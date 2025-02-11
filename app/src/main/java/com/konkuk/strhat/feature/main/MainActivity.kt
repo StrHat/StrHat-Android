@@ -1,4 +1,4 @@
-package com.konkuk.strhat
+package com.konkuk.strhat.feature.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
