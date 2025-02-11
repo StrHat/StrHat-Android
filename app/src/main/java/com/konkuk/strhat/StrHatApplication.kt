@@ -1,0 +1,17 @@
+package com.konkuk.strhat
+
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+
+@HiltAndroidApp
+class StrHatApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        setTimber()
+    }
+
+    private fun setTimber() {
+        Timber.plant(Timber.DebugTree())
+    }
+}
