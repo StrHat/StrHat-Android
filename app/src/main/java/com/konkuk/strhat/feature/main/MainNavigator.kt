@@ -12,6 +12,7 @@ import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
+import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
 import com.konkuk.strhat.feature.onboarding.navigation.navigateToOnBoarding
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosis
@@ -23,7 +24,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Route.OnBoarding
+    val startDestination = Route.Splash
 
     val currentTab: MainTab?
         @Composable get() = MainTab.entries.find { tab ->
@@ -47,6 +48,10 @@ class MainNavigator(
             MainTab.SELFDIAGNOSIS -> navController.navigateToSelfDiagnosis(navOptions)
             MainTab.MYPAGE -> navController.navigateToMyPage(navOptions)
         }
+    }
+
+    fun navigateToLogin() {
+        navController.navigateToLogin()
     }
 
     fun navigateToOnBoarding() {
