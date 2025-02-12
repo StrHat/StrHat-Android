@@ -19,6 +19,7 @@ inline fun Modifier.noRippleClickable(
         onClick()
     }
 }
+
 fun Modifier.addFocusCleaner(
     focusManager: FocusManager,
     doOnClear: () -> Unit = {}): Modifier {

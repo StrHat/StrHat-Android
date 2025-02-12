@@ -5,17 +5,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.konkuk.strhat.feature.onboarding.OnBoardingRoute
-import com.konkuk.strhat.core.navigation.Route.OnBoarding as OnBoardingRoute
+import com.konkuk.strhat.core.navigation.Route.OnBoarding
 
 fun NavController.navigateToOnBoarding() {
-    navigate(OnBoardingRoute)
+    navigate(OnBoarding)
 }
 
 fun NavGraphBuilder.onBoardingNavGraph(
     padding: PaddingValues,
     onNavigateToHome: () -> Unit
 ) {
-    composable<OnBoardingRoute> {
+    composable<OnBoarding> {
         OnBoardingRoute(
             padding = padding,
             navigateToHome = onNavigateToHome
