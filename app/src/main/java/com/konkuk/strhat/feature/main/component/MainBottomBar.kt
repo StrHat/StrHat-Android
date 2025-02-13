@@ -17,12 +17,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.feature.main.MainTab
 import com.konkuk.strhat.ui.theme.StrHatTheme
+import com.konkuk.strhat.ui.theme.StrHatTheme.colors
+import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -49,31 +51,25 @@ fun MainBottomBar(
         enter = fadeIn() + slideIn { IntOffset(0, it.height) },
         exit = fadeOut() + slideOut { IntOffset(0, it.height) }
     ) {
-        // val borderColor = defaultWithSuhyeonColors.Grey200
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(68.dp)
-                .drawBehind {
-                    val borderThickness = 1.dp.toPx()
-
-//                    drawLine(
-//                        color = borderColor,
-//                        start = Offset(0f, 0f),
-//                        end = Offset(size.width, 0f),
-//                        strokeWidth = borderThickness
-//                    )
-                }
-//                .background(
-//                    color = colors.White,
-//                ),
+        Surface(
+            color = colors.MainWhite,
+            shadowElevation = 30.dp
         ) {
-            tabs.forEach { tab ->
-                MainBottomBarItem(
-                    tab = tab,
-                    selected = tab == currentTab,
-                    onClick = { onTabSelected(tab) },
-                )
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(68.dp)
+                    .background(
+                        color = colors.MainWhite,
+                    ),
+            ) {
+                tabs.forEach { tab ->
+                    MainBottomBarItem(
+                        tab = tab,
+                        selected = tab == currentTab,
+                        onClick = { onTabSelected(tab) },
+                    )
+                }
             }
         }
     }
@@ -86,7 +82,7 @@ private fun RowScope.MainBottomBarItem(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
-    // val itemSelectColor = if (selected) colors.Purple500 else colors.Grey600
+    val itemSelectColor = if (selected) colors.MainBlue else colors.Gray400
     val itemSelectIcon = if (selected) tab.selectIconResId else tab.defaultIconResId
 
     Column(
@@ -112,8 +108,8 @@ private fun RowScope.MainBottomBarItem(
         )
         Text(
             text = stringResource(tab.descriptionResId),
-//            style = typography.caption01_SB.merge(itemSelectColor),
-//            color = itemSelectColor
+            style = typography.body5_b_10.merge(itemSelectColor),
+            color = itemSelectColor
         )
     }
 }
