@@ -1,6 +1,5 @@
 package com.konkuk.strhat.feature.main.component
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,7 +17,6 @@ import com.konkuk.strhat.feature.onboarding.navigation.onBoardingNavGraph
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.selfDiagnosisNavGraph
 import com.konkuk.strhat.feature.splash.navigation.splashNavGraph
 
-@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun MainNavHost(
     modifier: Modifier = Modifier,

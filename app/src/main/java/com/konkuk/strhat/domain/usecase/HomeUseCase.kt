@@ -7,7 +7,6 @@ import javax.inject.Inject
 class HomeUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
-    suspend operator fun invoke(): Result<HomeModel> {
-        return homeRepository.getHomeData()
-    }
+    suspend operator fun invoke(): Result<HomeModel> =
+        homeRepository.getHomeData()
 }
