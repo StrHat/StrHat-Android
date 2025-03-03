@@ -6,4 +6,7 @@
     <string name="diary">일기</string>
     <string name="self_diagnosis">자가진단</string>
     <string name="my_page">MY</string>
+
+    <!-- textfield -->
+    <string name="textfield_nickname">앱 내에서 사용될 닉네임을 입력해주세요.</string>
 </resources>
