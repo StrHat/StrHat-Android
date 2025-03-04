@@ -1,4 +1,4 @@
-package com.konkuk.strhat.core.component
+package com.konkuk.strhat.core.component.picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

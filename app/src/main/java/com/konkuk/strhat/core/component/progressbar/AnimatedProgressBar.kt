@@ -1,4 +1,4 @@
-package com.konkuk.strhat.core.component
+package com.konkuk.strhat.core.component.progressbar
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
