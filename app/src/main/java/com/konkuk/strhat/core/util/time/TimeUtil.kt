@@ -2,6 +2,7 @@ package com.konkuk.strhat.core.util.time
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -15,6 +16,10 @@ fun String.toDate(): LocalDate {
     val (month, day) = match.destructured
     val currentYear = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year
     return LocalDate(currentYear, month.toInt(), day.toInt())
+}
+
+fun LocalDateTime.toFormattedDateString(): String {
+    return "${this.year}년 ${this.monthNumber}월 ${this.dayOfMonth}일"
 }
 
 fun String.toKoreanDay(): String {
