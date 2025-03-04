@@ -65,8 +65,8 @@ fun DatePicker(
     },
     visibleItemsCount: Int = 3,
     itemPadding: PaddingValues = PaddingValues(top = 11.dp, bottom = 15.dp, start = 5.dp, end = 5.dp),
-    textStyle: TextStyle = typography.title1_b_18.copy(color = colors.Gray200),
-    selectedTextStyle: TextStyle = typography.title1_b_18.copy(color = colors.Gray600),
+    textStyle: TextStyle = typography.head2_b_20.copy(color = colors.Gray300),
+    selectedTextStyle: TextStyle = typography.head2_b_20.copy(color = colors.Gray600),
     fadingEdgeGradient: Brush = Brush.verticalGradient(
         0f to Transparent,
         0.5f to colors.Gray600,
