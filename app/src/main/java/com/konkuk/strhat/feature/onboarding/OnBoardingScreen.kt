@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.konkuk.strhat.core.component.AnimatedProgressBar
+import com.konkuk.strhat.core.component.progressbar.AnimatedProgressBar
 
 @Composable
 fun OnBoardingRoute(
