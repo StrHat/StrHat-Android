@@ -26,4 +26,8 @@
     <string name="textfield_diary">오늘의 일기를 1500자 이하로 작성해주세요.\n일기를 자세하고 길게 작성할 수록 스틀햇의\n정성어린 답변을 받을 수 있습니다!</string>
     <string name="textfield_long_length">%d/%d</string>
 
+    <!-- onboarding -->
+    <string name="onboarding_title">스틀햇에 오신 것을\n환영합니다!</string>
+    <string name="onboarding_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.</string>
+
 </resources>
