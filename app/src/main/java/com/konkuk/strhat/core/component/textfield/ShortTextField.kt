@@ -1,6 +1,7 @@
 package com.konkuk.strhat.core.component.textfield
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,7 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.R
-import com.konkuk.strhat.ui.theme.StrHatTheme
+import com.konkuk.strhat.ui.theme.StrHatTheme.colors
+import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun ShortTextField(
@@ -36,15 +38,11 @@ fun ShortTextField(
         placeholder = {
             Text(
                 text = hint,
-                style = StrHatTheme.typography.body1_r_16,
-                color = StrHatTheme.colors.Gray400
+                style = typography.body1_r_16,
+                color = colors.Gray400
             )
         },
         modifier = modifier
-            .background(
-                color = StrHatTheme.colors.Gray100,
-                shape = RoundedCornerShape(4.dp)
-            )
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
             .onFocusChanged { focusState ->
@@ -52,11 +50,14 @@ fun ShortTextField(
             },
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = StrHatTheme.colors.MainBlack
+            focusedIndicatorColor = colors.MainBlack,
+            unfocusedContainerColor = colors.Gray100,
+            focusedContainerColor = colors.Gray100
         ),
-        textStyle = StrHatTheme.typography.body1_r_16.copy(
-            color = StrHatTheme.colors.MainBlack
-        )
+        textStyle = typography.body1_r_16.copy(
+            color = colors.MainBlack
+        ),
+        shape = RoundedCornerShape(4.dp)
     )
 
 }
@@ -65,10 +66,17 @@ fun ShortTextField(
 @Composable
 private fun PreviewShortTextField() {
     var text by remember { mutableStateOf("") }
-    ShortTextField(
-        value = text,
-        onValueChange = { text = it },
-        hint = stringResource(R.string.textfield_nickname),
-        modifier = Modifier.fillMaxWidth()
-    )
+    Column(
+        modifier = Modifier
+            .background(color = colors.MainWhite)
+            .fillMaxWidth()
+            .padding(vertical = 20.dp)
+    ) {
+        ShortTextField(
+            value = text,
+            onValueChange = { text = it },
+            hint = stringResource(R.string.textfield_nickname),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
