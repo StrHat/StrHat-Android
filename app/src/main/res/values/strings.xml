@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name">StrHat</string>
 
+    <!-- 공통 -->
+    <string name="confirm">확인</string>
+    <string name="dismiss">취소</string>
+
     <!-- navigation -->
     <string name="home">홈</string>
     <string name="diary">일기</string>
     <string name="self_diagnosis">자가진단</string>
     <string name="my_page">MY</string>
+
+    <!-- date picker bottom sheet -->
+    <string name="date_picker_bottom_sheet_title">날짜 선택</string>
+    <string name="date_picker_visible_button">날짜 선택 버튼</string>
+
+    <!-- progress bar -->
+    <string name="animated_progress_bar_label">Progress Bar Animation</string>
 
     <!-- textfield -->
     <string name="textfield_nickname">앱 내에서 사용될 닉네임을 입력해주세요</string>
