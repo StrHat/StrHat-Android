@@ -41,7 +41,7 @@ fun DatePicker(
     onDateTimeSelected: (LocalDateTime?) -> Unit = {},
     datePickerState: PickerState<String> = remember {
         PickerState(
-    "${startDateTime.year}년 " +
+            "${startDateTime.year}년 " +
             "${startDateTime.monthNumber}월 " +
             "${startDateTime.dayOfMonth}일 " +
             "${startDateTime.dayOfWeek.name.toKoreanDay()}요일"
