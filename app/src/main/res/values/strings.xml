@@ -8,5 +8,11 @@
     <string name="my_page">MY</string>
 
     <!-- textfield -->
-    <string name="textfield_nickname">앱 내에서 사용될 닉네임을 입력해주세요.</string>
+    <string name="textfield_nickname">앱 내에서 사용될 닉네임을 입력해주세요</string>
+    <string name="textfield_hobby">나만의 취미 및 힐링 방법을 1000자 이하로 작성해주세요\nex)\n1. 퍼즐 맞추는 것을 좋아함.\n2. 그림 그리는 것을 좋아함.\n3. 뜨개질하는 것을 좋아함.</string>
+    <string name="textfield_stress_management">나만의 스트레스 해소 방법을 1000자 이하로 작성해주세요\nex)\n1. 아주 매운 음식을 먹는 것을 즐김.\n2. 좋아하는 노래를 들으며 춤을 춤.\n3. 건대입구역에 있는 스타벅스에 가 사람들을 구경함.</string>
+    <string name="textfield_personality_type">나의 성향을 1000자 이하로 작성해주세요\nex)\n1. 내성적인 편임.\n2. 매사에 신중한 편임.\n3. 힘든 것을 티를 내지 않음.</string>
+    <string name="textfield_diary">오늘의 일기를 1500자 이하로 작성해주세요.\n일기를 자세하고 길게 작성할 수록 스틀햇의\n정성어린 답변을 받을 수 있습니다!</string>
+    <string name="textfield_long_length">%d/%d</string>
+
 </resources>
