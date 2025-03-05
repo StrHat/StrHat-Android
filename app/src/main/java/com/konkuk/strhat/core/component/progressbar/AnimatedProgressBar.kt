@@ -12,7 +12,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.R
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 
 @Composable
@@ -29,7 +31,7 @@ fun AnimatedProgressBar(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
         ),
-        label = "Progress Bar Animation"
+        label = stringResource(R.string.animated_progress_bar_label)
     )
     Box(
         modifier = modifier

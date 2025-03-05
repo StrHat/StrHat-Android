@@ -20,8 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.draghandle.BottomSheetDragHandle
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.picker.DatePicker
@@ -63,7 +65,7 @@ fun DatePickerBottomSheet(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     Text(
-                        text = "날짜 선택",
+                        text = stringResource(R.string.date_picker_bottom_sheet_title),
                         style = typography.title1_b_18,
                         color = colors.MainBlack
                     )
@@ -78,7 +80,7 @@ fun DatePickerBottomSheet(
                     )
 
                     StrHatButton(
-                        text = "확인",
+                        text = stringResource(R.string.confirm),
                         onClick = {
                             onDateSelected(tempSelectedDate)
                             onDismiss()
@@ -109,7 +111,9 @@ fun DatePickerBottomSheetPreview() {
             Button(
                 onClick = { setVisible(true) }
             ) {
-                Text("날짜 선택 버튼")
+                Text(
+                    text = stringResource(R.string.date_picker_visible_button)
+                )
             }
 
             DatePickerBottomSheet(
