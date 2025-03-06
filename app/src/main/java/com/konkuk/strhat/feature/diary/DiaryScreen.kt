@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Icon
@@ -30,7 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.util.KeyStorage.CALENDAR_COLUMN_COUNT
+import com.konkuk.strhat.core.util.KeyStorage.CALENDAR_TOTAL_CELLS
+import com.konkuk.strhat.core.util.KeyStorage.FIRST_DAY_MAX_INDEX
+import com.konkuk.strhat.core.util.KeyStorage.FIRST_DAY_OF_MONTH
+import com.konkuk.strhat.core.util.KeyStorage.MIN_OFFSET
+import com.konkuk.strhat.core.util.KeyStorage.PLUS_MINUS_OF_MONTH
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.feature.diary.component.CalendarDateCell
+import com.konkuk.strhat.feature.diary.component.CalendarDayOfWeekCell
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.datetime.Clock
@@ -51,10 +57,11 @@ fun DiaryRoute(
 
 @Composable
 private fun DiaryScreen(
-    padding: PaddingValues
+    padding: PaddingValues,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(padding)
     ) {
@@ -71,7 +78,7 @@ private fun DiaryScreen(
 
             var currentMonth by remember { mutableStateOf(YearMonth.now()) }
 
-            val firstDayOfMonth = currentMonth.atDay(1)
+            val firstDayOfMonth = currentMonth.atDay(FIRST_DAY_OF_MONTH)
             val daysInMonth = currentMonth.lengthOfMonth()
             val firstDayIndex = firstDayOfMonth.dayOfWeek.value
 
@@ -87,7 +94,7 @@ private fun DiaryScreen(
                     contentDescription = stringResource(R.string.diary_calendar_month_left_arrow_description),
                     tint = colors.Gray300,
                     modifier = Modifier
-                        .noRippleClickable { currentMonth = currentMonth.minusMonths(1) }
+                        .noRippleClickable { currentMonth = currentMonth.minusMonths(PLUS_MINUS_OF_MONTH) }
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -105,37 +112,21 @@ private fun DiaryScreen(
                     contentDescription = stringResource(R.string.diary_calendar_month_right_arrow_description),
                     tint = colors.Gray300,
                     modifier = Modifier
-                        .noRippleClickable { currentMonth = currentMonth.plusMonths(1) }
+                        .noRippleClickable { currentMonth = currentMonth.plusMonths(PLUS_MINUS_OF_MONTH) }
                 )
             }
 
-            val dayOfWeekList = listOf("일", "월", "화", "수", "목", "금", "토")
+            CalendarDayOfWeekCell()
 
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                dayOfWeekList.forEach { label ->
-                    Text(
-                        text = label,
-                        style = typography.body1_b_16,
-                        color = colors.Gray500,
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentSize()
-                            .padding(vertical = 4.dp)
-                    )
-                }
-            }
-
-            val totalCells = 42
+            val totalCells = CALENDAR_TOTAL_CELLS
             val daysOfMonthList = mutableListOf<LocalDate?>()
 
-            val offset = if (firstDayIndex == 7) 0 else firstDayIndex
+            val offset = if (firstDayIndex == FIRST_DAY_MAX_INDEX) MIN_OFFSET else firstDayIndex
             repeat(offset) {
                 daysOfMonthList.add(null)
             }
 
-            for (day in 1..daysInMonth) {
+            for (day in FIRST_DAY_OF_MONTH..daysInMonth) {
                 daysOfMonthList.add(LocalDate(currentMonth.year, currentMonth.monthValue, day))
             }
 
@@ -144,32 +135,17 @@ private fun DiaryScreen(
             }
 
             LazyVerticalGrid(
-                columns = GridCells.Fixed(7),
+                columns = GridCells.Fixed(CALENDAR_COLUMN_COUNT),
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(daysOfMonthList.size) { index ->
                     val date = daysOfMonthList[index]
                     val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-                    Box(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .padding(4.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (date != null) {
-                            val textColor = when {
-                                date == today -> colors.MainBlue
-                                date < today  -> colors.MainBlack
-                                else          -> colors.Gray300
-                            }
 
-                            Text(
-                                text = date.dayOfMonth.toString(),
-                                style = typography.body1_m_16,
-                                color = textColor
-                            )
-                        }
-                    }
+                    CalendarDateCell(
+                        date = date,
+                        today = today
+                    )
                 }
             }
         }

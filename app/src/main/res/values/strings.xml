@@ -22,4 +22,11 @@
     <string name="diary_screen_title">원하는 날짜의 일기를\n작성해보세요!</string>
     <string name="diary_calendar_month_left_arrow_description">Diary Calendar Month Arrow Left</string>
     <string name="diary_calendar_month_right_arrow_description">Diary Calendar Month Arrow Right</string>
+    <string name="day_of_week_sunday">일</string>
+    <string name="day_of_week_monday">월</string>
+    <string name="day_of_week_tuesday">화</string>
+    <string name="day_of_week_wednesday">수</string>
+    <string name="day_of_week_thursday">목</string>
+    <string name="day_of_week_friday">금</string>
+    <string name="day_of_week_saturday">토</string>
 </resources>
