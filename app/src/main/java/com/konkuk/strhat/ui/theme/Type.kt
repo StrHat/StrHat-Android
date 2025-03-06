@@ -36,7 +36,7 @@ val defaultStrHatTypography = StrHatTypography(
     head1_b_24 = TextStyle(
         fontFamily = strHatFontBold,
         fontSize = 24.sp,
-        lineHeight = 26.sp
+        lineHeight = 32.sp
     ),
     head2_b_20 = TextStyle(
         fontFamily = strHatFontBold,
