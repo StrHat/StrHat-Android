@@ -29,4 +29,6 @@
     <string name="day_of_week_thursday">목</string>
     <string name="day_of_week_friday">금</string>
     <string name="day_of_week_saturday">토</string>
+    <string name="add_diary_floating_button_description">Add New Diary</string>
+    <string name="add_diary_screen">일기 작성 화면</string>
 </resources>
