@@ -157,7 +157,7 @@ private fun SelectableButton(
             Text(
                 text = if (selectedYear == 0) "${currentYear}년" else "${selectedYear}년",
                 color = if (selectedYear == 0) colors.Gray400 else colors.MainBlack,
-                style = typography.head2_b_20
+                style = typography.body1_m_16
             )
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_dropdown_down),
