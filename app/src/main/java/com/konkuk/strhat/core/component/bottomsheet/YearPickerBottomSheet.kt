@@ -26,6 +26,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.bottomsheet.draghandle.BottomSheetDragHandle
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.picker.Picker
 import com.konkuk.strhat.core.component.picker.PickerState
@@ -95,7 +96,8 @@ private fun YearSelectionBottomSheet(
         modifier = Modifier,
         containerColor = colors.MainWhite,
         onDismissRequest = onDismiss,
-        sheetState = sheetState
+        sheetState = sheetState,
+        dragHandle = { BottomSheetDragHandle() }
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 28.dp)
