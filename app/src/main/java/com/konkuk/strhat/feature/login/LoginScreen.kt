@@ -55,7 +55,7 @@ fun LoginScreen(
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_logo_blue),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.app_name_korean),
             tint = colors.MainBlue
         )
         Text(
@@ -83,7 +83,7 @@ fun LoginScreen(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_kakao),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.app_name_korean),
                 tint = colors.MainBlack
             )
 

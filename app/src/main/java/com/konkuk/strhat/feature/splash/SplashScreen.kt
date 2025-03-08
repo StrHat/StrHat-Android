@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,7 +52,7 @@ fun SplashScreen(
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_logo_white),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.app_name_korean),
             tint = colors.MainWhite
         )
     }
