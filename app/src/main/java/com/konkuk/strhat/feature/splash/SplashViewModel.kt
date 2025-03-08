@@ -16,7 +16,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     init {
         viewModelScope.launch {
-            delay(3000)
+            delay(2000)
             _navigateToLogin.value = true
         }
     }
