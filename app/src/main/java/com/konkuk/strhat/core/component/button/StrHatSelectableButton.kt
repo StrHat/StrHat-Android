@@ -21,7 +21,6 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
-import com.konkuk.strhat.ui.theme.SubBlue
 
 @Composable
 fun StrHatSelectableButtons(
@@ -54,7 +53,7 @@ fun StrHatSelectableButton(
     Box(
         modifier = modifier
             .background(
-                color = if (isSelected) SubBlue else colors.Gray100,
+                color = if (isSelected) colors.SubBlue else colors.Gray100,
                 shape = RoundedCornerShape(6.dp)
             )
             .noRippleClickable(onClick = onClick)

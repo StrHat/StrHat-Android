@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
 
 @Composable
-fun Picker(
+fun YearPicker(
     items: List<String>,
     modifier: Modifier = Modifier,
     state: PickerState = rememberPickerState(),

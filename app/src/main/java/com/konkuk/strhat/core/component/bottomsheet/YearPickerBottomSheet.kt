@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.draghandle.BottomSheetDragHandle
 import com.konkuk.strhat.core.component.button.StrHatButton
-import com.konkuk.strhat.core.component.picker.Picker
 import com.konkuk.strhat.core.component.picker.PickerState
+import com.konkuk.strhat.core.component.picker.YearPicker
 import com.konkuk.strhat.core.util.KeyStorage.MIN_YEAR
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -79,7 +79,8 @@ private fun YearSelectionBottomSheet(
     selectedYear: Int,
     currentYear: Int,
     onDismiss: () -> Unit,
-    onYearSelected: (Int) -> Unit
+    onYearSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val years = remember { (MIN_YEAR..currentYear).toList() }
@@ -94,7 +95,7 @@ private fun YearSelectionBottomSheet(
     }
 
     ModalBottomSheet(
-        modifier = Modifier,
+        modifier = modifier,
         containerColor = colors.MainWhite,
         onDismissRequest = onDismiss,
         sheetState = sheetState,
@@ -113,9 +114,9 @@ private fun YearSelectionBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 40.dp, bottom = 20.dp)
-                    .padding(horizontal = 33.dp)
+                    .padding(horizontal = 32.dp)
             ) {
-                Picker(
+                YearPicker(
                     state = pickerState,
                     items = years.map { it.toString() },
                     initialSelectedIndex = defaultYearIndex,
@@ -139,7 +140,8 @@ private fun YearSelectionBottomSheet(
 private fun SelectableButton(
     selectedYear: Int,
     currentYear: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier
@@ -153,7 +155,7 @@ private fun SelectableButton(
             .padding(vertical = 12.dp, horizontal = 16.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
