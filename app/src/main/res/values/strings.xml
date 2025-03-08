@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">StrHat</string>
+    <string name="app_name_korean">스틀햇</string>
 
     <!-- 공통 -->
     <string name="confirm">확인</string>
@@ -43,4 +44,7 @@
     <string name="onboarding_title">스틀햇에 오신 것을\n환영합니다!</string>
     <string name="onboarding_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.</string>
 
+    <!-- login -->
+    <string name="login_social_login">소셜 로그인</string>
+    <string name="login_kakao_login">카카오로 계속하기</string>
 </resources>
