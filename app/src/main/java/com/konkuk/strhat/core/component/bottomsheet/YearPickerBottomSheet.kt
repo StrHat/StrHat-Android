@@ -30,6 +30,7 @@ import com.konkuk.strhat.core.component.bottomsheet.draghandle.BottomSheetDragHa
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.picker.Picker
 import com.konkuk.strhat.core.component.picker.PickerState
+import com.konkuk.strhat.core.util.KeyStorage.MIN_YEAR
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -81,7 +82,7 @@ private fun YearSelectionBottomSheet(
     onYearSelected: (Int) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val years = remember { (2000..currentYear).toList() }
+    val years = remember { (MIN_YEAR..currentYear).toList() }
     val defaultYearIndex = years.indexOf(
         if (selectedYear == 0) currentYear else selectedYear
     ).takeIf { it >= 0 } ?: 0
