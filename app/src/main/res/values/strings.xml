@@ -5,6 +5,7 @@
     <!-- 공통 -->
     <string name="confirm">확인</string>
     <string name="dismiss">취소</string>
+    <string name="next">다음</string>
 
     <!-- navigation -->
     <string name="home">홈</string>
@@ -43,6 +44,8 @@
     <!-- onboarding -->
     <string name="onboarding_title">스틀햇에 오신 것을\n환영합니다!</string>
     <string name="onboarding_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.</string>
+    <string name="onboarding_nickname">닉네임</string>
+    <string name="onboarding_year">태어난 년도를 선택해주세요.</string>
 
     <!-- login -->
     <string name="login_social_login">소셜 로그인</string>
