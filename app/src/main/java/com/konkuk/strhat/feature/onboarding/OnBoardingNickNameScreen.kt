@@ -29,23 +29,21 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
-fun OnBoardingRoute(
+fun OnBoardingNickNameRoute(
     padding: PaddingValues,
-    navigateToHome: () -> Unit,
+    navigateToGender: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    OnBoardingScreen(
+    OnBoardingNickNameScreen(
         padding = padding,
-        onButtonClick = {
-            navigateToHome()
-        }
+        navigateToGender = navigateToGender
     )
 }
 
 @Composable
-fun OnBoardingScreen(
+fun OnBoardingNickNameScreen(
     padding: PaddingValues,
-    onButtonClick: () -> Unit,
+    navigateToGender: () -> Unit,
 ) {
     var nickname by remember { mutableStateOf("") }
     var selectedYear by remember { mutableStateOf(0) }
@@ -67,7 +65,7 @@ fun OnBoardingScreen(
         StrHatButton(
             isDisabled = if (nickname.isEmpty() || selectedYear == 0) true else false,
             text = stringResource(R.string.next),
-            onClick = onButtonClick,
+            onClick = navigateToGender,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
@@ -122,9 +120,9 @@ private fun PreviewOnBoardingScreen() {
             .background(color = colors.MainWhite)
             .fillMaxSize()
     ) {
-        OnBoardingScreen(
+        OnBoardingNickNameScreen(
             padding = PaddingValues(),
-            onButtonClick = {}
+            navigateToGender = {}
         )
     }
 }
