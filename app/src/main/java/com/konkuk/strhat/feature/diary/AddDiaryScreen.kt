@@ -72,7 +72,7 @@ fun AddDiaryScreen(
                 verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    text = "오늘의 감정 선택하기",
+                    text = stringResource(R.string.add_diary_emotion_selection_title),
                     style = typography.head2_r_20,
                     color = colors.MainBlack
                 )
@@ -80,7 +80,7 @@ fun AddDiaryScreen(
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
-                    text = "(클수록 좋음에 해당)",
+                    text = stringResource(R.string.add_diary_emotion_selection_title_description),
                     style = typography.body2_r_15,
                     color = colors.Gray500,
                     modifier = Modifier.padding(bottom = 2.dp)
@@ -112,7 +112,7 @@ fun AddDiaryScreen(
             }
 
             Text(
-                text = "오늘의 일기 작성하기",
+                text = stringResource(R.string.add_today_diary_title),
                 style = typography.head2_r_20,
                 color = colors.MainBlack,
                 modifier = Modifier.padding(horizontal = 20.dp)
@@ -130,7 +130,7 @@ fun AddDiaryScreen(
 
         StrHatButton(
             isDisabled = diaryContent.length < 20,
-            text = "피드백 받기",
+            text = stringResource(R.string.get_feedback_button),
             modifier = Modifier.padding(20.dp),
             onClick = {}
         )

@@ -60,7 +60,7 @@
     <string name="day_of_week_friday">금</string>
     <string name="day_of_week_saturday">토</string>
     <string name="add_diary_floating_button_description">Add New Diary</string>
-    <string name="add_diary_screen">일기 작성 화면</string>
+    <string name="add_diary_screen_title">오늘은 어떤 날이었나요?</string>
     <string name="diary_unselected_empty_view_title">날짜를 선택해 일기를 조회해보세요!</string>
     <string name="diary_unselected_empty_view_strhat_description">Diary Date Unselected Empty View StrHat</string>
     <string name="no_diary_empty_view_title">해당 날짜에는 아직 작성된 일기가 없어요</string>
@@ -68,4 +68,8 @@
     <string name="diary_summary_view_title">2025년 4월 6일 일기</string>
     <string name="diary_summary_view_arrow_description">Diary Summary Arrow</string>
     <string name="diary_summary_content">Diary Summary Content Example</string>
+    <string name="add_diary_emotion_selection_title">오늘의 감정 선택하기</string>
+    <string name="add_diary_emotion_selection_title_description">(클수록 좋음에 해당)</string>
+    <string name="add_today_diary_title">오늘의 일기 작성하기</string>
+    <string name="get_feedback_button">피드백 받기</string>
 </resources>
