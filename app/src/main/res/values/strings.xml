@@ -31,4 +31,6 @@
     <string name="day_of_week_saturday">토</string>
     <string name="add_diary_floating_button_description">Add New Diary</string>
     <string name="add_diary_screen">일기 작성 화면</string>
+    <string name="diary_unselected_empty_view_title">날짜를 선택해 일기를 조회해보세요!</string>
+    <string name="diary_unselected_empty_view_strhat_description">Diary Date Unselected Empty View StrHat</string>
 </resources>
