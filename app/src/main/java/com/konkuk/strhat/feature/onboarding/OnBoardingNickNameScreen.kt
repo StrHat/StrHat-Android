@@ -9,10 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,20 +32,34 @@ fun OnBoardingNickNameRoute(
     navigateToGender: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
+    val progress by viewModel.progress.collectAsState()
+    val nickName by viewModel.nickName.collectAsState()
+    val selectedYear by viewModel.selectedYear.collectAsState()
+
     OnBoardingNickNameScreen(
         padding = padding,
-        navigateToGender = navigateToGender
+        progress = progress,
+        nickName = nickName,
+        onNickNameChange = viewModel::updateNickName,
+        selectedYear = selectedYear,
+        onYearSelected = viewModel::updateSelectedYear,
+        navigateToGender = {
+            navigateToGender()
+            viewModel.updateProgress()
+        }
     )
 }
 
 @Composable
 fun OnBoardingNickNameScreen(
     padding: PaddingValues,
+    progress: Float,
+    nickName: String,
+    onNickNameChange: (String) -> Unit,
+    selectedYear: Int,
+    onYearSelected: (Int) -> Unit,
     navigateToGender: () -> Unit,
 ) {
-    var nickname by remember { mutableStateOf("") }
-    var selectedYear by remember { mutableStateOf(0) }
-
     Box(
         modifier = Modifier
             .padding(20.dp)
@@ -55,17 +67,21 @@ fun OnBoardingNickNameScreen(
             .padding(padding),
     ) {
         OnBoardingNickNameSection(
-            nickname = nickname,
-            onNickNameChange = { nickname = it },
+            progress = progress,
+            nickname = nickName,
+            onNickNameChange = onNickNameChange,
             selectedYear = selectedYear,
-            onYearSelected = { selectedYear = it },
+            onYearSelected = onYearSelected,
             modifier = Modifier.align(alignment = Alignment.TopStart)
         )
 
         StrHatButton(
-            isDisabled = if (nickname.isEmpty() || selectedYear == 0) true else false,
+            isDisabled = if (nickName.isEmpty() || selectedYear == 0) true else false,
             text = stringResource(R.string.next),
-            onClick = navigateToGender,
+            onClick = {
+                navigateToGender()
+
+            },
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
@@ -73,6 +89,7 @@ fun OnBoardingNickNameScreen(
 
 @Composable
 fun OnBoardingNickNameSection(
+    progress: Float,
     nickname: String,
     onNickNameChange: (String) -> Unit,
     selectedYear: Int,
@@ -82,7 +99,7 @@ fun OnBoardingNickNameSection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(progress = 0f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_title,
@@ -122,6 +139,11 @@ private fun PreviewOnBoardingScreen() {
     ) {
         OnBoardingNickNameScreen(
             padding = PaddingValues(),
+            progress = 1 / 6f,
+            nickName = "",
+            onNickNameChange = {},
+            selectedYear = 0,
+            onYearSelected = {},
             navigateToGender = {}
         )
     }
