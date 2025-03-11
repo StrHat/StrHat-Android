@@ -18,6 +18,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +42,10 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.feature.diary.component.AddDiaryFloatingButton
 import com.konkuk.strhat.feature.diary.component.CalendarDateCell
 import com.konkuk.strhat.feature.diary.component.CalendarDayOfWeekCell
+import com.konkuk.strhat.feature.diary.component.DiaryDateUnselectedEmptyView
+import com.konkuk.strhat.feature.diary.component.DiarySummaryView
+import com.konkuk.strhat.feature.diary.component.NoDiaryEmptyView
+import com.konkuk.strhat.feature.diary.state.Diary
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.datetime.Clock
@@ -55,8 +60,14 @@ fun DiaryRoute(
     navigateToAddDiary: () -> Unit,
     viewModel: DiaryViewModel = hiltViewModel()
 ) {
+    val selectedDate by viewModel.selectedDate.collectAsState()
+    val selectedDiary by viewModel.selectedDiary.collectAsState()
+
     DiaryScreen(
         padding = padding,
+        selectedDate = selectedDate,
+        selectedDiary = selectedDiary,
+        onDateSelected = viewModel::onDateSelected,
         onFloatingBtnClick = navigateToAddDiary
     )
 }
@@ -64,6 +75,9 @@ fun DiaryRoute(
 @Composable
 private fun DiaryScreen(
     padding: PaddingValues,
+    selectedDate: LocalDate?,
+    selectedDiary: Diary?,
+    onDateSelected: (LocalDate) -> Unit,
     onFloatingBtnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -152,7 +166,10 @@ private fun DiaryScreen(
 
                     CalendarDateCell(
                         date = date,
-                        today = today
+                        today = today,
+                        onDateCellClick = { dateCell ->
+                            onDateSelected(dateCell)
+                        }
                     )
                 }
             }
@@ -163,12 +180,27 @@ private fun DiaryScreen(
                 thickness = 1.dp,
                 color = colors.Gray300
             )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            when {
+                selectedDate == null -> {
+                    DiaryDateUnselectedEmptyView()
+                }
+                selectedDiary != null -> {
+                    DiarySummaryView(date = selectedDate, content = selectedDiary.content)
+                }
+                else -> {
+                    NoDiaryEmptyView()
+                }
+            }
         }
 
         AddDiaryFloatingButton(
             modifier = Modifier
                 .align(BottomEnd)
-                .padding(bottom = 16.dp, end = 16.dp),
+                .padding(bottom = 16.dp, end = 16.dp)
+                .noRippleClickable { onFloatingBtnClick() },
             onFloatingBtnClick = onFloatingBtnClick
         )
     }
@@ -179,6 +211,9 @@ private fun DiaryScreen(
 fun DiaryScreenPreview() {
     DiaryScreen(
         padding = PaddingValues(0.dp),
-        onFloatingBtnClick = {}
+        selectedDate = LocalDate(2025, 1, 1),
+        selectedDiary = Diary(LocalDate(2025, 1, 1), "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ"),
+        onFloatingBtnClick = {},
+        onDateSelected = {}
     )
 }
