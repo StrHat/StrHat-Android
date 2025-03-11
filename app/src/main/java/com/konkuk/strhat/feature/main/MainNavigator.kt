@@ -52,7 +52,14 @@ class MainNavigator(
     }
 
     fun navigateToLogin() {
-        navController.navigateToLogin()
+        navController.navigateToLogin(
+            navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        )
     }
 
     fun navigateToOnBoarding() {

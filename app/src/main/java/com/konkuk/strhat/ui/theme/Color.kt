@@ -22,6 +22,7 @@ val MainRed = Color(0xFFFF0000)
 val SubRed = Color(0xFFFF6B6B)
 
 val MainYellow = Color(0xFFFFEE6B)
+val SubYellow = Color(0xFFFCE64A)
 
 val MainGreen = Color(0xFF85C47A)
 val SubGreen = Color(0xFFC9FCA5)
@@ -42,6 +43,7 @@ data class StrHatColors(
     val MainRed: Color,
     val SubRed: Color,
     val MainYellow: Color,
+    val SubYellow: Color,
     val MainGreen: Color,
     val SubGreen: Color,
 )
@@ -61,6 +63,7 @@ val defaultStrHatColors = StrHatColors(
     MainRed = MainRed,
     SubRed = SubRed,
     MainYellow = MainYellow,
+    SubYellow = SubYellow,
     MainGreen = MainGreen,
     SubGreen = SubGreen,
 )

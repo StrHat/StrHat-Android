@@ -7,4 +7,7 @@ object KeyStorage {
     const val CALENDAR_COLUMN_COUNT = 7
     const val FIRST_DAY_MAX_INDEX = 7
     const val MIN_OFFSET = 0
+
+    // year picker
+    const val MIN_YEAR = 2000
 }

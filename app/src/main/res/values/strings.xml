@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">StrHat</string>
+    <string name="app_name_korean">스틀햇</string>
 
     <!-- 공통 -->
     <string name="confirm">확인</string>
@@ -15,8 +16,37 @@
     <string name="date_picker_bottom_sheet_title">날짜 선택</string>
     <string name="date_picker_visible_button">날짜 선택 버튼</string>
 
+    <!-- year picker bottom sheet -->
+    <string name="year_picker_title">태어난 년도를 선택해주세요.</string>
+    <string name="year_picker_bottom_sheet_title">태어난 년도 선택</string>
+    <string name="year_picker_bottom_sheet_button">선택</string>
+    <string name="year_picker_bottom_sheet">년</string>
+
     <!-- progress bar -->
     <string name="animated_progress_bar_label">Progress Bar Animation</string>
+
+    <!-- textfield -->
+    <string name="textfield_nickname">앱 내에서 사용될 닉네임을 입력해주세요</string>
+    <string name="textfield_hobby">나만의 취미 및 힐링 방법을 1000자 이하로 작성해주세요\nex)\n1. 퍼즐 맞추는 것을 좋아함.\n2. 그림 그리는 것을 좋아함.\n3. 뜨개질하는 것을 좋아함.</string>
+    <string name="textfield_stress_management">나만의 스트레스 해소 방법을 1000자 이하로 작성해주세요\nex)\n1. 아주 매운 음식을 먹는 것을 즐김.\n2. 좋아하는 노래를 들으며 춤을 춤.\n3. 건대입구역에 있는 스타벅스에 가 사람들을 구경함.</string>
+    <string name="textfield_personality_type">나의 성향을 1000자 이하로 작성해주세요\nex)\n1. 내성적인 편임.\n2. 매사에 신중한 편임.\n3. 힘든 것을 티를 내지 않음.</string>
+    <string name="textfield_diary">오늘의 일기를 1500자 이하로 작성해주세요.\n일기를 자세하고 길게 작성할 수록 스틀햇의\n정성어린 답변을 받을 수 있습니다!</string>
+    <string name="textfield_long_length">%d/%d</string>
+
+    <!-- dialog -->
+    <string name="dialog_chat_title">대화 그만하기</string>
+    <string name="dialog_chat_description">스틀햇과의 대화를 그만하시겠어요?</string>
+    <string name="dialog_logout_title">로그아웃</string>
+    <string name="dialog_logout_description">정말 로그아웃하시겠어요?</string>
+    <string name="dialog_diary_title">일기 전문보기</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_title">스틀햇에 오신 것을\n환영합니다!</string>
+    <string name="onboarding_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.</string>
+
+    <!-- login -->
+    <string name="login_social_login">소셜 로그인</string>
+    <string name="login_kakao_login">카카오로 계속하기</string>
 
     <!-- diary screen -->
     <string name="diary_screen_title">원하는 날짜의 일기를\n작성해보세요!</string>
