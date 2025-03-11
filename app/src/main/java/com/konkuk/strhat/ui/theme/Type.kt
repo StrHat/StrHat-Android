@@ -101,7 +101,7 @@ val defaultStrHatTypography = StrHatTypography(
     body4_r_12 = TextStyle(
         fontFamily = strHatFontRegular,
         fontSize = 12.sp,
-        lineHeight = 14.sp
+        lineHeight = 18.sp
     ),
     body5_b_10 = TextStyle(
         fontFamily = strHatFontExtraBold,

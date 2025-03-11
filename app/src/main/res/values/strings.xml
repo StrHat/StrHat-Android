@@ -35,4 +35,7 @@
     <string name="diary_unselected_empty_view_strhat_description">Diary Date Unselected Empty View StrHat</string>
     <string name="no_diary_empty_view_title">해당 날짜에는 아직 작성된 일기가 없어요</string>
     <string name="no_diary_empty_view_strhat_description">No Diary Empty View StrHat</string>
+    <string name="diary_summary_view_title">2025년 4월 6일 일기</string>
+    <string name="diary_summary_view_arrow_description">Diary Summary Arrow</string>
+    <string name="diary_summary_content">Diary Summary Content Example</string>
 </resources>
