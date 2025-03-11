@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.datetime.LocalDate
@@ -16,12 +17,16 @@ import kotlinx.datetime.LocalDate
 fun CalendarDateCell(
     date: LocalDate?,
     today: LocalDate,
+    onDateCellClick: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .aspectRatio(1f)
-            .padding(4.dp),
+            .padding(4.dp)
+            .noRippleClickable {
+                date?.let { onDateCellClick(it) }
+            },
         contentAlignment = Alignment.Center
     ) {
         if (date != null) {
