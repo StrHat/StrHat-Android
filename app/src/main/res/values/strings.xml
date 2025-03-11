@@ -33,4 +33,6 @@
     <string name="add_diary_screen">일기 작성 화면</string>
     <string name="diary_unselected_empty_view_title">날짜를 선택해 일기를 조회해보세요!</string>
     <string name="diary_unselected_empty_view_strhat_description">Diary Date Unselected Empty View StrHat</string>
+    <string name="no_diary_empty_view_title">해당 날짜에는 아직 작성된 일기가 없어요</string>
+    <string name="no_diary_empty_view_strhat_description">No Diary Empty View StrHat</string>
 </resources>
