@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.util.KeyStorage.CALENDAR_COLUMN_COUNT
 import com.konkuk.strhat.core.util.KeyStorage.CALENDAR_TOTAL_CELLS
 import com.konkuk.strhat.core.util.KeyStorage.FIRST_DAY_MAX_INDEX
@@ -92,10 +93,8 @@ private fun DiaryScreen(
                 .background(colors.MainWhite)
                 .padding(horizontal = 16.dp, vertical = 20.dp)
         ) {
-            Text(
-                text = stringResource(R.string.diary_screen_title),
-                style = typography.head1_b_24,
-                color = colors.MainBlack
+            PageDescriptionSection(
+                titleResId = R.string.diary_screen_title
             )
 
             var currentMonth by remember { mutableStateOf(YearMonth.now()) }
