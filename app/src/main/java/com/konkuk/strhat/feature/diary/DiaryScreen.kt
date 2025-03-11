@@ -167,6 +167,7 @@ private fun DiaryScreen(
                     CalendarDateCell(
                         date = date,
                         today = today,
+                        isSelected = (date == selectedDate),
                         onDateCellClick = { dateCell ->
                             onDateSelected(dateCell)
                         }
