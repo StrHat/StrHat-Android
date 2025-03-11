@@ -47,6 +47,7 @@ fun AddDiaryScreen(
     modifier: Modifier = Modifier
 ) {
     var diaryContent by remember { mutableStateOf("") }
+    var selectedEmotionIndex by remember { mutableStateOf(-1) }
 
     Column(
         modifier = modifier
@@ -106,7 +107,9 @@ fun AddDiaryScreen(
                 emotionStrHatList.forEachIndexed { index, emotionIcon ->
                     EmotionSelection(
                         emotionStrHat = emotionIcon,
-                        emotionScore = emotionScoreList[index]
+                        emotionScore = emotionScoreList[index],
+                        isSelected = (selectedEmotionIndex == index),
+                        onEmotionClick = { selectedEmotionIndex = index }
                     )
                 }
             }
