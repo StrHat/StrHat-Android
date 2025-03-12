@@ -17,8 +17,14 @@ class OnBoardingViewModel @Inject constructor() : ViewModel() {
     private val _selectedOption = MutableStateFlow("")
     val selectedOption = _selectedOption.asStateFlow()
 
-    private val _hobbyText = MutableStateFlow("")
-    val hobbyText = _hobbyText.asStateFlow()
+    private val _hobby = MutableStateFlow("")
+    val hobby = _hobby.asStateFlow()
+
+    private val _stress = MutableStateFlow("")
+    val stress = _stress.asStateFlow()
+
+    private val _personality = MutableStateFlow("")
+    val personality = _personality.asStateFlow()
 
     fun updateNickName(nickName: String) {
         _nickName.value = nickName
@@ -33,6 +39,14 @@ class OnBoardingViewModel @Inject constructor() : ViewModel() {
     }
 
     fun updateHobby(hobby: String) {
-        _hobbyText.value = hobby
+        _hobby.value = hobby
+    }
+
+    fun updateStress(stress: String) {
+        _stress.value = stress
+    }
+
+    fun updatePersonality(personality: String) {
+        _personality.value = personality
     }
 }

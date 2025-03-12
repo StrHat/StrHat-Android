@@ -24,27 +24,27 @@ import com.konkuk.strhat.core.component.textfield.LongTextField
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 
 @Composable
-fun OnBoardingHobbyRoute(
+fun OnBoardingStressRoute(
     padding: PaddingValues,
-    navigateToStress: () -> Unit,
+    navigateToPersonality: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    val hobby by viewModel.hobby.collectAsState()
+    val stress by viewModel.stress.collectAsState()
 
-    OnBoardingHobbyScreen(
+    OnBoardingStressScreen(
         padding = padding,
-        hobby = hobby,
-        onHobbyChange = viewModel::updateHobby,
-        navigateToStress = navigateToStress
+        stress = stress,
+        onStressChange = viewModel::updateStress,
+        navigateToPersonality = navigateToPersonality
     )
 }
 
 @Composable
-fun OnBoardingHobbyScreen(
+fun OnBoardingStressScreen(
     padding: PaddingValues,
-    hobby: String,
-    onHobbyChange: (String) -> Unit,
-    navigateToStress: () -> Unit
+    stress: String,
+    onStressChange: (String) -> Unit,
+    navigateToPersonality: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -52,17 +52,17 @@ fun OnBoardingHobbyScreen(
             .fillMaxSize()
             .padding(padding),
     ) {
-        OnBoardingHobbySection(
-            hobby = hobby,
-            onHobbyChange = onHobbyChange
+        OnBoardingStressSection(
+            stress = stress,
+            onStressChange = onStressChange
         )
 
         StrHatButton(
-            isDisabled = if (hobby.isEmpty()) true else false,
+            isDisabled = if (stress.isEmpty()) true else false,
             text = stringResource(R.string.next),
             onClick = {
-                if (hobby.isNotEmpty())
-                    navigateToStress()
+                if (stress.isNotEmpty())
+                    navigateToPersonality()
             },
             modifier = Modifier.align(Alignment.BottomCenter)
         )
@@ -70,26 +70,26 @@ fun OnBoardingHobbyScreen(
 }
 
 @Composable
-fun OnBoardingHobbySection(
-    hobby: String,
-    onHobbyChange: (String) -> Unit,
+fun OnBoardingStressSection(
+    stress: String,
+    onStressChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(3 / 6f)
+        AnimatedProgressBar(4 / 6f)
 
         PageDescriptionSection(
-            titleResId = R.string.onboarding_hobby_title,
+            titleResId = R.string.onboarding_stress_title,
             descriptionResId = R.string.onboarding_type_description,
             modifier = Modifier.padding(top = 40.dp, bottom = 30.dp)
         )
 
         LongTextField(
-            value = hobby,
-            onValueChange = onHobbyChange,
-            hint = stringResource(R.string.textfield_hobby),
+            value = stress,
+            onValueChange = onStressChange,
+            hint = stringResource(R.string.textfield_stress_management),
             maxLength = 1000,
             modifier = Modifier.fillMaxWidth()
         )
@@ -98,17 +98,17 @@ fun OnBoardingHobbySection(
 
 @Preview
 @Composable
-private fun PreviewOnBoardingHobbyScreen() {
+private fun PreviewOnBoardingStressScreen() {
     Column(
         modifier = Modifier
             .background(color = colors.MainWhite)
             .fillMaxSize()
     ) {
-        OnBoardingHobbyScreen(
+        OnBoardingStressScreen(
             padding = PaddingValues(),
-            hobby = "",
-            onHobbyChange = {},
-            navigateToStress = {}
+            stress = "",
+            onStressChange = {},
+            navigateToPersonality = {}
         )
     }
 }
