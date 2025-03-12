@@ -8,14 +8,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor() : ViewModel() {
-    private val _progress = MutableStateFlow(1 / 6f)
-    val progress = _progress.asStateFlow()
 
     private val _nickName = MutableStateFlow("")
     val nickName = _nickName.asStateFlow()
 
     private val _selectedYear = MutableStateFlow(0)
     val selectedYear = _selectedYear.asStateFlow()
+
+    private val _selectedOption = MutableStateFlow("")
+    val selectedOption = _selectedOption.asStateFlow()
 
     fun updateNickName(nickName: String) {
         _nickName.value = nickName
@@ -25,7 +26,7 @@ class OnBoardingViewModel @Inject constructor() : ViewModel() {
         _selectedYear.value = year
     }
 
-    fun updateProgress() {
-        _progress.value += 1 / 6f
+    fun updateSelectedOption(gender: String){
+        _selectedOption.value = gender
     }
 }

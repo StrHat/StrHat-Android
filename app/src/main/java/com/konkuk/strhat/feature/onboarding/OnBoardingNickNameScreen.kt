@@ -32,33 +32,27 @@ fun OnBoardingNickNameRoute(
     navigateToGender: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    val progress by viewModel.progress.collectAsState()
     val nickName by viewModel.nickName.collectAsState()
     val selectedYear by viewModel.selectedYear.collectAsState()
 
     OnBoardingNickNameScreen(
         padding = padding,
-        progress = progress,
         nickName = nickName,
         onNickNameChange = viewModel::updateNickName,
         selectedYear = selectedYear,
         onYearSelected = viewModel::updateSelectedYear,
-        navigateToGender = {
-            navigateToGender()
-            viewModel.updateProgress()
-        }
+        navigateToGender = navigateToGender
     )
 }
 
 @Composable
 fun OnBoardingNickNameScreen(
     padding: PaddingValues,
-    progress: Float,
     nickName: String,
     onNickNameChange: (String) -> Unit,
     selectedYear: Int,
     onYearSelected: (Int) -> Unit,
-    navigateToGender: () -> Unit,
+    navigateToGender: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -67,7 +61,6 @@ fun OnBoardingNickNameScreen(
             .padding(padding),
     ) {
         OnBoardingNickNameSection(
-            progress = progress,
             nickname = nickName,
             onNickNameChange = onNickNameChange,
             selectedYear = selectedYear,
@@ -79,8 +72,8 @@ fun OnBoardingNickNameScreen(
             isDisabled = if (nickName.isEmpty() || selectedYear == 0) true else false,
             text = stringResource(R.string.next),
             onClick = {
-                navigateToGender()
-
+                if (nickName.isNotEmpty() && selectedYear != 0)
+                    navigateToGender()
             },
             modifier = Modifier.align(Alignment.BottomCenter)
         )
@@ -89,7 +82,6 @@ fun OnBoardingNickNameScreen(
 
 @Composable
 fun OnBoardingNickNameSection(
-    progress: Float,
     nickname: String,
     onNickNameChange: (String) -> Unit,
     selectedYear: Int,
@@ -99,10 +91,10 @@ fun OnBoardingNickNameSection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(progress)
+        AnimatedProgressBar(1 / 6f)
 
         PageDescriptionSection(
-            titleResId = R.string.onboarding_title,
+            titleResId = R.string.onboarding_nickname_title,
             descriptionResId = R.string.onboarding_description,
             modifier = Modifier.padding(top = 40.dp, bottom = 50.dp)
         )
@@ -139,7 +131,6 @@ private fun PreviewOnBoardingScreen() {
     ) {
         OnBoardingNickNameScreen(
             padding = PaddingValues(),
-            progress = 1 / 6f,
             nickName = "",
             onNickNameChange = {},
             selectedYear = 0,
