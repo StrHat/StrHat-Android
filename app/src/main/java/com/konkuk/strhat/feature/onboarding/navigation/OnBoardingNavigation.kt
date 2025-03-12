@@ -12,13 +12,10 @@ import com.konkuk.strhat.feature.onboarding.OnBoardingHobbyRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingNickNameRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingPersonalityRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingStressRoute
+import com.konkuk.strhat.feature.onboarding.OnBoardingSuccessRoute
 
 fun NavController.navigateToOnBoarding() {
     navigate(OnBoarding::class.qualifiedName!!)
-}
-
-fun NavController.navigateToNickName() {
-    navigate(OnBoardingRoute.NickName::class.qualifiedName!!)
 }
 
 fun NavController.navigateToGender() {
@@ -43,6 +40,7 @@ fun NavController.navigateToSuccess() {
 
 fun NavGraphBuilder.onBoardingNavGraph(
     padding: PaddingValues,
+    onNavigateToHome: () -> Unit,
     navController: NavController
 ) {
     navigation(
@@ -81,6 +79,13 @@ fun NavGraphBuilder.onBoardingNavGraph(
             OnBoardingPersonalityRoute(
                 padding = padding,
                 navigateToSuccess = navController::navigateToSuccess
+            )
+        }
+
+        composable(OnBoardingRoute.Success::class.qualifiedName!!) {
+            OnBoardingSuccessRoute(
+                padding = padding,
+                navigateToHome = onNavigateToHome
             )
         }
     }
