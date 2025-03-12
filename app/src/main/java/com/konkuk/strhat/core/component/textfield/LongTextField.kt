@@ -38,7 +38,6 @@ fun LongTextField(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
     ) {
         OutlinedTextField(
             value = value,

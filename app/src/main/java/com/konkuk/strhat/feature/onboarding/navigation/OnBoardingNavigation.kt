@@ -8,6 +8,8 @@ import androidx.navigation.navigation
 import com.konkuk.strhat.core.navigation.OnBoardingRoute
 import com.konkuk.strhat.core.navigation.Route.OnBoarding
 import com.konkuk.strhat.feature.onboarding.OnBoardingGenderRoute
+import com.konkuk.strhat.feature.onboarding.OnBoardingHobbyRoute
+import com.konkuk.strhat.feature.onboarding.OnBoardingHobbyScreen
 import com.konkuk.strhat.feature.onboarding.OnBoardingNickNameRoute
 
 fun NavController.navigateToOnBoarding() {
@@ -57,6 +59,13 @@ fun NavGraphBuilder.onBoardingNavGraph(
             OnBoardingGenderRoute(
                 padding = padding,
                 navigateToHobby = navController::navigateToHobby
+            )
+        }
+
+        composable(OnBoardingRoute.Hobby::class.qualifiedName!!) {
+            OnBoardingHobbyRoute(
+                padding = padding,
+                navigateToStress = navController::navigateToStress
             )
         }
     }
