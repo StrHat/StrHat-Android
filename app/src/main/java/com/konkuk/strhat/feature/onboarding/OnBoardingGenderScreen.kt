@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,8 +36,15 @@ fun OnBoardingGenderRoute(
 ) {
     val selectedOption by viewModel.selectedOption.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(2 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingGenderScreen(
         padding = padding,
+        progress = progress,
         selectedOption = selectedOption,
         onOptionSelected = viewModel::updateSelectedOption,
         navigateToHobby = navigateToHobby
@@ -47,6 +55,7 @@ fun OnBoardingGenderRoute(
 @Composable
 fun OnBoardingGenderScreen(
     padding: PaddingValues,
+    progress: Float,
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     navigateToHobby: () -> Unit
@@ -58,6 +67,7 @@ fun OnBoardingGenderScreen(
             .padding(padding),
     ) {
         OnBoardingGenderSection(
+            progress = progress,
             selectedOption = selectedOption,
             onOptionSelected = onOptionSelected
         )
@@ -76,6 +86,7 @@ fun OnBoardingGenderScreen(
 
 @Composable
 fun OnBoardingGenderSection(
+    progress: Float,
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -87,7 +98,7 @@ fun OnBoardingGenderSection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(2 / 6f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_gender_title,
@@ -121,6 +132,7 @@ private fun PreviewOnBoardingGenderScreen() {
     ) {
         OnBoardingGenderScreen(
             padding = PaddingValues(),
+            progress = 0f,
             selectedOption = "",
             onOptionSelected = {},
             navigateToHobby = {}

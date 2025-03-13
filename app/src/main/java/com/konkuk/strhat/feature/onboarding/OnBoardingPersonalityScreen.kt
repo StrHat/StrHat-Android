@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,8 +32,15 @@ fun OnBoardingPersonalityRoute(
 ) {
     val personality by viewModel.personality.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(5 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingPersonalityScreen(
         padding = padding,
+        progress = progress,
         personality = personality,
         onPersonalityChange = viewModel::updatePersonality,
         navigateToSuccess = navigateToSuccess
@@ -42,6 +50,7 @@ fun OnBoardingPersonalityRoute(
 @Composable
 fun OnBoardingPersonalityScreen(
     padding: PaddingValues,
+    progress: Float,
     personality: String,
     onPersonalityChange: (String) -> Unit,
     navigateToSuccess: () -> Unit
@@ -53,6 +62,7 @@ fun OnBoardingPersonalityScreen(
             .padding(padding),
     ) {
         OnBoardingPersonalitySection(
+            progress = progress,
             personality = personality,
             onPersonalityChange = onPersonalityChange
         )
@@ -71,6 +81,7 @@ fun OnBoardingPersonalityScreen(
 
 @Composable
 fun OnBoardingPersonalitySection(
+    progress: Float,
     personality: String,
     onPersonalityChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -78,7 +89,7 @@ fun OnBoardingPersonalitySection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(5 / 6f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_personality_title,
@@ -106,6 +117,7 @@ private fun PreviewOnBoardingPersonalityScreen() {
     ) {
         OnBoardingPersonalityScreen(
             padding = PaddingValues(),
+            progress = 0f,
             personality = "",
             onPersonalityChange = {},
             navigateToSuccess = {}

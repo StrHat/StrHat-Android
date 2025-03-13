@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,8 +36,15 @@ fun OnBoardingNickNameRoute(
     val nickName by viewModel.nickName.collectAsState()
     val selectedYear by viewModel.selectedYear.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(1 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingNickNameScreen(
         padding = padding,
+        progress = progress,
         nickName = nickName,
         onNickNameChange = viewModel::updateNickName,
         selectedYear = selectedYear,
@@ -48,6 +56,7 @@ fun OnBoardingNickNameRoute(
 @Composable
 fun OnBoardingNickNameScreen(
     padding: PaddingValues,
+    progress: Float,
     nickName: String,
     onNickNameChange: (String) -> Unit,
     selectedYear: Int,
@@ -61,6 +70,7 @@ fun OnBoardingNickNameScreen(
             .padding(padding),
     ) {
         OnBoardingNickNameSection(
+            progress = progress,
             nickname = nickName,
             onNickNameChange = onNickNameChange,
             selectedYear = selectedYear,
@@ -82,6 +92,7 @@ fun OnBoardingNickNameScreen(
 
 @Composable
 fun OnBoardingNickNameSection(
+    progress: Float,
     nickname: String,
     onNickNameChange: (String) -> Unit,
     selectedYear: Int,
@@ -91,7 +102,7 @@ fun OnBoardingNickNameSection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(1 / 6f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_nickname_title,
@@ -131,6 +142,7 @@ private fun PreviewOnBoardingScreen() {
     ) {
         OnBoardingNickNameScreen(
             padding = PaddingValues(),
+            progress = 0f,
             nickName = "",
             onNickNameChange = {},
             selectedYear = 0,

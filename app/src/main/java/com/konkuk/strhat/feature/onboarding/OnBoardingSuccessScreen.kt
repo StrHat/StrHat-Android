@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.progressbar.AnimatedProgressBar
@@ -28,10 +32,18 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun OnBoardingSuccessRoute(
     padding: PaddingValues,
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(6 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingSuccessScreen(
         padding = padding,
+        progress = progress,
         navigateToHome = navigateToHome
     )
 }
@@ -39,6 +51,7 @@ fun OnBoardingSuccessRoute(
 @Composable
 fun OnBoardingSuccessScreen(
     padding: PaddingValues,
+    progress: Float,
     navigateToHome: () -> Unit
 ) {
     Box(
@@ -47,8 +60,7 @@ fun OnBoardingSuccessScreen(
             .fillMaxSize()
             .padding(padding),
     ) {
-        OnBoardingSuccessSection(
-        )
+        OnBoardingSuccessSection(progress = progress)
 
         StrHatButton(
             isDisabled = false,
@@ -61,10 +73,11 @@ fun OnBoardingSuccessScreen(
 
 @Composable
 fun OnBoardingSuccessSection(
+    progress: Float,
     modifier: Modifier = Modifier
 ) {
     Column {
-        AnimatedProgressBar(1f)
+        AnimatedProgressBar(progress)
 
         Column(
             modifier = modifier.fillMaxSize(),
@@ -100,6 +113,7 @@ private fun PreviewOnBoardingSuccessScreen() {
     ) {
         OnBoardingSuccessScreen(
             padding = PaddingValues(),
+            progress = 0f,
             navigateToHome = {}
         )
     }

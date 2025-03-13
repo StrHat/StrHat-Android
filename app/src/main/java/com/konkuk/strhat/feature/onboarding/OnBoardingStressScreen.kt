@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,8 +32,15 @@ fun OnBoardingStressRoute(
 ) {
     val stress by viewModel.stress.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(4 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingStressScreen(
         padding = padding,
+        progress = progress,
         stress = stress,
         onStressChange = viewModel::updateStress,
         navigateToPersonality = navigateToPersonality
@@ -42,6 +50,7 @@ fun OnBoardingStressRoute(
 @Composable
 fun OnBoardingStressScreen(
     padding: PaddingValues,
+    progress: Float,
     stress: String,
     onStressChange: (String) -> Unit,
     navigateToPersonality: () -> Unit
@@ -53,6 +62,7 @@ fun OnBoardingStressScreen(
             .padding(padding),
     ) {
         OnBoardingStressSection(
+            progress = progress,
             stress = stress,
             onStressChange = onStressChange
         )
@@ -71,6 +81,7 @@ fun OnBoardingStressScreen(
 
 @Composable
 fun OnBoardingStressSection(
+    progress: Float,
     stress: String,
     onStressChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -78,7 +89,7 @@ fun OnBoardingStressSection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(4 / 6f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_stress_title,
@@ -106,6 +117,7 @@ private fun PreviewOnBoardingStressScreen() {
     ) {
         OnBoardingStressScreen(
             padding = PaddingValues(),
+            progress = 0f,
             stress = "",
             onStressChange = {},
             navigateToPersonality = {}

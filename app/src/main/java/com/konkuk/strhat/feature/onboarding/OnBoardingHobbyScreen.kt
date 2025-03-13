@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,8 +32,15 @@ fun OnBoardingHobbyRoute(
 ) {
     val hobby by viewModel.hobby.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.updateProgress(3 / 6f)
+    }
+
+    val progress by viewModel.progress.collectAsState()
+
     OnBoardingHobbyScreen(
         padding = padding,
+        progress = progress,
         hobby = hobby,
         onHobbyChange = viewModel::updateHobby,
         navigateToStress = navigateToStress
@@ -42,6 +50,7 @@ fun OnBoardingHobbyRoute(
 @Composable
 fun OnBoardingHobbyScreen(
     padding: PaddingValues,
+    progress: Float,
     hobby: String,
     onHobbyChange: (String) -> Unit,
     navigateToStress: () -> Unit
@@ -53,6 +62,7 @@ fun OnBoardingHobbyScreen(
             .padding(padding),
     ) {
         OnBoardingHobbySection(
+            progress = progress,
             hobby = hobby,
             onHobbyChange = onHobbyChange
         )
@@ -71,6 +81,7 @@ fun OnBoardingHobbyScreen(
 
 @Composable
 fun OnBoardingHobbySection(
+    progress: Float,
     hobby: String,
     onHobbyChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -78,7 +89,7 @@ fun OnBoardingHobbySection(
     Column(
         modifier = modifier
     ) {
-        AnimatedProgressBar(3 / 6f)
+        AnimatedProgressBar(progress)
 
         PageDescriptionSection(
             titleResId = R.string.onboarding_hobby_title,
@@ -106,6 +117,7 @@ private fun PreviewOnBoardingHobbyScreen() {
     ) {
         OnBoardingHobbyScreen(
             padding = PaddingValues(),
+            progress = 0f,
             hobby = "",
             onHobbyChange = {},
             navigateToStress = {}
