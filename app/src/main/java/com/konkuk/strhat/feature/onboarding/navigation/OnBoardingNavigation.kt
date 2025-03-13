@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.konkuk.strhat.core.navigation.OnBoardingRoute
-import com.konkuk.strhat.core.navigation.Route.OnBoarding
 import com.konkuk.strhat.feature.onboarding.OnBoardingGenderRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingHobbyRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingNickNameRoute
@@ -15,27 +13,27 @@ import com.konkuk.strhat.feature.onboarding.OnBoardingStressRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingSuccessRoute
 
 fun NavController.navigateToOnBoarding() {
-    navigate(OnBoarding::class.qualifiedName!!)
+    navigate(OnBoardingRoute.NickName)
 }
 
 fun NavController.navigateToGender() {
-    navigate(OnBoardingRoute.Gender::class.qualifiedName!!)
+    navigate(OnBoardingRoute.Gender)
 }
 
 fun NavController.navigateToHobby() {
-    navigate(OnBoardingRoute.Hobby::class.qualifiedName!!)
+    navigate(OnBoardingRoute.Hobby)
 }
 
 fun NavController.navigateToStress() {
-    navigate(OnBoardingRoute.Stress::class.qualifiedName!!)
+    navigate(OnBoardingRoute.Stress)
 }
 
 fun NavController.navigateToPersonality() {
-    navigate(OnBoardingRoute.Personality::class.qualifiedName!!)
+    navigate(OnBoardingRoute.Personality)
 }
 
 fun NavController.navigateToSuccess() {
-    navigate(OnBoardingRoute.Success::class.qualifiedName!!)
+    navigate(OnBoardingRoute.Success)
 }
 
 fun NavGraphBuilder.onBoardingNavGraph(
@@ -43,50 +41,45 @@ fun NavGraphBuilder.onBoardingNavGraph(
     onNavigateToHome: () -> Unit,
     navController: NavController
 ) {
-    navigation(
-        startDestination = OnBoardingRoute.NickName::class.qualifiedName!!,
-        route = OnBoarding::class.qualifiedName!!
-    ) {
-        composable(OnBoardingRoute.NickName::class.qualifiedName!!) {
-            OnBoardingNickNameRoute(
-                padding = padding,
-                navigateToGender = navController::navigateToGender
-            )
-        }
+    composable<OnBoardingRoute.NickName> {
+        OnBoardingNickNameRoute(
+            padding = padding,
+            navigateToGender = navController::navigateToGender
+        )
+    }
 
-        composable(OnBoardingRoute.Gender::class.qualifiedName!!) {
-            OnBoardingGenderRoute(
-                padding = padding,
-                navigateToHobby = navController::navigateToHobby
-            )
-        }
+    composable<OnBoardingRoute.Gender> {
+        OnBoardingGenderRoute(
+            padding = padding,
+            navigateToHobby = navController::navigateToHobby
+        )
+    }
 
-        composable(OnBoardingRoute.Hobby::class.qualifiedName!!) {
-            OnBoardingHobbyRoute(
-                padding = padding,
-                navigateToStress = navController::navigateToStress
-            )
-        }
+    composable<OnBoardingRoute.Hobby> {
+        OnBoardingHobbyRoute(
+            padding = padding,
+            navigateToStress = navController::navigateToStress
+        )
+    }
 
-        composable(OnBoardingRoute.Stress::class.qualifiedName!!) {
-            OnBoardingStressRoute(
-                padding = padding,
-                navigateToPersonality = navController::navigateToPersonality
-            )
-        }
+    composable<OnBoardingRoute.Stress> {
+        OnBoardingStressRoute(
+            padding = padding,
+            navigateToPersonality = navController::navigateToPersonality
+        )
+    }
 
-        composable(OnBoardingRoute.Personality::class.qualifiedName!!) {
-            OnBoardingPersonalityRoute(
-                padding = padding,
-                navigateToSuccess = navController::navigateToSuccess
-            )
-        }
+    composable<OnBoardingRoute.Personality> {
+        OnBoardingPersonalityRoute(
+            padding = padding,
+            navigateToSuccess = navController::navigateToSuccess
+        )
+    }
 
-        composable(OnBoardingRoute.Success::class.qualifiedName!!) {
-            OnBoardingSuccessRoute(
-                padding = padding,
-                navigateToHome = onNavigateToHome
-            )
-        }
+    composable<OnBoardingRoute.Success> {
+        OnBoardingSuccessRoute(
+            padding = padding,
+            navigateToHome = onNavigateToHome
+        )
     }
 }
