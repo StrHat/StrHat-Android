@@ -44,7 +44,6 @@ fun ShortTextField(
         },
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
             },

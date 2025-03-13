@@ -5,6 +5,7 @@
     <!-- 공통 -->
     <string name="confirm">확인</string>
     <string name="dismiss">취소</string>
+    <string name="next">다음</string>
 
     <!-- navigation -->
     <string name="home">홈</string>
@@ -41,8 +42,23 @@
     <string name="dialog_diary_title">일기 전문보기</string>
 
     <!-- onboarding -->
-    <string name="onboarding_title">스틀햇에 오신 것을\n환영합니다!</string>
+    <string name="onboarding_nickname_title">스틀햇에 오신 것을\n환영합니다!</string>
     <string name="onboarding_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.</string>
+    <string name="onboarding_nickname">닉네임</string>
+    <string name="onboarding_year">태어난 년도를 선택해주세요.</string>
+
+    <string name="onboarding_gender_title">성별을 선택해주세요!</string>
+    <string name="onboarding_job">직업을 선택해주세요.</string>
+    
+    <string name="onboarding_hobby_title">나만의 취미 및 힐링 방법은?</string>
+    <string name="onboarding_type_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.\n자세할 수록 스틀햇이 정확한 답변을 제공할 수 있습니다!</string>
+
+    <string name="onboarding_stress_title">나만의 스트레스 해소 방법은?</string>
+
+    <string name="onboarding_personality_title">나의 성향은?</string>
+
+    <string name="onboarding_success_title">수고하셨어요!\n그럼 본격적으로\n스틀햇을 시작해볼까요?</string>
+    <string name="onboarding_success_button">스틀햇 시작하기</string>
 
     <!-- login -->
     <string name="login_social_login">소셜 로그인</string>

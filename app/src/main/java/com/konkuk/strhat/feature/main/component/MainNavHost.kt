@@ -60,7 +60,8 @@ fun MainNavHost(
 
             onBoardingNavGraph(
                 padding = padding,
-                onNavigateToHome = navigator::navigateToHome
+                onNavigateToHome = navigator::navigateToHome,
+                navController = navigator.navController
             )
         }
     }
