@@ -36,7 +36,7 @@ val defaultStrHatTypography = StrHatTypography(
     head1_b_24 = TextStyle(
         fontFamily = strHatFontBold,
         fontSize = 24.sp,
-        lineHeight = 26.sp
+        lineHeight = 32.sp
     ),
     head2_b_20 = TextStyle(
         fontFamily = strHatFontBold,
@@ -71,7 +71,7 @@ val defaultStrHatTypography = StrHatTypography(
     body2_r_15 = TextStyle(
         fontFamily = strHatFontRegular,
         fontSize = 15.sp,
-        lineHeight = 17.sp
+        lineHeight = 21.sp
     ),
     body3_b_14 = TextStyle(
         fontFamily = strHatFontBold,
@@ -101,7 +101,7 @@ val defaultStrHatTypography = StrHatTypography(
     body4_r_12 = TextStyle(
         fontFamily = strHatFontRegular,
         fontSize = 12.sp,
-        lineHeight = 14.sp
+        lineHeight = 18.sp
     ),
     body5_b_10 = TextStyle(
         fontFamily = strHatFontExtraBold,

@@ -9,6 +9,8 @@ sealed interface Route {
     data object Login : Route
     @Serializable
     data object OnBoarding : Route
+    @Serializable
+    data object AddDiary : Route
 }
 
 sealed interface MainTabRoute : Route {

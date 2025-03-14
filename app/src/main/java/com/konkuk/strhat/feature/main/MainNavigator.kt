@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.Route
+import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
@@ -74,6 +75,10 @@ class MainNavigator(
                 launchSingleTop = true
             }
         )
+    }
+
+    fun navigateToAddDiary() {
+        navController.navigateToAddDiary()
     }
 
     private fun popBackStack() {

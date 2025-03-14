@@ -63,4 +63,30 @@
     <!-- login -->
     <string name="login_social_login">소셜 로그인</string>
     <string name="login_kakao_login">카카오로 계속하기</string>
+
+    <!-- diary screen -->
+    <string name="diary_screen_title">원하는 날짜의 일기를\n작성해보세요!</string>
+    <string name="diary_calendar_month_left_arrow_description">Diary Calendar Month Arrow Left</string>
+    <string name="diary_calendar_month_right_arrow_description">Diary Calendar Month Arrow Right</string>
+    <string name="day_of_week_sunday">일</string>
+    <string name="day_of_week_monday">월</string>
+    <string name="day_of_week_tuesday">화</string>
+    <string name="day_of_week_wednesday">수</string>
+    <string name="day_of_week_thursday">목</string>
+    <string name="day_of_week_friday">금</string>
+    <string name="day_of_week_saturday">토</string>
+    <string name="add_diary_floating_button_description">Add New Diary</string>
+    <string name="add_diary_screen_title">오늘은 어떤 날이었나요?</string>
+    <string name="diary_unselected_empty_view_title">날짜를 선택해 일기를 조회해보세요!</string>
+    <string name="diary_unselected_empty_view_strhat_description">Diary Date Unselected Empty View StrHat</string>
+    <string name="no_diary_empty_view_title">해당 날짜에는 아직 작성된 일기가 없어요</string>
+    <string name="no_diary_empty_view_strhat_description">No Diary Empty View StrHat</string>
+    <string name="diary_summary_view_title">2025년 4월 6일 일기</string>
+    <string name="diary_summary_view_arrow_description">Diary Summary Arrow</string>
+    <string name="diary_summary_content">Diary Summary Content Example</string>
+    <string name="add_diary_emotion_selection_title">오늘의 감정 선택하기</string>
+    <string name="add_diary_emotion_selection_title_description">(클수록 좋음에 해당)</string>
+    <string name="add_today_diary_title">오늘의 일기 작성하기</string>
+    <string name="get_feedback_button">피드백 받기</string>
+    <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
 </resources>
