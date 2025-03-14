@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
@@ -44,6 +45,7 @@ fun AddDiaryRoute(
 @Composable
 fun AddDiaryScreen(
     padding: PaddingValues,
+    viewModel: AddDiaryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     var diaryContent by remember { mutableStateOf("") }
@@ -95,19 +97,10 @@ fun AddDiaryScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val emotionStrHatList = listOf(
-                    R.drawable.ic_strhat_blue,
-                    R.drawable.ic_strhat_red,
-                    R.drawable.ic_strhat_gray,
-                    R.drawable.ic_strhat_yellow,
-                    R.drawable.ic_strhat_green
-                )
-                val emotionScoreList = listOf(1, 2, 3, 4, 5)
-
-                emotionStrHatList.forEachIndexed { index, emotionIcon ->
+                viewModel.emotionTypes.forEachIndexed { index, emotion ->
                     EmotionSelection(
-                        emotionStrHat = emotionIcon,
-                        emotionScore = emotionScoreList[index],
+                        emotionStrHat = emotion.iconResId,
+                        emotionScore = emotion.score,
                         isSelected = (selectedEmotionIndex == index),
                         onEmotionClick = { selectedEmotionIndex = index }
                     )
