@@ -41,7 +41,12 @@ fun DiarySummaryView(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "${date.year}년 ${date.monthNumber}월 ${date.dayOfMonth}일 일기",
+                text = stringResource(
+                    id = R.string.diary_summary_title,
+                    date.year,
+                    date.monthNumber,
+                    date.dayOfMonth
+                ),
                 style = typography.title1_b_18,
                 color = colors.MainBlack
             )

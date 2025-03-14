@@ -72,4 +72,5 @@
     <string name="add_diary_emotion_selection_title_description">(클수록 좋음에 해당)</string>
     <string name="add_today_diary_title">오늘의 일기 작성하기</string>
     <string name="get_feedback_button">피드백 받기</string>
+    <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
 </resources>
