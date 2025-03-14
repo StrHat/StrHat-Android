@@ -49,7 +49,7 @@ private fun PreviewPageDescriptionSection1() {
             .background(color = colors.MainWhite)
     ) {
         PageDescriptionSection(
-            titleResId = R.string.onboarding_title,
+            titleResId = R.string.onboarding_nickname_title,
             descriptionResId = R.string.onboarding_description
         )
     }
@@ -64,7 +64,7 @@ private fun PreviewPageDescriptionSection2() {
             .background(color = colors.MainWhite)
     ) {
         PageDescriptionSection(
-            titleResId = R.string.onboarding_title
+            titleResId = R.string.onboarding_nickname_title
         )
     }
 }

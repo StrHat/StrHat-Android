@@ -23,3 +23,18 @@ sealed interface MainTabRoute : Route {
     @Serializable
     data object MyPage : MainTabRoute
 }
+
+sealed interface OnBoardingRoute: Route{
+    @Serializable
+    data object NickName : OnBoardingRoute
+    @Serializable
+    data object Gender : OnBoardingRoute
+    @Serializable
+    data object Hobby : OnBoardingRoute
+    @Serializable
+    data object Stress : OnBoardingRoute
+    @Serializable
+    data object Personality : OnBoardingRoute
+    @Serializable
+    data object Success : OnBoardingRoute
+}
