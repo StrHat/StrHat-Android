@@ -119,7 +119,7 @@ fun AddDiaryScreen(
                 hint = stringResource(R.string.textfield_diary),
                 maxLength = 1500,
                 modifier = Modifier.fillMaxWidth()
-                    .padding(top = 10.dp)
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp)
             )
         }
 
