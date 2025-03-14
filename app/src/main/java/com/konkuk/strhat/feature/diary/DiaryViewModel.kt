@@ -1,6 +1,7 @@
 package com.konkuk.strhat.feature.diary
 
 import androidx.lifecycle.ViewModel
+import com.konkuk.strhat.core.util.time.generateDiaryContent
 import com.konkuk.strhat.feature.diary.state.Diary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +20,11 @@ class DiaryViewModel @Inject constructor() : ViewModel() {
     private val dummyDiary: Map<LocalDate, Diary> = mapOf(
         LocalDate(2025, 3, 1) to Diary(
             date = LocalDate(2025, 3, 1),
-            content = "3월 1일에 작성된 일기 요약"
+            content = LocalDate(2025, 3, 1).generateDiaryContent()
         ),
         LocalDate(2025, 2, 26) to Diary(
             date = LocalDate(2025, 2, 26),
-            content = "2월 26일에 작성된 일기 요약"
+            content = LocalDate(2025, 2, 26).generateDiaryContent()
         )
     )
 

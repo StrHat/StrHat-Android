@@ -61,7 +61,6 @@ fun AddDiaryScreen(
         Column(
             modifier = modifier
                 .weight(1f)
-                .background(colors.MainWhite)
         ) {
             PageDescriptionSection(
                 titleResId = R.string.add_diary_screen_title,
