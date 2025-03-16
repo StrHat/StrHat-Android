@@ -4,8 +4,10 @@ import com.konkuk.strhat.data.dto.response.ResponseHomeDto
 import com.konkuk.strhat.domain.entity.HomeModel
 
 fun ResponseHomeDto.toHomeModel() = HomeModel(
-    count = count,
-    region = region,
-    homePosts = homePosts,
-    nickname = nickname
+    nickname = nickname,
+    emotion = emotion,
+    positiveEmotions = positiveEmotions,
+    stressReliefSuggestion = stressReliefSuggestion,
+    stressScore = stressScore,
+    stressLevel = stressLevel
 )

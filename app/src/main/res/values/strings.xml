@@ -49,7 +49,7 @@
 
     <string name="onboarding_gender_title">성별을 선택해주세요!</string>
     <string name="onboarding_job">직업을 선택해주세요.</string>
-    
+
     <string name="onboarding_hobby_title">나만의 취미 및 힐링 방법은?</string>
     <string name="onboarding_type_description">이 정보는 AI의 맞춤형 답변에 도움됩니다.\n자세할 수록 스틀햇이 정확한 답변을 제공할 수 있습니다!</string>
 
@@ -63,4 +63,13 @@
     <!-- login -->
     <string name="login_social_login">소셜 로그인</string>
     <string name="login_kakao_login">카카오로 계속하기</string>
+
+    <!-- home -->
+    <string name="home_title">안녕하세요, %s님</string>
+    <string name="home_keyword">오늘의 키워드는\n%s, %s, %s이었네요</string>
+    <string name="home_image_description">오늘의 감정 이미지</string>
+    <string name="home_stress_title">오늘의 스트레스 점수는\n%d이에요</string>
+    <string name="home_stress_sub_title">%s에 해당되네요</string>
+    <string name="home_stress_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
+
 </resources>

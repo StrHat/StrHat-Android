@@ -1,8 +1,10 @@
 package com.konkuk.strhat.domain.entity
 
 data class HomeModel(
-    val count: Int,
-    val region: String,
-    val homePosts: List<HomePostItemModel>,
-    val nickname: String
+    val nickname: String,
+    val emotion: Int,
+    val positiveEmotions: List<String>,
+    val stressReliefSuggestion: String,
+    val stressScore: Int,
+    val stressLevel: String
 )

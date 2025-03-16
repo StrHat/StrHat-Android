@@ -1,12 +1,13 @@
 package com.konkuk.strhat.data.dto.response
 
-import com.konkuk.strhat.domain.entity.HomePostItemModel
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponseHomeDto(
-    val count: Int,
-    val region: String,
-    val homePosts: List<HomePostItemModel>,
-    val nickname: String
+    val nickname: String,
+    val emotion: Int,
+    val positiveEmotions: List<String>,
+    val stressReliefSuggestion: String,
+    val stressScore: Int,
+    val stressLevel: String
 )
