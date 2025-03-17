@@ -34,3 +34,7 @@ fun String.toKoreanDay(): String {
         else -> ""
     }
 }
+
+fun LocalDate.generateDiaryContent(): String {
+    return "${this.monthNumber}월 ${this.dayOfMonth}일에 작성된 일기 요약"
+}

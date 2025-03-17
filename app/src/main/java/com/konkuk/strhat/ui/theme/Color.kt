@@ -13,6 +13,7 @@ val Gray300 = Color(0xFFD0D0D0)
 val Gray400 = Color(0xFFAAAAAA)
 val Gray500 = Color(0xFF848484)
 val Gray600 = Color(0xFF666668)
+val Gray900 = Color(0xFF2F2F2F)
 
 val MainBlue = Color(0xFF6BB2FF)
 val SubBlue = Color(0xFFE1ECFB)
@@ -36,6 +37,7 @@ data class StrHatColors(
     val Gray400: Color,
     val Gray500: Color,
     val Gray600: Color,
+    val Gray900: Color,
     val MainBlue: Color,
     val SubBlue: Color,
     val MainRed: Color,
@@ -55,6 +57,7 @@ val defaultStrHatColors = StrHatColors(
     Gray400 = Gray400,
     Gray500 = Gray500,
     Gray600 = Gray600,
+    Gray900 = Gray900,
     MainBlue = MainBlue,
     SubBlue = SubBlue,
     MainRed = MainRed,

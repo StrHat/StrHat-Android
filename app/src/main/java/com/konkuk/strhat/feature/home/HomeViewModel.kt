@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     fun updateHomeModel() {
         _homeModel.value =
             HomeModel(
-                hasDiary = true,
+                hasDiary = false,
                 nickname = "밍서",
                 emotion = 3,
                 positiveEmotions = listOf("행복", "즐거움", "기쁨"),
