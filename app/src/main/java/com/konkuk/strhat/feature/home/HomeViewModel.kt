@@ -11,6 +11,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor() : ViewModel() {
     private val _homeModel = MutableStateFlow(
         HomeModel(
+            hasDiary = false,
             nickname = "",
             emotion = 1,
             positiveEmotions = listOf("", "", ""),
@@ -21,9 +22,10 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     )
     val homeModel = _homeModel.asStateFlow()
 
-    fun updateHomeModel(homeModel: HomeModel) {
+    fun updateHomeModel() {
         _homeModel.value =
             HomeModel(
+                hasDiary = true,
                 nickname = "밍서",
                 emotion = 3,
                 positiveEmotions = listOf("행복", "즐거움", "기쁨"),

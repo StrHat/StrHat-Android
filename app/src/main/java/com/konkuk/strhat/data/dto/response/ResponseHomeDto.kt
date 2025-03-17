@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponseHomeDto(
+    val hasDiary: Boolean,
     val nickname: String,
     val emotion: Int,
     val positiveEmotions: List<String>,
