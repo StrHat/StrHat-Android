@@ -1,0 +1,240 @@
+package com.konkuk.strhat.feature.diary
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.core.component.section.PageDescriptionSection
+import com.konkuk.strhat.core.component.section.TitleSection
+import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
+import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
+import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
+import com.konkuk.strhat.ui.theme.StrHatTheme
+import com.konkuk.strhat.ui.theme.StrHatTheme.colors
+import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.todayIn
+
+@Composable
+fun DiaryAIFeedbackRoute(
+    padding: PaddingValues,
+    viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
+) {
+    val diaryAIFeedbackSummary by viewModel.diaryAIFeedbackSummary.collectAsState()
+    val diaryAIFeedbackPositiveKeywords by viewModel.diaryAIFeedbackPositiveKeywords.collectAsState()
+    val diaryAIFeedbackNegativeKeywords by viewModel.diaryAIFeedbackNegativeKeywords.collectAsState()
+    val diaryAIFeedbackRecommendation by viewModel.diaryAIFeedbackRecommendation.collectAsState()
+
+    DiaryAIFeedbackScreen(
+        padding = padding,
+        diaryAIFeedbackSummary = diaryAIFeedbackSummary,
+        diaryAIFeedbackPositiveKeywords = diaryAIFeedbackPositiveKeywords,
+        diaryAIFeedbackNegativeKeywords = diaryAIFeedbackNegativeKeywords,
+        diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation
+    )
+}
+
+@Composable
+private fun DiaryAIFeedbackScreen(
+    padding: PaddingValues,
+    diaryAIFeedbackSummary: String,
+    diaryAIFeedbackPositiveKeywords: List<String>,
+    diaryAIFeedbackNegativeKeywords: List<String>,
+    diaryAIFeedbackRecommendation: String,
+    modifier: Modifier = Modifier
+) {
+    val today = remember {
+        Clock.System.todayIn(TimeZone.currentSystemDefault())
+    }
+
+    val formattedDate = stringResource(
+        id = R.string.diary_ai_feedback_date,
+        today.year, today.monthNumber, today.dayOfMonth
+    )
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colors.MainWhite)
+            .padding(top = 70.dp, start = 20.dp, end = 20.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(bottom = 20.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            PageDescriptionSection(
+                titleResId = R.string.diary_ai_feedback_screen_title
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                TitleSection(
+                    title = stringResource(
+                        id = R.string.diary_ai_feedback_date_title,
+                        formattedDate
+                    )
+                )
+
+                Spacer(modifier = Modifier.width(6.dp))
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.diary_ai_total_diary_button),
+                        style = typography.body4_m_12,
+                        color = colors.Gray500,
+                        modifier = Modifier.padding(bottom = 2.dp)
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier.width(70.dp),
+                        thickness = 1.dp,
+                        color = colors.Gray500
+                    )
+                }
+            }
+
+            DiaryAIFeedbackSummaryBox(
+                diaryAIFeedbackSummary = diaryAIFeedbackSummary,
+                modifier = Modifier.padding(top = 10.dp)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TitleSection(
+                title = stringResource(R.string.diary_ai_feedback_positive_title)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(46.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DiaryAIFeedbackKeywordBox(
+                    keywords = diaryAIFeedbackPositiveKeywords,
+                    feedBackBoxBackgroundColor = colors.SubBlue,
+                    modifier = Modifier.weight(1f)
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_strhat_green_shadow),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 24.dp)
+                        .width(100.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TitleSection(
+                title = stringResource(R.string.diary_ai_feedback_negative_title)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(46.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_strhat_red_shadow),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(start = 24.dp)
+                        .width(100.dp)
+                )
+                DiaryAIFeedbackKeywordBox(
+                    keywords = diaryAIFeedbackNegativeKeywords,
+                    feedBackBoxBackgroundColor = colors.Gray100,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TitleSection(
+                title = stringResource(R.string.diary_ai_feedback_recommendation_title)
+            )
+
+            DiaryAIFeedbackRecommendationBox(
+                diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation,
+                modifier = Modifier.padding(top = 10.dp)
+            )
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(40.dp)
+        ) {
+            StrHatButton(
+                isDisabled = false,
+                text = stringResource(R.string.confirm),
+                modifier = Modifier
+                    .padding(bottom = 20.dp)
+                    .weight(1f),
+                onClick = {}
+            )
+            StrHatButton(
+                isDisabled = false,
+                text = stringResource(R.string.diary_ai_feedback_chat_history_button),
+                modifier = Modifier
+                    .padding(bottom = 20.dp)
+                    .weight(1f),
+                onClick = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun DiaryAIFeedbackScreenPreview(
+    modifier: Modifier = Modifier
+) {
+    StrHatTheme {
+        DiaryAIFeedbackScreen(
+            padding = PaddingValues(),
+            diaryAIFeedbackSummary = stringResource(R.string.diary_ai_feedback_summary_example),
+            diaryAIFeedbackPositiveKeywords = listOf("긍정1", "긍정2", "긍정3"),
+            diaryAIFeedbackNegativeKeywords = listOf("부정1", "부정2", "부정3"),
+            diaryAIFeedbackRecommendation = stringResource(R.string.diary_ai_feedback_recommendation_example),
+            modifier = Modifier.background(colors.MainWhite)
+        )
+    }
+}

@@ -21,7 +21,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun DiaryAIFeedbackKeywordBox(
-    positiveKeywords: List<String>,
+    keywords: List<String>,
     feedBackBoxBackgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
@@ -37,7 +37,7 @@ fun DiaryAIFeedbackKeywordBox(
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            positiveKeywords.forEachIndexed { index, keyword ->
+            keywords.forEachIndexed { index, keyword ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -62,7 +62,7 @@ fun DiaryAIFeedbackKeywordBox(
 private fun DiaryAIFeedbackPositiveKeywordBoxPreview() {
     StrHatTheme {
         DiaryAIFeedbackKeywordBox(
-            positiveKeywords = listOf("희망", "노력", "행복"),
+            keywords = listOf("희망", "노력", "행복"),
             feedBackBoxBackgroundColor = colors.SubBlue,
             modifier = Modifier.fillMaxWidth()
         )
@@ -74,7 +74,7 @@ private fun DiaryAIFeedbackPositiveKeywordBoxPreview() {
 private fun DiaryAIFeedbackNegativeKeywordBoxPreview() {
     StrHatTheme {
         DiaryAIFeedbackKeywordBox(
-            positiveKeywords = listOf("스트레스", "조급함", "지침"),
+            keywords = listOf("스트레스", "조급함", "지침"),
             feedBackBoxBackgroundColor = colors.Gray100,
             modifier = Modifier.fillMaxWidth()
         )

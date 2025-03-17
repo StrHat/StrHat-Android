@@ -89,4 +89,16 @@
     <string name="add_today_diary_title">오늘의 일기 작성하기</string>
     <string name="get_feedback_button">피드백 받기</string>
     <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
+
+    <!-- diary ai feedback screen -->
+    <string name="diary_ai_feedback_screen_title">스틀햇의 피드백</string>
+    <string name="diary_ai_feedback_date">%1$s년 %2$s월 %3$s일</string>
+    <string name="diary_ai_feedback_date_title">%1$s의 일기 요약</string>
+    <string name="diary_ai_total_diary_button">일기 전문 보기</string>
+    <string name="diary_ai_feedback_positive_title">이 날의 긍정 감정 키워드</string>
+    <string name="diary_ai_feedback_negative_title">이 날의 부정 감정 키워드</string>
+    <string name="diary_ai_feedback_recommendation_title">이 날의 스트레스 해소 활동 추천</string>
+    <string name="diary_ai_feedback_chat_history_button">대화기록 조회하기</string>
+    <string name="diary_ai_feedback_summary_example">시험 기간은 항상 스트레스를 주죠. 공부와 시간 부족으로 지쳐가는데도 조금만 더 힘내면 끝이 보인다는 희망으로 자신을 격려하고 계신 모습이 보여요. 지금의 노력과 힘든 시간들이 행복한 미래로 이어질 거라 믿어요.</string>
+    <string name="diary_ai_feedback_recommendation_example">시험 스트레스를 조금이나마 덜어줄 수 있는 방법으로, 독서와 음악을 조합해보는 건 어떨까요? 좋아하는 음악을 들으며 독서를 즐기면서 마음을 편하게 해보세요.</string>
 </resources>
