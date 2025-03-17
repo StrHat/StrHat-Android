@@ -19,18 +19,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.section.TitleSection
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
@@ -50,13 +55,15 @@ fun DiaryAIFeedbackRoute(
     val diaryAIFeedbackPositiveKeywords by viewModel.diaryAIFeedbackPositiveKeywords.collectAsState()
     val diaryAIFeedbackNegativeKeywords by viewModel.diaryAIFeedbackNegativeKeywords.collectAsState()
     val diaryAIFeedbackRecommendation by viewModel.diaryAIFeedbackRecommendation.collectAsState()
+    val totalDiary by viewModel.totalDiary.collectAsState()
 
     DiaryAIFeedbackScreen(
         padding = padding,
         diaryAIFeedbackSummary = diaryAIFeedbackSummary,
         diaryAIFeedbackPositiveKeywords = diaryAIFeedbackPositiveKeywords,
         diaryAIFeedbackNegativeKeywords = diaryAIFeedbackNegativeKeywords,
-        diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation
+        diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation,
+        totalDiary = totalDiary
     )
 }
 
@@ -67,8 +74,11 @@ private fun DiaryAIFeedbackScreen(
     diaryAIFeedbackPositiveKeywords: List<String>,
     diaryAIFeedbackNegativeKeywords: List<String>,
     diaryAIFeedbackRecommendation: String,
+    totalDiary: String,
     modifier: Modifier = Modifier
 ) {
+    var showTotalDiaryDialog by remember { mutableStateOf(false) }
+
     val today = remember {
         Clock.System.todayIn(TimeZone.currentSystemDefault())
     }
@@ -112,7 +122,10 @@ private fun DiaryAIFeedbackScreen(
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.noRippleClickable {
+                        showTotalDiaryDialog = true
+                    }
                 ) {
                     Text(
                         text = stringResource(R.string.diary_ai_total_diary_button),
@@ -220,6 +233,19 @@ private fun DiaryAIFeedbackScreen(
             )
         }
     }
+
+    if (showTotalDiaryDialog) {
+        Dialog(
+            onDismissRequest = { showTotalDiaryDialog = false }
+        ) {
+            StrHatDialog(
+                titleResId = R.string.diary_ai_total_diary_button,
+                diary = totalDiary,
+                onConfirmButtonClick = { showTotalDiaryDialog = false },
+                onDismissButtonClick = { showTotalDiaryDialog = false }
+            )
+        }
+    }
 }
 
 @Preview
@@ -234,6 +260,7 @@ fun DiaryAIFeedbackScreenPreview(
             diaryAIFeedbackPositiveKeywords = listOf("긍정1", "긍정2", "긍정3"),
             diaryAIFeedbackNegativeKeywords = listOf("부정1", "부정2", "부정3"),
             diaryAIFeedbackRecommendation = stringResource(R.string.diary_ai_feedback_recommendation_example),
+            totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             modifier = Modifier.background(colors.MainWhite)
         )
     }
