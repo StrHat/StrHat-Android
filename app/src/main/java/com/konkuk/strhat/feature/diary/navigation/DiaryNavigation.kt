@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
+import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRoute
 import com.konkuk.strhat.feature.diary.DiaryRoute
 
 fun NavController.navigateToDiary(navOptions: NavOptions) {
@@ -18,9 +19,14 @@ fun NavController.navigateToAddDiary() {
     navigate(Route.AddDiary)
 }
 
+fun NavController.navigateToDiaryAIFeedback() {
+    navigate(Route.DiaryAIFeedback)
+}
+
 fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
-    onNavigateToAddDiary: () -> Unit
+    onNavigateToAddDiary: () -> Unit,
+    onNavigateToDiaryAIFeedback: () -> Unit
 ) {
     composable<MainTabRoute.Diary> {
         DiaryRoute(
@@ -31,6 +37,13 @@ fun NavGraphBuilder.diaryNavGraph(
 
     composable<Route.AddDiary> {
         AddDiaryRoute(
+            padding = padding,
+            navigateToDiaryAIFeedback = onNavigateToDiaryAIFeedback
+        )
+    }
+
+    composable<Route.DiaryAIFeedback> {
+        DiaryAIFeedbackRoute(
             padding = padding
         )
     }

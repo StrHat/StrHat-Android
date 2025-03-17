@@ -12,6 +12,7 @@ import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
+import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
@@ -79,6 +80,10 @@ class MainNavigator(
 
     fun navigateToAddDiary() {
         navController.navigateToAddDiary()
+    }
+
+    fun navigateToDiaryAIFeedback() {
+        navController.navigateToDiaryAIFeedback()
     }
 
     private fun popBackStack() {

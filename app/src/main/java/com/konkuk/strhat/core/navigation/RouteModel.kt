@@ -11,6 +11,8 @@ sealed interface Route {
     data object OnBoarding : Route
     @Serializable
     data object AddDiary : Route
+    @Serializable
+    data object DiaryAIFeedback : Route
 }
 
 sealed interface MainTabRoute : Route {
