@@ -8,8 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -55,6 +56,7 @@ private fun HomeScreen(
     padding: PaddingValues,
     homeModel: HomeModel
 ) {
+    val textStyle = typography.head2_b_20
     Column(
         modifier = Modifier
             .padding(20.dp)
@@ -88,7 +90,13 @@ private fun HomeScreen(
                     )
 
                     addStyle(
-                        style = SpanStyle(color = colors.MainBlue),
+                        style = SpanStyle(
+                            color = colors.MainBlue,
+                            fontSize = textStyle.fontSize,
+                            fontWeight = textStyle.fontWeight,
+                            fontFamily = textStyle.fontFamily,
+                            letterSpacing = textStyle.letterSpacing
+                        ),
                         start = 9,
                         end = 13 + homeModel.positiveEmotions[0].length + homeModel.positiveEmotions[1].length + homeModel.positiveEmotions[2].length
                     )
@@ -98,8 +106,11 @@ private fun HomeScreen(
             )
 
             Row(
-                modifier = Modifier.padding(bottom = 50.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Image(
                     painter = painterResource(
@@ -112,13 +123,20 @@ private fun HomeScreen(
                             else -> R.drawable.ic_strhat_blue_shadow
                         }
                     ),
-                    contentDescription = stringResource(R.string.home_image_description)
+                    contentDescription = stringResource(R.string.home_image_description),
+                    modifier = Modifier.size(
+                        width = LocalConfiguration.current.screenWidthDp.dp * 0.36f,
+                        height = LocalConfiguration.current.screenHeightDp.dp * 0.14f
+                    )
                 )
 
                 Box(
                     modifier = Modifier
-                        .padding(start = 35.dp)
-                        .height(LocalConfiguration.current.screenHeightDp.dp * 0.31f)
+                        .padding(start = 25.dp)
+                        .size(
+                            width = LocalConfiguration.current.screenWidthDp.dp * 0.4f,
+                            height = LocalConfiguration.current.screenHeightDp.dp * 0.31f
+                        )
                         .background(color = colors.Gray100, shape = RoundedCornerShape(12.dp))
                         .padding(20.dp)
                         .verticalScroll(rememberScrollState())
@@ -154,7 +172,11 @@ private fun HomeScreen(
                             color =
                             if (homeModel.stressScore < 6) colors.MainBlue
                             else if (homeModel.stressScore < 9) colors.MainRed
-                            else colors.SubRed
+                            else colors.SubRed,
+                            fontSize = textStyle.fontSize,
+                            fontWeight = textStyle.fontWeight,
+                            fontFamily = textStyle.fontFamily,
+                            letterSpacing = textStyle.letterSpacing
                         ),
                         start = 0,
                         end = 10
@@ -183,7 +205,11 @@ private fun HomeScreen(
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_strhat_empty_blue_yellow),
-                    contentDescription = stringResource(R.string.home_empty_image_description)
+                    contentDescription = stringResource(R.string.home_empty_image_description),
+                    modifier = Modifier.size(
+                        width = LocalConfiguration.current.screenWidthDp.dp * 0.4f,
+                        height = LocalConfiguration.current.screenHeightDp.dp * 0.15f
+                    )
                 )
 
                 Text(
