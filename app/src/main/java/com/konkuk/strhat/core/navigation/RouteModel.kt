@@ -13,6 +13,8 @@ sealed interface Route {
     data object AddDiary : Route
     @Serializable
     data object DiaryAIFeedback : Route
+    @Serializable
+    data object Chat : Route
 }
 
 sealed interface MainTabRoute : Route {

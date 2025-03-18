@@ -27,7 +27,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = MainTabRoute.Home
+    val startDestination = Route.Chat
 
     val currentTab: MainTab?
         @Composable get() = MainTab.entries.find { tab ->
