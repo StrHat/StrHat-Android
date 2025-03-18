@@ -50,4 +50,8 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
     fun updateHealing(healing: String) {
         _myPageModel.value = _myPageModel.value.copy(hobbyHealingStyle = healing)
     }
+
+    fun updateStress(stress: String) {
+        _myPageModel.value = _myPageModel.value.copy(stressReliefStyle = stress)
+    }
 }
