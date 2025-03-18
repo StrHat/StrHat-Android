@@ -78,7 +78,7 @@ private fun MyStressScreen(
             LongTextField(
                 value = stress,
                 onValueChange = onStressChange,
-                hint = stringResource(R.string.textfield_hobby),
+                hint = stringResource(R.string.textfield_stress_management),
                 maxLength = 1000,
                 modifier = Modifier.fillMaxWidth()
             )
