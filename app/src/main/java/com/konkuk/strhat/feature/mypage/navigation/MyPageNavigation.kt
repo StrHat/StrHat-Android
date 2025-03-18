@@ -36,6 +36,7 @@ fun NavController.navigateToPersonality() {
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
+    onNavigateToLogin: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -44,7 +45,8 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToAccount = navController::navigateToAccount,
             navigateToHealing = navController::navigateToHealing,
             navigateToStress = navController::navigateToStress,
-            navigateToPersonality = navController::navigateToPersonality
+            navigateToPersonality = navController::navigateToPersonality,
+            navigateToLogin = onNavigateToLogin
         )
     }
 

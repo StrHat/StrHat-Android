@@ -20,6 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,8 +30,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -41,6 +46,7 @@ fun MyPageRoute(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
+    navigateToLogin: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -54,6 +60,7 @@ fun MyPageRoute(
         navigateToHealing = navigateToHealing,
         navigateToStress = navigateToStress,
         navigateToPersonality = navigateToPersonality,
+        navigateToLogin = navigateToLogin,
         myPageModel = myPageModel
     )
 }
@@ -65,8 +72,11 @@ private fun MyPageScreen(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
+    navigateToLogin: () -> Unit,
     myPageModel: MyPageModel
 ) {
+    var isLogoutDialogVisible by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -334,13 +344,31 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_logout),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
+                .noRippleClickable { isLogoutDialogVisible = true }
         )
         HorizontalDivider(
             thickness = 1.dp,
             color = colors.Gray300,
             modifier = Modifier.padding(bottom = 15.dp)
         )
+    }
+
+    if (isLogoutDialogVisible) {
+        Dialog(onDismissRequest = { isLogoutDialogVisible = false }) {
+            StrHatDialog(
+                titleResId = R.string.dialog_logout_title,
+                imageResId = R.drawable.ic_strhat_dialog_all,
+                imageRatio = 2f / 1f,
+                descriptionResId = R.string.dialog_logout_description,
+                onConfirmButtonClick = {
+                    isLogoutDialogVisible = false
+                    navigateToLogin()
+                                       },
+                onDismissButtonClick = { isLogoutDialogVisible = false }
+            )
+        }
     }
 }
 
@@ -358,6 +386,7 @@ private fun PreviewMyPageScreen() {
             navigateToHealing = {},
             navigateToStress = {},
             navigateToPersonality = {},
+            navigateToLogin = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,
