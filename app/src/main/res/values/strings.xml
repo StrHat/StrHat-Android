@@ -89,4 +89,19 @@
     <string name="add_today_diary_title">오늘의 일기 작성하기</string>
     <string name="get_feedback_button">피드백 받기</string>
     <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
+
+    <!-- home -->
+    <string name="home_title">안녕하세요, %s님</string>
+    <string name="home_keyword">오늘의 키워드는\n%s, %s, %s이었네요</string>
+    <string name="home_image_description">오늘의 감정 이미지</string>
+    <string name="home_stress_title">오늘의 스트레스 점수는\n%d이에요</string>
+    <string name="home_stress_sub_title">%s에 해당되네요</string>
+    <string name="home_stress_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
+
+    <string name="home_empty_sub_title">오늘의 일기를\n아직 작성하지 않았네요.</string>
+    <string name="home_empty_image_description">일기 미작성 이미지</string>
+    <string name="home_empty_description">오늘은 어떤 일이 있었는지 궁금해요!\n일기를 작성하러 가볼까요?</string>
+    <string name="home_empty_sub_description">일기는 일기탭에서 작성 가능해요!</string>
+
+
 </resources>
