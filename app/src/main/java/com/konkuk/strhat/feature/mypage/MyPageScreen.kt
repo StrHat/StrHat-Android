@@ -37,6 +37,10 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun MyPageRoute(
     padding: PaddingValues,
+    navigateToAccount: () -> Unit,
+    navigateToHealing: () -> Unit,
+    navigateToStress: () -> Unit,
+    navigateToPersonality: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -45,13 +49,22 @@ fun MyPageRoute(
     val myPageModel by viewModel.myPageModel.collectAsState()
 
     MyPageScreen(
-        padding = padding, myPageModel = myPageModel
+        padding = padding,
+        navigateToAccount = navigateToAccount,
+        navigateToHealing = navigateToHealing,
+        navigateToStress = navigateToStress,
+        navigateToPersonality = navigateToPersonality,
+        myPageModel = myPageModel
     )
 }
 
 @Composable
 private fun MyPageScreen(
     padding: PaddingValues,
+    navigateToAccount: () -> Unit,
+    navigateToHealing: () -> Unit,
+    navigateToStress: () -> Unit,
+    navigateToPersonality: () -> Unit,
     myPageModel: MyPageModel
 ) {
     Column(
@@ -145,13 +158,14 @@ private fun MyPageScreen(
                     )
                 }
 
-                Text(text = stringResource(R.string.my_modify),
+                Text(
+                    text = stringResource(R.string.my_modify),
                     style = typography.body4_r_12,
                     color = colors.Gray400,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier
                         .padding(top = 10.dp)
-                        .noRippleClickable { }
+                        .noRippleClickable(navigateToAccount)
                 )
             }
 
@@ -181,13 +195,14 @@ private fun MyPageScreen(
                     color = colors.MainBlack
                 )
 
-                Text(text = stringResource(R.string.my_modify),
+                Text(
+                    text = stringResource(R.string.my_modify),
                     style = typography.body4_r_12,
                     color = colors.Gray400,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier
                         .padding(top = 10.dp)
-                        .noRippleClickable { }
+                        .noRippleClickable(navigateToHealing)
                 )
             }
 
@@ -217,13 +232,14 @@ private fun MyPageScreen(
                     color = colors.MainBlack
                 )
 
-                Text(text = stringResource(R.string.my_modify),
+                Text(
+                    text = stringResource(R.string.my_modify),
                     style = typography.body4_r_12,
                     color = colors.Gray400,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier
                         .padding(top = 10.dp)
-                        .noRippleClickable { }
+                        .noRippleClickable(navigateToStress)
                 )
             }
 
@@ -253,13 +269,14 @@ private fun MyPageScreen(
                     color = colors.MainBlack
                 )
 
-                Text(text = stringResource(R.string.my_modify),
+                Text(
+                    text = stringResource(R.string.my_modify),
                     style = typography.body4_r_12,
                     color = colors.Gray400,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier
                         .padding(top = 10.dp)
-                        .noRippleClickable { }
+                        .noRippleClickable(navigateToPersonality)
                 )
             }
 
@@ -337,6 +354,10 @@ private fun PreviewMyPageScreen() {
     ) {
         MyPageScreen(
             padding = PaddingValues(),
+            navigateToAccount = {},
+            navigateToHealing = {},
+            navigateToStress = {},
+            navigateToPersonality = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,

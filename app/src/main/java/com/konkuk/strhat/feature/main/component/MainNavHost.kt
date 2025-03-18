@@ -47,6 +47,8 @@ fun MainNavHost(
 
             myPageNavGraph(
                 padding = padding,
+                onNavigateToMyPage = navigator::navigateToMyPage,
+                navController = navigator.navController
             )
 
             splashNavGraph(
