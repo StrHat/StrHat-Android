@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +30,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.core.component.button.UnderlineButton
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.section.TitleSection
@@ -39,9 +38,9 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
+import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
-import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
@@ -51,18 +50,12 @@ fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
 ) {
-    val diaryAIFeedbackSummary by viewModel.diaryAIFeedbackSummary.collectAsState()
-    val diaryAIFeedbackPositiveKeywords by viewModel.diaryAIFeedbackPositiveKeywords.collectAsState()
-    val diaryAIFeedbackNegativeKeywords by viewModel.diaryAIFeedbackNegativeKeywords.collectAsState()
-    val diaryAIFeedbackRecommendation by viewModel.diaryAIFeedbackRecommendation.collectAsState()
+    val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
     val totalDiary by viewModel.totalDiary.collectAsState()
 
     DiaryAIFeedbackScreen(
         padding = padding,
-        diaryAIFeedbackSummary = diaryAIFeedbackSummary,
-        diaryAIFeedbackPositiveKeywords = diaryAIFeedbackPositiveKeywords,
-        diaryAIFeedbackNegativeKeywords = diaryAIFeedbackNegativeKeywords,
-        diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation,
+        diaryAIFeedbackState = diaryAIFeedbackState,
         totalDiary = totalDiary
     )
 }
@@ -70,10 +63,7 @@ fun DiaryAIFeedbackRoute(
 @Composable
 private fun DiaryAIFeedbackScreen(
     padding: PaddingValues,
-    diaryAIFeedbackSummary: String,
-    diaryAIFeedbackPositiveKeywords: List<String>,
-    diaryAIFeedbackNegativeKeywords: List<String>,
-    diaryAIFeedbackRecommendation: String,
+    diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: String,
     modifier: Modifier = Modifier
 ) {
@@ -121,28 +111,16 @@ private fun DiaryAIFeedbackScreen(
 
                 Spacer(modifier = Modifier.width(6.dp))
 
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                UnderlineButton(
+                    btnText = stringResource(R.string.diary_ai_total_diary_button),
                     modifier = Modifier.noRippleClickable {
                         showTotalDiaryDialog = true
                     }
-                ) {
-                    Text(
-                        text = stringResource(R.string.diary_ai_total_diary_button),
-                        style = typography.body4_m_12,
-                        color = colors.Gray500,
-                        modifier = Modifier.padding(bottom = 2.dp)
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.width(70.dp),
-                        thickness = 1.dp,
-                        color = colors.Gray500
-                    )
-                }
+                )
             }
 
             DiaryAIFeedbackSummaryBox(
-                diaryAIFeedbackSummary = diaryAIFeedbackSummary,
+                diaryAIFeedbackSummary = diaryAIFeedbackState.diaryAIFeedbackSummary,
                 modifier = Modifier.padding(top = 10.dp)
             )
 
@@ -160,7 +138,7 @@ private fun DiaryAIFeedbackScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryAIFeedbackPositiveKeywords,
+                    keywords = diaryAIFeedbackState.diaryAIFeedbackPositiveKeywords,
                     feedBackBoxBackgroundColor = colors.SubBlue,
                     modifier = Modifier.weight(1f)
                 )
@@ -194,7 +172,7 @@ private fun DiaryAIFeedbackScreen(
                         .width(100.dp)
                 )
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryAIFeedbackNegativeKeywords,
+                    keywords = diaryAIFeedbackState.diaryAIFeedbackNegativeKeywords,
                     feedBackBoxBackgroundColor = colors.Gray100,
                     modifier = Modifier.weight(1f)
                 )
@@ -207,7 +185,7 @@ private fun DiaryAIFeedbackScreen(
             )
 
             DiaryAIFeedbackRecommendationBox(
-                diaryAIFeedbackRecommendation = diaryAIFeedbackRecommendation,
+                diaryAIFeedbackRecommendation = diaryAIFeedbackState.diaryAIFeedbackRecommendation,
                 modifier = Modifier.padding(top = 10.dp)
             )
         }
@@ -250,16 +228,18 @@ private fun DiaryAIFeedbackScreen(
 
 @Preview
 @Composable
-fun DiaryAIFeedbackScreenPreview(
-    modifier: Modifier = Modifier
-) {
+fun DiaryAIFeedbackScreenPreview() {
     StrHatTheme {
-        DiaryAIFeedbackScreen(
-            padding = PaddingValues(),
+        val diaryAIFeedbackExampleState = DiaryAIFeedbackState(
             diaryAIFeedbackSummary = stringResource(R.string.diary_ai_feedback_summary_example),
             diaryAIFeedbackPositiveKeywords = listOf("긍정1", "긍정2", "긍정3"),
             diaryAIFeedbackNegativeKeywords = listOf("부정1", "부정2", "부정3"),
-            diaryAIFeedbackRecommendation = stringResource(R.string.diary_ai_feedback_recommendation_example),
+            diaryAIFeedbackRecommendation = stringResource(R.string.diary_ai_feedback_recommendation_example)
+        )
+
+        DiaryAIFeedbackScreen(
+            padding = PaddingValues(),
+            diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             modifier = Modifier.background(colors.MainWhite)
         )
