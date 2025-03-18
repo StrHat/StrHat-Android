@@ -9,6 +9,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
@@ -25,7 +26,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Route.Splash
+    val startDestination = MainTabRoute.Home
 
     val currentTab: MainTab?
         @Composable get() = MainTab.entries.find { tab ->

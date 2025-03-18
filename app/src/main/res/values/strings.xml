@@ -89,4 +89,24 @@
     <string name="add_today_diary_title">오늘의 일기 작성하기</string>
     <string name="get_feedback_button">피드백 받기</string>
     <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
+
+    <!-- my -->
+    <string name="my_title">계정 정보</string>
+    <string name="my_image_description">마이페이지 감정 이미지</string>
+    <string name="my_nickname">닉네임:</string>
+    <string name="my_age">나이:</string>
+    <string name="my_gender">성별:</string>
+    <string name="my_job">직업:</string>
+    <string name="my_modify">수정하기</string>
+
+    <string name="my_healing_title">저는요, 힐링이 필요할 때</string>
+    <string name="my_stress_title">저는요, 스트레스 해소를 위해</string>
+    <string name="my_personality_title">저의 성향은요!</string>
+
+    <string name="my_more_title">더보기</string>
+    <string name="my_more_graph">나의 스트레스 및 감정 그래프</string>
+    <string name="my_more_stress_score">오늘 나의 스트레스 점수 확인</string>
+    <string name="my_more_record">나의 자가 진단 결과 기록</string>
+    <string name="my_more_logout">로그아웃</string>
+
 </resources>
