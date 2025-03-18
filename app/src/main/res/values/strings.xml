@@ -109,6 +109,10 @@
     <string name="my_more_record">나의 자가 진단 결과 기록</string>
     <string name="my_more_logout">로그아웃</string>
 
+    <!-- my account -->
+    <string name="my_account_title">계정 정보 수정하기</string>
+    <string name="my_gender_title">성별을 선택해주세요</string>
+
 
     <!-- home -->
     <string name="home_title">안녕하세요, %s님</string>

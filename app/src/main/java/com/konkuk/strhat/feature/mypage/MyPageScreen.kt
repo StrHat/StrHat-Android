@@ -50,7 +50,7 @@ fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
-        viewModel.updateMyPageModel()
+        viewModel.getMyPageModel()
     }
     val myPageModel by viewModel.myPageModel.collectAsState()
 
