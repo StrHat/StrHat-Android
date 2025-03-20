@@ -25,6 +25,7 @@ import com.konkuk.strhat.core.component.bottomsheet.YearSelectableButton
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.button.StrHatSelectableButtons
 import com.konkuk.strhat.core.component.dropdown.JobDropDown
+import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.textfield.ShortTextField
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -71,18 +72,11 @@ private fun MyAccountScreen(
             .padding(padding),
     ) {
         Column {
-            Text(
-                text = stringResource(R.string.my_account_title),
-                style = typography.head1_b_24,
-                color = colors.MainBlack,
-                modifier = Modifier.padding(bottom = 5.dp)
+            PageDescriptionSection(
+                titleResId = R.string.my_account_title,
+                descriptionResId = R.string.onboarding_description
             )
-            Text(
-                text = stringResource(R.string.onboarding_description),
-                style = typography.body3_r_14,
-                color = colors.MainBlack,
-                modifier = Modifier.padding(bottom = 30.dp)
-            )
+            Spacer(Modifier.height(30.dp))
 
             Text(
                 text = stringResource(R.string.onboarding_nickname),

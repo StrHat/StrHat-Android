@@ -34,6 +34,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
+import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -84,11 +85,7 @@ private fun MyPageScreen(
             .fillMaxSize()
             .padding(padding)
     ) {
-        Text(
-            text = stringResource(R.string.my_title),
-            style = typography.head1_b_24,
-            color = colors.MainBlack
-        )
+        PageDescriptionSection(titleResId = R.string.my_title)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -365,7 +362,7 @@ private fun MyPageScreen(
                 onConfirmButtonClick = {
                     isLogoutDialogVisible = false
                     navigateToLogin()
-                                       },
+                },
                 onDismissButtonClick = { isLogoutDialogVisible = false }
             )
         }

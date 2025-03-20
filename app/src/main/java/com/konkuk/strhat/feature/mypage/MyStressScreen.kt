@@ -3,8 +3,10 @@ package com.konkuk.strhat.feature.mypage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.textfield.LongTextField
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -56,18 +59,11 @@ private fun MyStressScreen(
             .padding(padding),
     ) {
         Column {
-            Text(
-                text = stringResource(R.string.my_account_title),
-                style = typography.head1_b_24,
-                color = colors.MainBlack,
-                modifier = Modifier.padding(bottom = 5.dp)
+            PageDescriptionSection(
+                titleResId = R.string.my_account_title,
+                descriptionResId = R.string.onboarding_type_description
             )
-            Text(
-                text = stringResource(R.string.onboarding_type_description),
-                style = typography.body3_r_14,
-                color = colors.MainBlack,
-                modifier = Modifier.padding(bottom = 30.dp)
-            )
+            Spacer(Modifier.height(30.dp))
 
             Text(
                 text = stringResource(R.string.onboarding_stress_title),
