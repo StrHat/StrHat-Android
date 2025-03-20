@@ -3,8 +3,8 @@ package com.konkuk.strhat.domain.type
 enum class GenderType(
     val type: String
 ){
-    MALE(type = "남"),
-    FEMALE(type = "여");
+    MALE(type = "남성"),
+    FEMALE(type = "여성");
 
     companion object{
         fun toGenderType(gender: String): String =

@@ -28,6 +28,7 @@ import com.konkuk.strhat.core.component.dropdown.JobDropDown
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.textfield.ShortTextField
 import com.konkuk.strhat.domain.entity.MyPageModel
+import com.konkuk.strhat.domain.type.GenderType
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
@@ -62,7 +63,8 @@ private fun MyAccountScreen(
     navigateToMyPage: () -> Unit,
 ) {
     val options = listOf(
-        "남성", "여성"
+        GenderType.MALE.type,
+        GenderType.FEMALE.type
     )
 
     Box(
