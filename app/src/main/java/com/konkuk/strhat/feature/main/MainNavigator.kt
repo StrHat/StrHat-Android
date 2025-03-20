@@ -12,7 +12,10 @@ import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
+import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
+import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
+import com.konkuk.strhat.feature.diary.navigation.navigateToStressScore
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
@@ -93,8 +96,24 @@ class MainNavigator(
         navController.navigateToAddDiary()
     }
 
-    private fun popBackStack() {
+    fun navigateToDiaryAIFeedback() {
+        navController.navigateToDiaryAIFeedback()
+    }
+
+    fun navigateToChat() {
+        navController.navigateToChat()
+    }
+
+    fun popBackStack() {
         navController.popBackStack()
+    }
+
+    fun popBackStackInclusiveFalse() {
+        navController.popBackStack(MainTabRoute.Diary, false)
+    }
+
+    fun navigateToStressScore() {
+        navController.navigateToStressScore()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

@@ -35,16 +35,19 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun AddDiaryRoute(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToDiaryAIFeedback: () -> Unit
 ) {
     AddDiaryScreen(
-        padding = padding
+        padding = padding,
+        onGetFeedbackBtnClick = navigateToDiaryAIFeedback
     )
 }
 
 @Composable
 fun AddDiaryScreen(
     padding: PaddingValues,
+    onGetFeedbackBtnClick: () -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -119,7 +122,7 @@ fun AddDiaryScreen(
                 hint = stringResource(R.string.textfield_diary),
                 maxLength = 1500,
                 modifier = Modifier.fillMaxWidth()
-                    .padding(top = 10.dp)
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp)
             )
         }
 
@@ -127,7 +130,7 @@ fun AddDiaryScreen(
             isDisabled = diaryContent.length < 20,
             text = stringResource(R.string.get_feedback_button),
             modifier = Modifier.padding(20.dp),
-            onClick = {}
+            onClick = onGetFeedbackBtnClick
         )
     }
 }
@@ -140,7 +143,8 @@ fun AddDiaryScreenPreview(
     StrHatTheme {
         AddDiaryScreen(
             padding = PaddingValues(),
-            modifier = Modifier.background(colors.MainWhite)
+            modifier = Modifier.background(colors.MainWhite),
+            onGetFeedbackBtnClick = {}
         )
     }
 }

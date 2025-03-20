@@ -16,7 +16,7 @@ val Gray600 = Color(0xFF666668)
 val Gray900 = Color(0xFF2F2F2F)
 
 val MainBlue = Color(0xFF6BB2FF)
-val SubBlue = Color(0xFFE1ECFB)
+val SubBlue = Color(0xFFE1F0FF)
 
 val MainRed = Color(0xFFFF0000)
 val SubRed = Color(0xFFFF6B6B)

@@ -49,3 +49,12 @@ sealed interface MyPageRoute: Route{
     @Serializable
     data object Personality: MyPageRoute
 }
+
+sealed interface DiaryRoute : Route {
+    @Serializable
+    data object DiaryAIFeedback : Route
+    @Serializable
+    data object Chat : Route
+    @Serializable
+    data object StressScore : Route
+}

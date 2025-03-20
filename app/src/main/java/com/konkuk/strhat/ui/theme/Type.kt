@@ -15,6 +15,7 @@ val strHatFontRegular = FontFamily(Font(R.font.roboto_regular))
 
 @Immutable
 data class StrHatTypography(
+    val head0_b_26: TextStyle,
     val head1_b_24: TextStyle,
     val head2_b_20: TextStyle,
     val head2_r_20: TextStyle,
@@ -33,6 +34,11 @@ data class StrHatTypography(
 )
 
 val defaultStrHatTypography = StrHatTypography(
+    head0_b_26 = TextStyle(
+        fontFamily = strHatFontBold,
+        fontSize = 26.sp,
+        lineHeight = 34.sp
+    ),
     head1_b_24 = TextStyle(
         fontFamily = strHatFontBold,
         fontSize = 24.sp,
@@ -76,7 +82,7 @@ val defaultStrHatTypography = StrHatTypography(
     body3_b_14 = TextStyle(
         fontFamily = strHatFontBold,
         fontSize = 14.sp,
-        lineHeight = 21.sp
+        lineHeight = 22.sp
     ),
     body3_m_14 = TextStyle(
         fontFamily = strHatFontMedium,
