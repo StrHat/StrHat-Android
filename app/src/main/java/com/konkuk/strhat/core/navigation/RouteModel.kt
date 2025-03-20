@@ -38,3 +38,14 @@ sealed interface OnBoardingRoute: Route{
     @Serializable
     data object Success : OnBoardingRoute
 }
+
+sealed interface MyPageRoute: Route{
+    @Serializable
+    data object Account: MyPageRoute
+    @Serializable
+    data object Healing: MyPageRoute
+    @Serializable
+    data object Stress: MyPageRoute
+    @Serializable
+    data object Personality: MyPageRoute
+}
