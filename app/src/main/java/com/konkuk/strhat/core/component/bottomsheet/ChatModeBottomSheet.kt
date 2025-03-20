@@ -23,10 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.draghandle.BottomSheetDragHandle
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.component.HeartButton
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -38,6 +41,7 @@ fun ChatModeBottomSheet(
     isVisible: Boolean,
     onDismiss: () -> Unit,
     onChatModeSelected: (String?) -> Unit,
+    navigateToChat: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedMode by remember { mutableStateOf<String?>(null) }
@@ -63,12 +67,12 @@ fun ChatModeBottomSheet(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "스틀햇 모드 선택",
+                        text = stringResource(R.string.chat_select_chat_mode),
                         style = typography.title1_b_18,
                         color = colors.MainBlack
                     )
                     Text(
-                        text = "스틀햇과 나누고 싶은 대화 모드를 선택해주세요!",
+                        text = stringResource(R.string.chat_select_chat_mode_description),
                         style = typography.body3_m_14,
                         color = colors.Gray500
                     )
@@ -81,30 +85,31 @@ fun ChatModeBottomSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         HeartButton(
-                            modeText = "공감",
-                            isModeSelected = (selectedMode == "공감"),
-                            onModeClick = { modeText, _ ->
-                                selectedMode = if (selectedMode == "공감") null else "공감"
+                            modeText = ChatModeType.EMPATHY.chatModeType,
+                            isModeSelected = (selectedMode == ChatModeType.EMPATHY.chatModeType),
+                            onModeClick = { mode, _ ->
+                                selectedMode = if (selectedMode == ChatModeType.EMPATHY.chatModeType) null else ChatModeType.EMPATHY.chatModeType
                             }
                         )
 
                         Spacer(modifier = Modifier.width(50.dp))
 
                         HeartButton(
-                            modeText = "해결책",
-                            isModeSelected = (selectedMode == "해결책"),
-                            onModeClick = { modeText, _ ->
-                                selectedMode = if (selectedMode == "해결책") null else "해결책"
+                            modeText = ChatModeType.SOLUTION.chatModeType,
+                            isModeSelected = (selectedMode == ChatModeType.SOLUTION.chatModeType),
+                            onModeClick = { mode, _ ->
+                                selectedMode = if (selectedMode == ChatModeType.SOLUTION.chatModeType) null else ChatModeType.SOLUTION.chatModeType
                             }
                         )
                     }
 
                     StrHatButton(
-                        text = "선택",
+                        text = stringResource(R.string.select),
                         isDisabled = selectedMode == null,
                         onClick = {
                             onChatModeSelected(selectedMode)
                             onDismiss()
+                            navigateToChat()
                         }
                     )
                 }
@@ -131,14 +136,15 @@ private fun ChatModeBottomSheetPreview() {
                 onClick = { setVisible(true) }
             ) {
                 Text(
-                    text = "대화 모드 선택 버튼"
+                    text = stringResource(R.string.chat_select_chat_mode_button)
                 )
             }
 
             ChatModeBottomSheet(
                 isVisible = isVisible,
                 onDismiss = { setVisible(false) },
-                onChatModeSelected = {}
+                onChatModeSelected = {},
+                navigateToChat = {}
             )
         }
     }

@@ -15,10 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.feature.diary.component.ChatBubble
 import com.konkuk.strhat.feature.diary.component.ChatTextFieldRow
 import com.konkuk.strhat.feature.diary.component.ChatTopBar
@@ -53,6 +59,7 @@ private fun ChatScreen(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
+    var showChatQuitDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) {
@@ -67,7 +74,11 @@ private fun ChatScreen(
             .padding(padding)
     ) {
         Column {
-            ChatTopBar()
+            ChatTopBar(
+                onChatQuitBtnClick = {
+                    showChatQuitDialog = true
+                }
+            )
 
             Column(
                 modifier = Modifier
@@ -96,6 +107,22 @@ private fun ChatScreen(
                         .imePadding()
                 )
             }
+        }
+    }
+
+    if (showChatQuitDialog) {
+        Dialog(
+            onDismissRequest = { showChatQuitDialog = false }
+        ) {
+            StrHatDialog(
+                titleResId = R.string.dialog_chat_title,
+                imageResId = R.drawable.ic_strhat_dialog_yellow_red_green,
+                imageRatio = 1f / 1f,
+                descriptionResId = R.string.dialog_chat_description,
+                onConfirmButtonClick = {},
+                onDismissButtonClick = { showChatQuitDialog = false },
+                modifier = Modifier.padding(horizontal = 40.dp)
+            )
         }
     }
 }

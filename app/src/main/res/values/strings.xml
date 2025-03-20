@@ -6,6 +6,7 @@
     <string name="confirm">확인</string>
     <string name="dismiss">취소</string>
     <string name="next">다음</string>
+    <string name="select">선택</string>
 
     <!-- navigation -->
     <string name="home">홈</string>
@@ -98,8 +99,14 @@
     <string name="diary_ai_feedback_positive_title">이 날의 긍정 감정 키워드</string>
     <string name="diary_ai_feedback_negative_title">이 날의 부정 감정 키워드</string>
     <string name="diary_ai_feedback_recommendation_title">이 날의 스트레스 해소 활동 추천</string>
-    <string name="diary_ai_feedback_chat_history_button">대화기록 조회하기</string>
+    <string name="diary_ai_feedback_chat_button">스틀햇과 대화하기</string>
     <string name="diary_ai_feedback_summary_example">시험 기간은 항상 스트레스를 주죠. 공부와 시간 부족으로 지쳐가는데도 조금만 더 힘내면 끝이 보인다는 희망으로 자신을 격려하고 계신 모습이 보여요. 지금의 노력과 힘든 시간들이 행복한 미래로 이어질 거라 믿어요.</string>
     <string name="diary_ai_feedback_recommendation_example">시험 스트레스를 조금이나마 덜어줄 수 있는 방법으로, 독서와 음악을 조합해보는 건 어떨까요? 좋아하는 음악을 들으며 독서를 즐기면서 마음을 편하게 해보세요.</string>
     <string name="diary_ai_feedback_total_diary_example">3월 17일 일기 전문 예시입니다. 시험 기간에 관한 일기입니다.</string>
+    <string name="diary_ai_feedback_quit_button">그만하기</string>
+
+    <!-- chat -->
+    <string name="chat_select_chat_mode">스틀햇 모드 선택</string>
+    <string name="chat_select_chat_mode_description">스틀햇과 나누고 싶은 대화 모드를 선택해주세요!</string>
+    <string name="chat_select_chat_mode_button">대화 모드 선택 버튼</string>
 </resources>
