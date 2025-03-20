@@ -123,6 +123,7 @@ private fun ChatScreen(
                 imageRatio = 1f / 1f,
                 descriptionResId = R.string.dialog_chat_description,
                 onConfirmButtonClick = {
+                    showChatQuitDialog = false
                     navigateToStressScore()
                 },
                 onDismissButtonClick = { showChatQuitDialog = false },
