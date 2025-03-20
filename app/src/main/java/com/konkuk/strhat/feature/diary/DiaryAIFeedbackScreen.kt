@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.bottomsheet.ChatModeBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.button.UnderlineButton
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
@@ -48,6 +49,8 @@ import kotlinx.datetime.todayIn
 @Composable
 fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
+    navigateToChat: () -> Unit,
+    navigateToDiaryMain: () -> Unit,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
 ) {
     val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
@@ -56,7 +59,9 @@ fun DiaryAIFeedbackRoute(
     DiaryAIFeedbackScreen(
         padding = padding,
         diaryAIFeedbackState = diaryAIFeedbackState,
-        totalDiary = totalDiary
+        totalDiary = totalDiary,
+        navigateToChat = navigateToChat,
+        navigateToDiaryMain = navigateToDiaryMain
     )
 }
 
@@ -65,9 +70,12 @@ private fun DiaryAIFeedbackScreen(
     padding: PaddingValues,
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: String,
+    navigateToChat: () -> Unit,
+    navigateToDiaryMain: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
+    var isChatModeBottomSheetVisible by remember { mutableStateOf(false) }
 
     val today = remember {
         Clock.System.todayIn(TimeZone.currentSystemDefault())
@@ -194,20 +202,24 @@ private fun DiaryAIFeedbackScreen(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
             StrHatButton(
-                isDisabled = false,
-                text = stringResource(R.string.confirm),
+                isDisabled = true,
+                text = stringResource(R.string.diary_ai_feedback_quit_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
-                onClick = {}
+                onClick = {
+                    navigateToDiaryMain()
+                }
             )
             StrHatButton(
                 isDisabled = false,
-                text = stringResource(R.string.diary_ai_feedback_chat_history_button),
+                text = stringResource(R.string.diary_ai_feedback_chat_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
-                onClick = {}
+                onClick = {
+                    isChatModeBottomSheetVisible = true
+                }
             )
         }
     }
@@ -223,6 +235,17 @@ private fun DiaryAIFeedbackScreen(
                 onDismissButtonClick = { showTotalDiaryDialog = false }
             )
         }
+    }
+
+    if (isChatModeBottomSheetVisible) {
+        ChatModeBottomSheet(
+            isVisible = isChatModeBottomSheetVisible,
+            onDismiss = { isChatModeBottomSheetVisible = false },
+            onChatModeSelected = { selectedMode ->
+                isChatModeBottomSheetVisible = false
+            },
+            navigateToChat = navigateToChat
+        )
     }
 }
 
@@ -241,6 +264,8 @@ fun DiaryAIFeedbackScreenPreview() {
             padding = PaddingValues(),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
+            navigateToChat = {},
+            navigateToDiaryMain = {},
             modifier = Modifier.background(colors.MainWhite)
         )
     }
