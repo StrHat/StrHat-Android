@@ -148,6 +148,7 @@
     <string name="chat_select_chat_mode">스틀햇 모드 선택</string>
     <string name="chat_select_chat_mode_description">스틀햇과 나누고 싶은 대화 모드를 선택해주세요!</string>
     <string name="chat_select_chat_mode_button">대화 모드 선택 버튼</string>
+    <string name="chat_text_field_row_hint">메시지를 입력하세요</string>
 
     <!-- stress score screen -->
     <string name="stress_score_nickname_description">님의</string>
