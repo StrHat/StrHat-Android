@@ -81,6 +81,17 @@ class MainNavigator(
         )
     }
 
+    fun navigateToMyPage(navOptions: NavOptions? = null) {
+        navController.navigateToMyPage(
+            navOptions ?: navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        )
+    }
+
     fun navigateToAddDiary() {
         navController.navigateToAddDiary()
     }
