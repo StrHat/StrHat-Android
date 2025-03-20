@@ -42,7 +42,8 @@ fun MainNavHost(
                 onNavigateToDiaryAIFeedback = navigator::navigateToDiaryAIFeedback,
                 onNavigateToChat = navigator::navigateToChat,
                 popBackStack = navigator::popBackStackInclusiveFalse,
-                onNavigateToHome = navigator::navigateToHome
+                onNavigateToHome = navigator::navigateToHome,
+                onNavigateToStressScore = navigator::navigateToStressScore
             )
 
             selfDiagnosisNavGraph(

@@ -35,13 +35,18 @@ fun NavController.navigateToChat() {
     navigate(DiaryRoute.Chat)
 }
 
+fun NavController.navigateToStressScore() {
+    navigate(DiaryRoute.StressScore)
+}
+
 fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: () -> Unit,
     onNavigateToChat: () -> Unit,
     popBackStack: () -> Unit,
-    onNavigateToHome: () -> Unit
+    onNavigateToHome: () -> Unit,
+    onNavigateToStressScore: () -> Unit
 ) {
     composable<MainTabRoute.Diary> {
         DiaryRoute(
@@ -67,7 +72,8 @@ fun NavGraphBuilder.diaryNavGraph(
 
     composable<DiaryRoute.Chat> {
         ChatRoute(
-            padding = padding
+            padding = padding,
+            navigateToStressScore = onNavigateToStressScore
         )
     }
 
