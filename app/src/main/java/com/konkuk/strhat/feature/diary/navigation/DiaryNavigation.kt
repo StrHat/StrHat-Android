@@ -12,6 +12,7 @@ import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRoute
 import com.konkuk.strhat.feature.diary.DiaryRoute
+import com.konkuk.strhat.feature.diary.StressScoreRoute
 
 fun NavController.navigateToDiary(navOptions: NavOptions) {
     navigate(MainTabRoute.Diary, navOptions)
@@ -39,7 +40,8 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: () -> Unit,
     onNavigateToChat: () -> Unit,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
     composable<MainTabRoute.Diary> {
         DiaryRoute(
@@ -66,6 +68,13 @@ fun NavGraphBuilder.diaryNavGraph(
     composable<DiaryRoute.Chat> {
         ChatRoute(
             padding = padding
+        )
+    }
+
+    composable<DiaryRoute.StressScore> {
+        StressScoreRoute(
+            padding = padding,
+            navigateToHome = onNavigateToHome
         )
     }
 }

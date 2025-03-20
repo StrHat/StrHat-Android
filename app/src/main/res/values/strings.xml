@@ -109,4 +109,13 @@
     <string name="chat_select_chat_mode">스틀햇 모드 선택</string>
     <string name="chat_select_chat_mode_description">스틀햇과 나누고 싶은 대화 모드를 선택해주세요!</string>
     <string name="chat_select_chat_mode_button">대화 모드 선택 버튼</string>
+
+    <!-- stress score screen -->
+    <string name="stress_score_nickname_description">님의</string>
+    <string name="stress_score_today_title">오늘의 스트레스 점수는</string>
+    <string name="stress_score_stress_score_end">이에요</string>
+    <string name="stress_score_level_end">에 해당되네요</string>
+    <string name="stress_score_level_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
+    <string name="stress_score_analysis_title">스트레스 원인 분석</string>
+    <string name="stress_score_to_home">홈화면으로 돌아가기</string>
 </resources>

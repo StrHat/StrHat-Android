@@ -44,4 +44,6 @@ sealed interface DiaryRoute : Route {
     data object DiaryAIFeedback : Route
     @Serializable
     data object Chat : Route
+    @Serializable
+    data object StressScore : Route
 }
