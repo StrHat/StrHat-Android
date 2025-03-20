@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
@@ -21,13 +22,24 @@ fun NavController.navigateToAddDiary() {
 }
 
 fun NavController.navigateToDiaryAIFeedback() {
-    navigate(Route.DiaryAIFeedback)
+    navigate(DiaryRoute.DiaryAIFeedback) {
+        popUpTo(MainTabRoute.Diary) {
+            inclusive = false
+        }
+        launchSingleTop = true
+    }
+}
+
+fun NavController.navigateToChat() {
+    navigate(DiaryRoute.Chat)
 }
 
 fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
     onNavigateToAddDiary: () -> Unit,
-    onNavigateToDiaryAIFeedback: () -> Unit
+    onNavigateToDiaryAIFeedback: () -> Unit,
+    onNavigateToChat: () -> Unit,
+    popBackStack: () -> Unit
 ) {
     composable<MainTabRoute.Diary> {
         DiaryRoute(
@@ -43,13 +55,15 @@ fun NavGraphBuilder.diaryNavGraph(
         )
     }
 
-    composable<Route.DiaryAIFeedback> {
+    composable<DiaryRoute.DiaryAIFeedback> {
         DiaryAIFeedbackRoute(
-            padding = padding
+            padding = padding,
+            navigateToChat = onNavigateToChat,
+            navigateToDiaryMain = popBackStack
         )
     }
 
-    composable<Route.Chat> {
+    composable<DiaryRoute.Chat> {
         ChatRoute(
             padding = padding
         )

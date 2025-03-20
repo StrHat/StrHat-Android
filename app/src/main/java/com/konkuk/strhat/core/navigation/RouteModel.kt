@@ -11,10 +11,6 @@ sealed interface Route {
     data object OnBoarding : Route
     @Serializable
     data object AddDiary : Route
-    @Serializable
-    data object DiaryAIFeedback : Route
-    @Serializable
-    data object Chat : Route
 }
 
 sealed interface MainTabRoute : Route {
@@ -41,4 +37,11 @@ sealed interface OnBoardingRoute: Route{
     data object Personality : OnBoardingRoute
     @Serializable
     data object Success : OnBoardingRoute
+}
+
+sealed interface DiaryRoute : Route {
+    @Serializable
+    data object DiaryAIFeedback : Route
+    @Serializable
+    data object Chat : Route
 }

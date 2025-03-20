@@ -12,6 +12,7 @@ import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
+import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
@@ -27,7 +28,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = Route.Chat
+    val startDestination = MainTabRoute.Home
 
     val currentTab: MainTab?
         @Composable get() = MainTab.entries.find { tab ->
@@ -87,8 +88,16 @@ class MainNavigator(
         navController.navigateToDiaryAIFeedback()
     }
 
-    private fun popBackStack() {
+    fun navigateToChat() {
+        navController.navigateToChat()
+    }
+
+    fun popBackStack() {
         navController.popBackStack()
+    }
+
+    fun popBackStackInclusiveFalse() {
+        navController.popBackStack(MainTabRoute.Diary, false)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

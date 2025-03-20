@@ -9,18 +9,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.core.component.button.UnderlineButton
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun ChatTopBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onChatQuitBtnClick: () -> Unit
 ) {
+    var showChatQuitDialog by remember { mutableStateOf(false) }
+
     Column {
         Box(
             modifier = modifier
@@ -39,6 +47,9 @@ fun ChatTopBar(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(top = 4.dp, end = 20.dp)
+                    .noRippleClickable {
+                        onChatQuitBtnClick()
+                    }
             )
         }
 
@@ -52,5 +63,7 @@ fun ChatTopBar(
 @Preview
 @Composable
 private fun ChatTopBarPreview() {
-    ChatTopBar()
+    ChatTopBar(
+        onChatQuitBtnClick = {}
+    )
 }

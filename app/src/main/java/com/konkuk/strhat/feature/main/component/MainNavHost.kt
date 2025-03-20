@@ -39,7 +39,9 @@ fun MainNavHost(
             diaryNavGraph(
                 padding = padding,
                 onNavigateToAddDiary = navigator::navigateToAddDiary,
-                onNavigateToDiaryAIFeedback = navigator::navigateToDiaryAIFeedback
+                onNavigateToDiaryAIFeedback = navigator::navigateToDiaryAIFeedback,
+                onNavigateToChat = navigator::navigateToChat,
+                popBackStack = navigator::popBackStackInclusiveFalse
             )
 
             selfDiagnosisNavGraph(
