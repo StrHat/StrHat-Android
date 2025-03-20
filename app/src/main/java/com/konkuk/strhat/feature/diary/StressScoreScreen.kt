@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -24,6 +23,7 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
+import com.konkuk.strhat.feature.diary.state.StressScoreState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -34,17 +34,11 @@ fun StressScoreRoute(
     navigateToHome: () -> Unit,
     viewModel: StressScoreViewModel = hiltViewModel()
 ) {
-    val nickname by viewModel.nickname.collectAsState()
-    val stressScore by viewModel.stressScore.collectAsState()
-    val level by viewModel.level.collectAsState()
-    val analysis by viewModel.analysis.collectAsState()
+    val stressScoreState by viewModel.stressScoreState.collectAsState()
 
     StressScoreScreen(
         padding = padding,
-        nickname = nickname,
-        stressScore = stressScore,
-        level = level,
-        analysis = analysis,
+        stressScoreState = stressScoreState,
         navigateToHome = navigateToHome
     )
 }
@@ -52,10 +46,7 @@ fun StressScoreRoute(
 @Composable
 fun StressScoreScreen(
     padding: PaddingValues,
-    nickname: String,
-    stressScore: Int,
-    level: String,
-    analysis: String,
+    stressScoreState: StressScoreState,
     navigateToHome: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -71,7 +62,7 @@ fun StressScoreScreen(
         ) {
             Row {
                 Text(
-                    text = nickname,
+                    text = stressScoreState.nickname,
                     style = typography.head1_b_24,
                     color = colors.MainBlue
                 )
@@ -92,7 +83,7 @@ fun StressScoreScreen(
 
             Row {
                 Text(
-                    text = stressScore.toString(),
+                    text = stressScoreState.stressScore.toString(),
                     style = typography.head0_b_26,
                     color = colors.Gray400,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -111,7 +102,7 @@ fun StressScoreScreen(
 
             Row {
                 Text(
-                    text = level,
+                    text = stressScoreState.level,
                     style = typography.head2_b_20,
                     color = colors.Gray400,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -140,7 +131,7 @@ fun StressScoreScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             DiaryAIFeedbackSummaryBox(
-                diaryAIFeedbackSummary = analysis
+                diaryAIFeedbackSummary = stressScoreState.analysis
             )
         }
 
@@ -158,12 +149,16 @@ fun StressScoreScreen(
 @Composable
 fun StressScoreScreenPreview() {
     StrHatTheme {
-        StressScoreScreen(
-            padding = PaddingValues(),
+        val stressScoreExampleState = StressScoreState(
             nickname = "송민서",
             stressScore = 6,
             level = "보통 스트레스 수준",
-            analysis = "사용자는 다양한 취향을 가진 다양한 활동을 즐기며 삶을 즐기는 편인데, 시험 기간에는 공부 부담과 시간 부족으로 인한 스트레스를 많이 받는 것으로 보입니다. 여러 전공 과목을 동시에 공부해야 하는 상황에서 과연 배워야 할 것들이 끝이 없다는 생각이 불안을 유발하며, 이로 인해 조급함과 지쳐감을 느끼고 있는 모습입니다. 이외에도 자신이 즐기는 음악 청취나 외향적인 성향의 활동을 쉽게 할 수 없다는 점이 스트레스를 느끼는데 영향을 줄 수 있습니다.",
+            analysis = "사용자는 다양한 취향을 가진 다양한 활동을 즐기며 삶을 즐기는 편인데, 시험 기간에는 공부 부담과 시간 부족으로 인한 스트레스를 많이 받는 것으로 보입니다. 여러 전공 과목을 동시에 공부해야 하는 상황에서 과연 배워야 할 것들이 끝이 없다는 생각이 불안을 유발하며, 이로 인해 조급함과 지쳐감을 느끼고 있는 모습입니다. 이외에도 자신이 즐기는 음악 청취나 외향적인 성향의 활동을 쉽게 할 수 없다는 점이 스트레스를 느끼는데 영향을 줄 수 있습니다."
+        )
+
+        StressScoreScreen(
+            padding = PaddingValues(),
+            stressScoreState = stressScoreExampleState,
             navigateToHome = {}
         )
     }
