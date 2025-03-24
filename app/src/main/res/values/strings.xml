@@ -158,4 +158,14 @@
     <string name="stress_score_level_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
     <string name="stress_score_analysis_title">스트레스 원인 분석</string>
     <string name="stress_score_to_home">홈화면으로 돌아가기</string>
+
+    <!-- self diagnosis -->
+    <string name="self_diagnosis_screen_stress_title">스트레스 자가 진단</string>
+    <string name="self_diagnosis_description_PSS">정확한 결과를 제공하기 위해 과학적으로 검증된 도구를 사용합니다.\n\n이 진단은 한국판 지각된 스트레스 척도(Perceived Stress Scale, PSS)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="self_diagnosis_PSS_button">PSS 검사하기</string>
+    <string name="self_diagnosis_description_SRI">이 진단은 스트레스 반응 척도(Stress Response Inventory, SRI)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="self_diagnosis_SRI_button">SRI 검사하기</string>
+    <string name="self_diagnosis_screen_depression_title">우울증 자가 진단</string>
+    <string name="self_diagnosis_description_PHQ_9">정확한 결과를 제공하기 위해 과학적으로 검증된 도구를 사용합니다.\n\n이 진단은 한국판 우울증 선별도구(Patient Health Questionnaire-9, PHQ-9)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="self_diagnosis_PHQ_9_button">PHQ-9 검사하기</string>
 </resources>
