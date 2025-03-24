@@ -46,6 +46,10 @@ sealed interface MyPageRoute: Route{
     data object Stress: MyPageRoute
     @Serializable
     data object Personality: MyPageRoute
+    @Serializable
+    data object MySelfDiagnosisRecord: MyPageRoute
+    @Serializable
+    data object MySelfDiagnosisRecordResult: MyPageRoute
 }
 
 sealed interface DiaryRoute : Route {

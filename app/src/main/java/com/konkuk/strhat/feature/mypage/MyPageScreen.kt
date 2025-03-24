@@ -48,6 +48,7 @@ fun MyPageRoute(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToLogin: () -> Unit,
+    navigateToMySelfDiagnosisRecord: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -62,6 +63,7 @@ fun MyPageRoute(
         navigateToStress = navigateToStress,
         navigateToPersonality = navigateToPersonality,
         navigateToLogin = navigateToLogin,
+        navigateToMySelfDiagnosisRecord = navigateToMySelfDiagnosisRecord,
         myPageModel = myPageModel
     )
 }
@@ -74,6 +76,7 @@ private fun MyPageScreen(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToLogin: () -> Unit,
+    navigateToMySelfDiagnosisRecord: () -> Unit,
     myPageModel: MyPageModel
 ) {
     var isLogoutDialogVisible by remember { mutableStateOf(false) }
@@ -330,6 +333,9 @@ private fun MyPageScreen(
             style = typography.body1_r_16,
             color = colors.MainBlack,
             modifier = Modifier.padding(bottom = 15.dp)
+                .noRippleClickable {
+                    navigateToMySelfDiagnosisRecord()
+                }
         )
         HorizontalDivider(
             thickness = 1.dp,
@@ -384,6 +390,7 @@ private fun PreviewMyPageScreen() {
             navigateToStress = {},
             navigateToPersonality = {},
             navigateToLogin = {},
+            navigateToMySelfDiagnosisRecord = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,

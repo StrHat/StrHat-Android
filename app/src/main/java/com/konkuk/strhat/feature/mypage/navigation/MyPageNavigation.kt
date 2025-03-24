@@ -11,6 +11,8 @@ import com.konkuk.strhat.feature.mypage.MyAccountRoute
 import com.konkuk.strhat.feature.mypage.MyHealingRoute
 import com.konkuk.strhat.feature.mypage.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyPersonalityRoute
+import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordResultRoute
+import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordRoute
 import com.konkuk.strhat.feature.mypage.MyStressRoute
 
 fun NavController.navigateToMyPage(navOptions: NavOptions) {
@@ -33,10 +35,20 @@ fun NavController.navigateToPersonality() {
     navigate(MyPageRoute.Personality)
 }
 
+fun NavController.navigateToMySelfDiagnosisRecord() {
+    navigate(MyPageRoute.MySelfDiagnosisRecord)
+}
+
+fun NavController.navigateToMySelfDiagnosisRecordResult() {
+    navigate(MyPageRoute.MySelfDiagnosisRecordResult)
+}
+
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
     onNavigateToLogin: () -> Unit,
+    onNavigateToMySelfDiagnosisRecord: () -> Unit,
+    onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -46,6 +58,7 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToHealing = navController::navigateToHealing,
             navigateToStress = navController::navigateToStress,
             navigateToPersonality = navController::navigateToPersonality,
+            navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
             navigateToLogin = onNavigateToLogin
         )
     }
@@ -73,6 +86,20 @@ fun NavGraphBuilder.myPageNavGraph(
 
     composable<MyPageRoute.Personality> {
         MyPersonalityRoute(
+            padding = padding,
+            navigateToMyPage = onNavigateToMyPage
+        )
+    }
+
+    composable<MyPageRoute.MySelfDiagnosisRecord> {
+        MySelfDiagnosisRecordRoute(
+            padding = padding,
+            navigateToMySelfDiagnosisRecordResult = onNavigateToMySelfDiagnosisRecordResult
+        )
+    }
+
+    composable<MyPageRoute.MySelfDiagnosisRecordResult> {
+        MySelfDiagnosisRecordResultRoute(
             padding = padding,
             navigateToMyPage = onNavigateToMyPage
         )

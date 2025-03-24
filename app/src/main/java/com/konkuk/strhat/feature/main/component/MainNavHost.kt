@@ -57,6 +57,8 @@ fun MainNavHost(
                 padding = padding,
                 onNavigateToMyPage = navigator::navigateToMyPage,
                 onNavigateToLogin = navigator::navigateToLogin,
+                onNavigateToMySelfDiagnosisRecord = navigator::navigateToMySelfDiagnosisRecord,
+                onNavigateToMySelfDiagnosisRecordResult = navigator::navigateToMySelfDiagnosisRecordResult,
                 navController = navigator.navController
             )
 
