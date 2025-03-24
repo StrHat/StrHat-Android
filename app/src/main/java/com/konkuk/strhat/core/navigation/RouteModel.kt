@@ -62,4 +62,6 @@ sealed interface DiaryRoute : Route {
 sealed interface SelfDiagnosisRoute : Route {
     @Serializable
     data object SelfDiagnosisTest : Route
+    @Serializable
+    data object SelfDiagnosisResult : Route
 }

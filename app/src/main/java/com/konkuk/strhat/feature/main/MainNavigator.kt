@@ -21,6 +21,7 @@ import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
 import com.konkuk.strhat.feature.onboarding.navigation.navigateToOnBoarding
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosis
+import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosisResult
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosisTest
 
 class MainNavigator(
@@ -82,11 +83,22 @@ class MainNavigator(
         )
     }
 
+    fun navigateToSelfDiagnosis(navOptions: NavOptions? = null) {
+        navController.navigateToSelfDiagnosis(
+            navOptions ?: navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        )
+    }
+
     fun navigateToMyPage(navOptions: NavOptions? = null) {
         navController.navigateToMyPage(
             navOptions ?: navOptions {
                 popUpTo(navController.graph.findStartDestination().id) {
-                    inclusive = true
+                    inclusive = false
                 }
                 launchSingleTop = true
             }
@@ -119,6 +131,10 @@ class MainNavigator(
 
     fun navigateToSelfDiagnosisTest() {
         navController.navigateToSelfDiagnosisTest()
+    }
+
+    fun navigateToSelfDiagnosisResult() {
+        navController.navigateToSelfDiagnosisResult()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

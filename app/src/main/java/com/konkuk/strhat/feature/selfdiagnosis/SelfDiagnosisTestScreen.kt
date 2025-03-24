@@ -12,21 +12,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 
 @Composable
 fun SelfDiagnosisTestRoute(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToSelfDiagnosisResult: () -> Unit
 ) {
     SelfDiagnosisTestScreen(
-        padding = padding
+        padding = padding,
+        navigateToSelfDiagnosisResult = navigateToSelfDiagnosisResult
     )
 }
 
 @Composable
 fun SelfDiagnosisTestScreen(
     padding: PaddingValues,
+    navigateToSelfDiagnosisResult: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -37,7 +41,10 @@ fun SelfDiagnosisTestScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.self_diagnosis_test_screen_title)
+            text = stringResource(R.string.self_diagnosis_test_screen_title),
+            modifier = Modifier.noRippleClickable {
+                navigateToSelfDiagnosisResult()
+            }
         )
     }
 }
@@ -47,7 +54,8 @@ fun SelfDiagnosisTestScreen(
 fun SelfDiagnosisTestScreenPreview() {
     StrHatTheme {
         SelfDiagnosisTestScreen(
-            padding = PaddingValues()
+            padding = PaddingValues(),
+            navigateToSelfDiagnosisResult = {}
         )
     }
 }

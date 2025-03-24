@@ -169,4 +169,12 @@
     <string name="self_diagnosis_description_PHQ_9">정확한 결과를 제공하기 위해 과학적으로 검증된 도구를 사용합니다.\n\n이 진단은 한국판 우울증 선별도구(Patient Health Questionnaire-9, PHQ-9)를 기반으로 한 전문적인 검사입니다.</string>
     <string name="self_diagnosis_PHQ_9_button">PHQ-9 검사하기</string>
     <string name="self_diagnosis_test_screen_title">자가 진단 문제지 화면</string>
+
+    <!-- self diagnosis result -->
+    <string name="self_diagnosis_result_nickname_description">님의</string>
+    <string name="self_diagnosis_result_test_type_description"> 검사를 통해</string>
+    <string name="self_diagnosis_result_stress_score_description">얻은 스트레스 척도는</string>
+    <string name="self_diagnosis_result_stress_score_end">이에요</string>
+    <string name="self_diagnosis_result_stress_level_end">에 해당되네요</string>
+    <string name="self_diagnosis_result_to_self_diagnosis_main">처음으로 돌아가기</string>
 </resources>
