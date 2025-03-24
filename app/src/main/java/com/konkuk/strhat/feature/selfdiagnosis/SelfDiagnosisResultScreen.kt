@@ -80,6 +80,9 @@ fun SelfDiagnosisResultScreen(
                     color = colors.MainBlack,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
                 Text(
                     text = stringResource(R.string.self_diagnosis_result_test_type_description),
                     style = typography.head1_b_24,
@@ -161,7 +164,12 @@ fun SelfDiagnosisResultScreenPreview() {
             testType = "PSS",
             stressScore = 10,
             stressLevel = "정상 스트레스 수준",
-            stressLevelDescription = "느끼고 있는 스트레스 정도는 정상적인 수준으로,\n심리적으로 안정되어 있습니다."
+            stressLevelDescription = "느끼고 있는 스트레스 정도는 정상적인 수준으로,\n심리적으로 안정되어 있습니다.",
+            testTypeDescription = "0~13점: 정상 스트레스 수준\n" +
+                    "14~16점: 경미한 스트레스 수준\n" +
+                    "17~18점: 중간 스트레스 수준\n" +
+                    "19점: 높은 스트레스 수준\n\n" + "이 척도는 Cohen, Kamarck과 Mermelstein (1983)의 지각된 스트레스 척도를 한국 실정에 맞게 번안하여 한국 대학생을 대상으로 타당화한 것입니다.\n" +
+                    "한국심리학회 홈페이지 또는 KSI한국학술정보 홈페이지에서 원문을 보실 수 있습니다."
         )
 
         SelfDiagnosisResultScreen(

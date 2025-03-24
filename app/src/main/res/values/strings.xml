@@ -172,9 +172,23 @@
 
     <!-- self diagnosis result -->
     <string name="self_diagnosis_result_nickname_description">님의</string>
-    <string name="self_diagnosis_result_test_type_description"> 검사를 통해</string>
+    <string name="self_diagnosis_result_test_type_description">검사를 통해</string>
     <string name="self_diagnosis_result_stress_score_description">얻은 스트레스 척도는</string>
     <string name="self_diagnosis_result_stress_score_end">이에요</string>
     <string name="self_diagnosis_result_stress_level_end">에 해당되네요</string>
     <string name="self_diagnosis_result_to_self_diagnosis_main">처음으로 돌아가기</string>
+    
+    <!-- my self diagnosis record -->
+    <string name="my_self_diagnosis_record_screen_title">나의 자가 진단 결과 기록</string>
+    <string name="my_self_diagnosis_record_stress_title">스트레스 자가 진단</string>
+    <string name="my_self_diagnosis_record_depression_title">우울증 자가 진단</string>
+    <string name="my_self_diagnosis_record_description_PSS">이 진단은 한국판 지각된 스트레스 척도(Perceived Stress Scale, PSS)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="my_self_diagnosis_record_PSS_button">PSS 검사 결과 기록 보기</string>
+    <string name="my_self_diagnosis_record_description_SRI">이 진단은 스트레스 반응 척도(Stress Response Inventory, SRI)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="my_self_diagnosis_record_SRI_button">SRI 검사 결과 기록 보기</string>
+    <string name="my_self_diagnosis_record_description_PHQ_9">이 진단은 한국판 우울증 선별도구(Patient Health Questionnaire-9, PHQ-9)를 기반으로 한 전문적인 검사입니다.</string>
+    <string name="my_self_diagnosis_record_PHQ_9_button">PHQ-9 검사 결과 기록 보기</string>
+    
+    <!-- my self diagnosis record result -->
+    <string name="my_self_diagnosis_record_result_calendar_icon_description">calendar icon</string>
 </resources>
