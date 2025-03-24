@@ -168,4 +168,5 @@
     <string name="self_diagnosis_screen_depression_title">우울증 자가 진단</string>
     <string name="self_diagnosis_description_PHQ_9">정확한 결과를 제공하기 위해 과학적으로 검증된 도구를 사용합니다.\n\n이 진단은 한국판 우울증 선별도구(Patient Health Questionnaire-9, PHQ-9)를 기반으로 한 전문적인 검사입니다.</string>
     <string name="self_diagnosis_PHQ_9_button">PHQ-9 검사하기</string>
+    <string name="self_diagnosis_test_screen_title">자가 진단 문제지 화면</string>
 </resources>

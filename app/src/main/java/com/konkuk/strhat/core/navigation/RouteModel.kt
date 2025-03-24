@@ -9,8 +9,6 @@ sealed interface Route {
     data object Login : Route
     @Serializable
     data object OnBoarding : Route
-    @Serializable
-    data object AddDiary : Route
 }
 
 sealed interface MainTabRoute : Route {
@@ -52,9 +50,16 @@ sealed interface MyPageRoute: Route{
 
 sealed interface DiaryRoute : Route {
     @Serializable
+    data object AddDiary : Route
+    @Serializable
     data object DiaryAIFeedback : Route
     @Serializable
     data object Chat : Route
     @Serializable
     data object StressScore : Route
+}
+
+sealed interface SelfDiagnosisRoute : Route {
+    @Serializable
+    data object SelfDiagnosisTest : Route
 }

@@ -23,16 +23,19 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun SelfDiagnosisRoute(
     padding: PaddingValues,
+    navigateToSelfDiagnosisTest: () -> Unit,
     viewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
     SelfDiagnosisScreen(
-        padding = padding
+        padding = padding,
+        onTestBtnClick = navigateToSelfDiagnosisTest
     )
 }
 
 @Composable
 private fun SelfDiagnosisScreen(
-    padding: PaddingValues
+    padding: PaddingValues,
+    onTestBtnClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -58,7 +61,7 @@ private fun SelfDiagnosisScreen(
 
         StrHatButton(
             text = stringResource(R.string.self_diagnosis_PSS_button),
-            onClick = {}
+            onClick = { onTestBtnClick() }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -73,7 +76,7 @@ private fun SelfDiagnosisScreen(
 
         StrHatButton(
             text = stringResource(R.string.self_diagnosis_SRI_button),
-            onClick = {}
+            onClick = { onTestBtnClick() }
         )
 
         Spacer(modifier = Modifier.height(36.dp))
@@ -96,7 +99,7 @@ private fun SelfDiagnosisScreen(
 
         StrHatButton(
             text = stringResource(R.string.self_diagnosis_PHQ_9_button),
-            onClick = {}
+            onClick = { onTestBtnClick() }
         )
     }
 }
@@ -106,7 +109,8 @@ private fun SelfDiagnosisScreen(
 fun SelfDiagnosisScreenPreview() {
     StrHatTheme {
         SelfDiagnosisScreen(
-            padding = PaddingValues()
+            padding = PaddingValues(),
+            onTestBtnClick = {}
         )
     }
 }

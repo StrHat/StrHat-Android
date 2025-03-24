@@ -48,6 +48,7 @@ fun MainNavHost(
 
             selfDiagnosisNavGraph(
                 padding = padding,
+                onNavigateToSelfDiagnosisTest = navigator::navigateToSelfDiagnosisTest
             )
 
             myPageNavGraph(

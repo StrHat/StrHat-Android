@@ -21,6 +21,7 @@ import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
 import com.konkuk.strhat.feature.onboarding.navigation.navigateToOnBoarding
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosis
+import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosisTest
 
 class MainNavigator(
     val navController: NavHostController,
@@ -114,6 +115,10 @@ class MainNavigator(
 
     fun navigateToStressScore() {
         navController.navigateToStressScore()
+    }
+
+    fun navigateToSelfDiagnosisTest() {
+        navController.navigateToSelfDiagnosisTest()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =
