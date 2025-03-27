@@ -31,6 +31,7 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.DatePickerBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.core.util.time.currentDate
 import com.konkuk.strhat.feature.mypage.state.MySelfDiagnosisRecordResultState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -59,6 +60,9 @@ fun MySelfDiagnosisRecordResultScreen(
     modifier: Modifier = Modifier
 ) {
     var isDatePickerBottomSheetVisible by remember { mutableStateOf(false) }
+
+    val initialDate = mySelfDiagnosisRecordResultState.selectedDate ?: currentDate
+    var selectedLocalDate by remember { mutableStateOf(initialDate) }
 
     Column(
         modifier = modifier
@@ -104,14 +108,14 @@ fun MySelfDiagnosisRecordResultScreen(
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Text(
-                        text = "3",
+                        text = selectedLocalDate.toString().substring(5, 7),
                         style = typography.head0_b_26,
                         color = colors.MainBlue,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
 
                     Text(
-                        text = "월",
+                        text = stringResource(R.string.my_self_diagnosis_record_result_date_month),
                         style = typography.head1_b_24,
                         color = colors.MainBlack
                     )
@@ -119,14 +123,14 @@ fun MySelfDiagnosisRecordResultScreen(
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Text(
-                        text = "24",
+                        text = selectedLocalDate.toString().substring(8, 10),
                         style = typography.head0_b_26,
                         color = colors.MainBlue,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
 
                     Text(
-                        text = "일",
+                        text = stringResource(R.string.my_self_diagnosis_record_result_date_day),
                         style = typography.head1_b_24,
                         color = colors.MainBlack
                     )
@@ -175,7 +179,7 @@ fun MySelfDiagnosisRecordResultScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Row {
                 Text(

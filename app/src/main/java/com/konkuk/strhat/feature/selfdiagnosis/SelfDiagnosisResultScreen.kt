@@ -113,7 +113,7 @@ fun SelfDiagnosisResultScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Row {
                 Text(

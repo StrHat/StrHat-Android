@@ -191,4 +191,6 @@
     
     <!-- my self diagnosis record result -->
     <string name="my_self_diagnosis_record_result_calendar_icon_description">calendar icon</string>
+    <string name="my_self_diagnosis_record_result_date_month">월</string>
+    <string name="my_self_diagnosis_record_result_date_day">일</string>
 </resources>
