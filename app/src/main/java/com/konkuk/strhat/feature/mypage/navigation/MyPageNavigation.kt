@@ -44,6 +44,10 @@ fun NavController.navigateToMySelfDiagnosisRecordResult() {
     navigate(MyPageRoute.MySelfDiagnosisRecordResult)
 }
 
+fun NavController.navigateToChangeGraph() {
+    navigate(MyPageRoute.MyStressEmotionChangeGraph)
+}
+
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
@@ -51,6 +55,7 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
     onNavigateToTodayStressScore: () -> Unit,
+    onNavigateToChangeGraph: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -62,7 +67,8 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToPersonality = navController::navigateToPersonality,
             navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
             navigateToLogin = onNavigateToLogin,
-            navigateToTodayStressScore = onNavigateToTodayStressScore
+            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            navigateToChangeGraph = onNavigateToChangeGraph
         )
     }
 

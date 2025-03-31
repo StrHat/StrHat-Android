@@ -18,6 +18,7 @@ import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
 import com.konkuk.strhat.feature.diary.navigation.navigateToTodayStressScore
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
+import com.konkuk.strhat.feature.mypage.navigation.navigateToChangeGraph
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecord
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecordResult
@@ -140,6 +141,10 @@ class MainNavigator(
 
     fun navigateToTodayStressScore() {
         navController.navigateToTodayStressScore()
+    }
+
+    fun navigateToChangeGraph() {
+        navController.navigateToChangeGraph()
     }
 
     fun navigateToSelfDiagnosisTest() {

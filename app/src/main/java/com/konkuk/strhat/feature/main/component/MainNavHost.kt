@@ -61,6 +61,7 @@ fun MainNavHost(
                 onNavigateToMySelfDiagnosisRecord = navigator::navigateToMySelfDiagnosisRecord,
                 onNavigateToMySelfDiagnosisRecordResult = navigator::navigateToMySelfDiagnosisRecordResult,
                 onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
+                onNavigateToChangeGraph = navigator::navigateToChangeGraph,
                 navController = navigator.navController
             )
 

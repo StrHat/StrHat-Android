@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
+import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRoute
