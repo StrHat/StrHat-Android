@@ -66,7 +66,8 @@ fun NavGraphBuilder.diaryNavGraph(
         DiaryAIFeedbackRoute(
             padding = padding,
             navigateToChat = onNavigateToChat,
-            navigateToTodayStressScore = onNavigateToTodayStressScore
+            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            navController = navController
         )
     }
 

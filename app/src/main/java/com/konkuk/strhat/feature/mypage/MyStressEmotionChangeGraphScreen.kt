@@ -43,6 +43,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun MyStressEmotionChangeGraphRoute(
     padding: PaddingValues,
     navigateToMyPageStressScore: () -> Unit,
+    navigateToMyPageAIFeedback: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val myWeeklyStressState by viewModel.myWeeklyStressState.collectAsState()
@@ -50,7 +51,8 @@ fun MyStressEmotionChangeGraphRoute(
     MyStressEmotionChangeGraphScreen(
         padding = padding,
         myWeeklyStressState = myWeeklyStressState,
-        navigateToMyPageStressScore = navigateToMyPageStressScore
+        navigateToMyPageStressScore = navigateToMyPageStressScore,
+        navigateToMyPageAIFeedback = navigateToMyPageAIFeedback
     )
 }
 
@@ -59,6 +61,7 @@ private fun MyStressEmotionChangeGraphScreen(
     padding: PaddingValues,
     myWeeklyStressState: MyWeeklyStressState,
     navigateToMyPageStressScore: () -> Unit,
+    navigateToMyPageAIFeedback: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var weekOffset by remember { mutableIntStateOf(0) }
@@ -175,7 +178,10 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = listOf(10, 2, 3, 4, 6, 7, 9)
+            values = listOf(10, 2, 3, 4, 6, 7, 9),
+            modifier = Modifier.noRippleClickable {
+                navigateToMyPageAIFeedback()
+            }
         )
     }
 }
@@ -191,7 +197,8 @@ private fun MyStressEmotionChangeGraphScreenPreview() {
         MyStressEmotionChangeGraphScreen(
             padding = PaddingValues(0.dp),
             myWeeklyStressState = myWeeklyStressExampleState,
-            navigateToMyPageStressScore = {}
+            navigateToMyPageStressScore = {},
+            navigateToMyPageAIFeedback = {}
         )
     }
 }

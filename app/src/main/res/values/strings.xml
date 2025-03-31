@@ -203,4 +203,7 @@
 
     <!-- my page stress score -->
     <string name="my_page_stress_score_title">스트레스 점수는</string>
+
+    <!-- my page ai feedback -->
+    <string name="my_page_ai_feedback_chat_history_button">대화기록 조회하기</string>
 </resources>

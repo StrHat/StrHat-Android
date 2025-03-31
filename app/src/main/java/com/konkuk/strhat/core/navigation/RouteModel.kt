@@ -58,9 +58,9 @@ sealed interface MyPageRoute: Route{
 
 sealed interface DiaryRoute : Route {
     @Serializable
-    data object AddDiary : Route
+    data object AddDiary : DiaryRoute
     @Serializable
-    data object DiaryAIFeedback : Route
+    data object DiaryAIFeedback : DiaryRoute
     @Serializable
     data object Chat : Route
     @Serializable

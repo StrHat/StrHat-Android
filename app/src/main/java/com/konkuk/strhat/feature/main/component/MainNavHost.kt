@@ -64,6 +64,7 @@ fun MainNavHost(
                 onNavigateToChangeGraph = navigator::navigateToChangeGraph,
                 onPopBackStack = navigator::popBackStack,
                 onNavigateToMyPageStressScore = navigator::navigateToMyPageStressScore,
+                onNavigateToMyPageAIFeedback = navigator::navigateToDiaryAIFeedback,
                 navController = navigator.navController
             )
 

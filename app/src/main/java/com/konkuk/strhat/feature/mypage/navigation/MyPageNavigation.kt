@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyAccountRoute
@@ -63,6 +64,7 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToChangeGraph: () -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: () -> Unit,
+    onNavigateToMyPageAIFeedback: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -124,7 +126,8 @@ fun NavGraphBuilder.myPageNavGraph(
     composable<MyPageRoute.MyStressEmotionChangeGraph> {
         MyStressEmotionChangeGraphRoute(
             padding = padding,
-            navigateToMyPageStressScore = onNavigateToMyPageStressScore
+            navigateToMyPageStressScore = onNavigateToMyPageStressScore,
+            navigateToMyPageAIFeedback = onNavigateToMyPageAIFeedback
         )
     }
 

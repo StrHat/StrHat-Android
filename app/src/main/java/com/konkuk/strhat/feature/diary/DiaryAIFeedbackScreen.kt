@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.ChatModeBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
@@ -51,6 +53,7 @@ fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
+    navController: NavController,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
 ) {
     val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
@@ -61,7 +64,8 @@ fun DiaryAIFeedbackRoute(
         diaryAIFeedbackState = diaryAIFeedbackState,
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
-        navigateToTodayStressScore = navigateToTodayStressScore
+        navigateToTodayStressScore = navigateToTodayStressScore,
+        navController = navController
     )
 }
 
@@ -72,8 +76,11 @@ private fun DiaryAIFeedbackScreen(
     totalDiary: String,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val previousRoute = navController.previousBackStackEntry?.destination?.route
+
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
     var isChatModeBottomSheetVisible by remember { mutableStateOf(false) }
 
@@ -203,8 +210,12 @@ private fun DiaryAIFeedbackScreen(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
             StrHatButton(
-                isDisabled = true,
-                text = stringResource(R.string.diary_ai_feedback_quit_button),
+                isDisabled = previousRoute?.contains("Diary") == true,
+                text =
+                    if (previousRoute?.contains("Diary") == true)
+                        stringResource(R.string.diary_ai_feedback_quit_button)
+                    else
+                        stringResource(R.string.confirm),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
@@ -214,12 +225,19 @@ private fun DiaryAIFeedbackScreen(
             )
             StrHatButton(
                 isDisabled = false,
-                text = stringResource(R.string.diary_ai_feedback_chat_button),
+                text =
+                    if (previousRoute?.contains("Diary") == true)
+                        stringResource(R.string.diary_ai_feedback_chat_button)
+                    else
+                        stringResource(R.string.my_page_ai_feedback_chat_history_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    isChatModeBottomSheetVisible = true
+                    if (previousRoute?.contains("Diary") == true)
+                        isChatModeBottomSheetVisible = true
+                    else
+                        navigateToChat()
                 }
             )
         }
@@ -267,6 +285,7 @@ fun DiaryAIFeedbackScreenPreview() {
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             navigateToChat = {},
             navigateToTodayStressScore = {},
+            navController = rememberNavController(),
             modifier = Modifier.background(colors.MainWhite)
         )
     }
