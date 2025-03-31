@@ -10,6 +10,7 @@ import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyAccountRoute
 import com.konkuk.strhat.feature.mypage.MyHealingRoute
+import com.konkuk.strhat.feature.mypage.MyPageChatHistoryRoute
 import com.konkuk.strhat.feature.mypage.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyPageStressScoreRoute
 import com.konkuk.strhat.feature.mypage.MyPersonalityRoute
@@ -52,6 +53,10 @@ fun NavController.navigateToChangeGraph() {
 
 fun NavController.navigateToMyPageStressScore() {
     navigate(MyPageRoute.MyPageStressScore)
+}
+
+fun NavController.navigateToMyPageChatHistory() {
+    navigate(MyPageRoute.MyPageChatHistory)
 }
 
 fun NavGraphBuilder.myPageNavGraph(
@@ -133,6 +138,13 @@ fun NavGraphBuilder.myPageNavGraph(
 
     composable<MyPageRoute.MyPageStressScore> {
         MyPageStressScoreRoute(
+            padding = padding,
+            popBackStack = onPopBackStack
+        )
+    }
+
+    composable<MyPageRoute.MyPageChatHistory> {
+        MyPageChatHistoryRoute(
             padding = padding,
             popBackStack = onPopBackStack
         )

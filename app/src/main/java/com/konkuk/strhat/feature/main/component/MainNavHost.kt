@@ -44,6 +44,8 @@ fun MainNavHost(
                 onNavigateToHome = navigator::navigateToHome,
                 onNavigateToMyPage = navigator::navigateToMyPage,
                 onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
+                onPopBackStack = navigator::popBackStack,
+                onNavigateToMyPageChatHistory = navigator::navigateToMyPageChatHistory,
                 navController = navigator.navController
             )
 

@@ -53,6 +53,8 @@ fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
+    popBackStack: () -> Unit,
+    navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
 ) {
@@ -65,6 +67,8 @@ fun DiaryAIFeedbackRoute(
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
         navigateToTodayStressScore = navigateToTodayStressScore,
+        popBackStack = popBackStack,
+        navigateToMyPageChatHistory = navigateToMyPageChatHistory,
         navController = navController
     )
 }
@@ -76,10 +80,14 @@ private fun DiaryAIFeedbackScreen(
     totalDiary: String,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
+    popBackStack: () -> Unit,
+    navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val previousRoute = navController.previousBackStackEntry?.destination?.route
+    val previousRoute = remember {
+        navController.previousBackStackEntry?.destination?.route
+    }
 
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
     var isChatModeBottomSheetVisible by remember { mutableStateOf(false) }
@@ -220,7 +228,10 @@ private fun DiaryAIFeedbackScreen(
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    navigateToTodayStressScore()
+                    if (previousRoute?.contains("Diary") == true)
+                        navigateToTodayStressScore()
+                    else
+                        popBackStack()
                 }
             )
             StrHatButton(
@@ -237,7 +248,7 @@ private fun DiaryAIFeedbackScreen(
                     if (previousRoute?.contains("Diary") == true)
                         isChatModeBottomSheetVisible = true
                     else
-                        navigateToChat()
+                        navigateToMyPageChatHistory()
                 }
             )
         }
@@ -285,6 +296,8 @@ fun DiaryAIFeedbackScreenPreview() {
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             navigateToChat = {},
             navigateToTodayStressScore = {},
+            popBackStack = {},
+            navigateToMyPageChatHistory = {},
             navController = rememberNavController(),
             modifier = Modifier.background(colors.MainWhite)
         )

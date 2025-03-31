@@ -206,4 +206,7 @@
 
     <!-- my page ai feedback -->
     <string name="my_page_ai_feedback_chat_history_button">대화기록 조회하기</string>
+
+    <!-- my page chat history -->
+    <string name="my_page_chat_history_quit_button">그만 보기</string>
 </resources>
