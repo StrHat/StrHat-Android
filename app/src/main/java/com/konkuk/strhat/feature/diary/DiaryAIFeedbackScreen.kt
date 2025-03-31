@@ -50,7 +50,7 @@ import kotlinx.datetime.todayIn
 fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     navigateToChat: () -> Unit,
-    navigateToDiaryMain: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
 ) {
     val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
@@ -61,7 +61,7 @@ fun DiaryAIFeedbackRoute(
         diaryAIFeedbackState = diaryAIFeedbackState,
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
-        navigateToDiaryMain = navigateToDiaryMain
+        navigateToTodayStressScore = navigateToTodayStressScore
     )
 }
 
@@ -71,7 +71,7 @@ private fun DiaryAIFeedbackScreen(
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: String,
     navigateToChat: () -> Unit,
-    navigateToDiaryMain: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
@@ -208,7 +208,7 @@ private fun DiaryAIFeedbackScreen(
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    navigateToDiaryMain()
+                    navigateToTodayStressScore()
                 }
             )
             StrHatButton(
@@ -265,7 +265,7 @@ fun DiaryAIFeedbackScreenPreview() {
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             navigateToChat = {},
-            navigateToDiaryMain = {},
+            navigateToTodayStressScore = {},
             modifier = Modifier.background(colors.MainWhite)
         )
     }

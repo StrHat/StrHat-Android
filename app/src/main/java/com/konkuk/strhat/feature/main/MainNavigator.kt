@@ -85,6 +85,17 @@ class MainNavigator(
         )
     }
 
+    fun navigateToDiary(navOptions: NavOptions? = null) {
+        navController.navigateToDiary(
+            navOptions ?: navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        )
+    }
+
     fun navigateToSelfDiagnosis(navOptions: NavOptions? = null) {
         navController.navigateToSelfDiagnosis(
             navOptions ?: navOptions {

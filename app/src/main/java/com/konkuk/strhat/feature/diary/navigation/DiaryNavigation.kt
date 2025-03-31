@@ -43,7 +43,6 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: () -> Unit,
     onNavigateToChat: () -> Unit,
-    popBackStack: () -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
     onNavigateToTodayStressScore: () -> Unit,
@@ -67,7 +66,7 @@ fun NavGraphBuilder.diaryNavGraph(
         DiaryAIFeedbackRoute(
             padding = padding,
             navigateToChat = onNavigateToChat,
-            navigateToDiaryMain = popBackStack
+            navigateToTodayStressScore = onNavigateToTodayStressScore
         )
     }
 

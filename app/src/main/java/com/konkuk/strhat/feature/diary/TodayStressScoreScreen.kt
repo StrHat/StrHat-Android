@@ -147,12 +147,15 @@ fun TodayStressScoreScreen(
 
         StrHatButton(
             text =
-                if (previousRoute?.contains("Chat") == true)
-                    stringResource(R.string.stress_score_to_home)
+                if (previousRoute?.contains("MyPage") == true)
+                    stringResource(R.string.confirm)
                 else
-                    stringResource(R.string.confirm),
+                    stringResource(R.string.stress_score_to_home),
             onClick = {
                 when {
+                    previousRoute?.contains("AIFeedback") == true -> {
+                        navigateToHome()
+                    }
                     previousRoute?.contains("Chat") == true -> {
                         navigateToHome()
                     }
