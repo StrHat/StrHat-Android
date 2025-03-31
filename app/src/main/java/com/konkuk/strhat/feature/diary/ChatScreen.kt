@@ -35,7 +35,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 @Composable
 fun ChatRoute(
     padding: PaddingValues,
-    navigateToStressScore: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val messages by viewModel.messages.collectAsState()
@@ -47,7 +47,7 @@ fun ChatRoute(
         inputText = inputText,
         onTextChange = { viewModel.updateInputText(it) },
         onSendClick = { viewModel.sendMessage() },
-        navigateToStressScore = navigateToStressScore
+        navigateToTodayStressScore = navigateToTodayStressScore
     )
 }
 
@@ -58,7 +58,7 @@ private fun ChatScreen(
     inputText: String,
     onTextChange: (String) -> Unit,
     onSendClick: () -> Unit,
-    navigateToStressScore: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -124,7 +124,7 @@ private fun ChatScreen(
                 descriptionResId = R.string.dialog_chat_description,
                 onConfirmButtonClick = {
                     showChatQuitDialog = false
-                    navigateToStressScore()
+                    navigateToTodayStressScore()
                 },
                 onDismissButtonClick = { showChatQuitDialog = false },
                 modifier = Modifier.padding(horizontal = 40.dp)
@@ -152,7 +152,7 @@ fun ChatScreenPreview() {
             inputText = "",
             onTextChange = {},
             onSendClick = {},
-            navigateToStressScore = {}
+            navigateToTodayStressScore = {}
         )
     }
 }

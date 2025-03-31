@@ -43,7 +43,9 @@ fun MainNavHost(
                 onNavigateToChat = navigator::navigateToChat,
                 popBackStack = navigator::popBackStackInclusiveFalse,
                 onNavigateToHome = navigator::navigateToHome,
-                onNavigateToStressScore = navigator::navigateToStressScore
+                onNavigateToMyPage = navigator::navigateToMyPage,
+                onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
+                navController = navigator.navController
             )
 
             selfDiagnosisNavGraph(
@@ -59,6 +61,7 @@ fun MainNavHost(
                 onNavigateToLogin = navigator::navigateToLogin,
                 onNavigateToMySelfDiagnosisRecord = navigator::navigateToMySelfDiagnosisRecord,
                 onNavigateToMySelfDiagnosisRecordResult = navigator::navigateToMySelfDiagnosisRecordResult,
+                onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
                 navController = navigator.navController
             )
 

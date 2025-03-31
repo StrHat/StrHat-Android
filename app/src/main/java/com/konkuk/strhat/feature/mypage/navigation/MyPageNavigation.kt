@@ -49,6 +49,7 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToLogin: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
+    onNavigateToTodayStressScore: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -59,7 +60,8 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToStress = navController::navigateToStress,
             navigateToPersonality = navController::navigateToPersonality,
             navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
-            navigateToLogin = onNavigateToLogin
+            navigateToLogin = onNavigateToLogin,
+            navigateToTodayStressScore = onNavigateToTodayStressScore
         )
     }
 

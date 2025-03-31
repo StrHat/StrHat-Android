@@ -60,7 +60,7 @@ sealed interface DiaryRoute : Route {
     @Serializable
     data object Chat : Route
     @Serializable
-    data object StressScore : Route
+    data object TodayStressScore : Route
 }
 
 sealed interface SelfDiagnosisRoute : Route {

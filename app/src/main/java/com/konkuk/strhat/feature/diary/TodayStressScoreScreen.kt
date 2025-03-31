@@ -19,6 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
@@ -29,27 +31,35 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
-fun StressScoreRoute(
+fun TodayStressScoreRoute(
     padding: PaddingValues,
     navigateToHome: () -> Unit,
+    navigateToMyPage: () -> Unit,
+    navController: NavController,
     viewModel: StressScoreViewModel = hiltViewModel()
 ) {
     val stressScoreState by viewModel.stressScoreState.collectAsState()
 
-    StressScoreScreen(
+    TodayStressScoreScreen(
         padding = padding,
         stressScoreState = stressScoreState,
-        navigateToHome = navigateToHome
+        navigateToHome = navigateToHome,
+        navigateToMyPage = navigateToMyPage,
+        navController = navController
     )
 }
 
 @Composable
-fun StressScoreScreen(
+fun TodayStressScoreScreen(
     padding: PaddingValues,
     stressScoreState: StressScoreState,
     navigateToHome: () -> Unit,
+    navigateToMyPage: () -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val previousRoute = navController.previousBackStackEntry?.destination?.route
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -136,9 +146,20 @@ fun StressScoreScreen(
         }
 
         StrHatButton(
-            text = stringResource(R.string.stress_score_to_home),
+            text =
+                if (previousRoute?.contains("Chat") == true)
+                    stringResource(R.string.stress_score_to_home)
+                else
+                    stringResource(R.string.confirm),
             onClick = {
-                navigateToHome()
+                when {
+                    previousRoute?.contains("Chat") == true -> {
+                        navigateToHome()
+                    }
+                    previousRoute?.contains("MyPage") == true -> {
+                        navigateToMyPage()
+                    }
+                }
             },
             modifier = Modifier.padding(bottom = 20.dp)
         )
@@ -156,10 +177,12 @@ fun StressScoreScreenPreview() {
             analysis = "사용자는 다양한 취향을 가진 다양한 활동을 즐기며 삶을 즐기는 편인데, 시험 기간에는 공부 부담과 시간 부족으로 인한 스트레스를 많이 받는 것으로 보입니다. 여러 전공 과목을 동시에 공부해야 하는 상황에서 과연 배워야 할 것들이 끝이 없다는 생각이 불안을 유발하며, 이로 인해 조급함과 지쳐감을 느끼고 있는 모습입니다. 이외에도 자신이 즐기는 음악 청취나 외향적인 성향의 활동을 쉽게 할 수 없다는 점이 스트레스를 느끼는데 영향을 줄 수 있습니다."
         )
 
-        StressScoreScreen(
+        TodayStressScoreScreen(
             padding = PaddingValues(),
             stressScoreState = stressScoreExampleState,
-            navigateToHome = {}
+            navigateToHome = {},
+            navigateToMyPage = {},
+            navController = rememberNavController()
         )
     }
 }
