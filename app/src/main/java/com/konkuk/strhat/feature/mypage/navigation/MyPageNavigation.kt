@@ -10,6 +10,7 @@ import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyAccountRoute
 import com.konkuk.strhat.feature.mypage.MyHealingRoute
 import com.konkuk.strhat.feature.mypage.MyPageRoute
+import com.konkuk.strhat.feature.mypage.MyPageStressScoreRoute
 import com.konkuk.strhat.feature.mypage.MyPersonalityRoute
 import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordResultRoute
 import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordRoute
@@ -48,6 +49,10 @@ fun NavController.navigateToChangeGraph() {
     navigate(MyPageRoute.MyStressEmotionChangeGraph)
 }
 
+fun NavController.navigateToMyPageStressScore() {
+    navigate(MyPageRoute.MyPageStressScore)
+}
+
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
@@ -56,6 +61,8 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
     onNavigateToTodayStressScore: () -> Unit,
     onNavigateToChangeGraph: () -> Unit,
+    onPopBackStack: () -> Unit,
+    onNavigateToMyPageStressScore: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -116,7 +123,15 @@ fun NavGraphBuilder.myPageNavGraph(
 
     composable<MyPageRoute.MyStressEmotionChangeGraph> {
         MyStressEmotionChangeGraphRoute(
-            padding = padding
+            padding = padding,
+            navigateToMyPageStressScore = onNavigateToMyPageStressScore
+        )
+    }
+
+    composable<MyPageRoute.MyPageStressScore> {
+        MyPageStressScoreRoute(
+            padding = padding,
+            popBackStack = onPopBackStack
         )
     }
 }

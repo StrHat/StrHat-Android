@@ -16,32 +16,45 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.feature.mypage.component.WeeklyBarChart
+import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun MyStressEmotionChangeGraphRoute(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToMyPageStressScore: () -> Unit,
+    viewModel: MyPageViewModel = hiltViewModel()
 ) {
+    val myWeeklyStressState by viewModel.myWeeklyStressState.collectAsState()
+
     MyStressEmotionChangeGraphScreen(
-        padding = padding
+        padding = padding,
+        myWeeklyStressState = myWeeklyStressState,
+        navigateToMyPageStressScore = navigateToMyPageStressScore
     )
 }
 
 @Composable
 private fun MyStressEmotionChangeGraphScreen(
     padding: PaddingValues,
+    myWeeklyStressState: MyWeeklyStressState,
+    navigateToMyPageStressScore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -58,7 +71,7 @@ private fun MyStressEmotionChangeGraphScreen(
         ) {
             Row {
                 Text(
-                    text = "송밍서",
+                    text = myWeeklyStressState.nickname,
                     style = typography.head1_b_24,
                     color = colors.MainBlue
                 )
@@ -117,7 +130,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         SummaryBox(
-            summary = "사용자는 완벽주의적이고 내성적인 성향을 가지고 있어서 발표나 의견 충돌, 야근, 인적 손실, 신체적 피로, 그리고 가족 관련 걱정 등 다양한 요인들이 스트레스를 유발했을 것으로 판단됩니다. 이러한 스트레스 요인들이 하나씩 쌓이며 사용자의 마음과 몸에 부담을 주었을 것입니다. 스트레스 관리를 위해 업무에서 완벽을 추구하는 것보다 실수를 수용하고 동료와 의견을 잘 조율하며, 일과 휴식을 균형 있게 유지하는 것이 중요해 보입니다.",
+            summary = myWeeklyStressState.weeklySummary,
             backgroundColor = colors.SubBlue
         )
 
@@ -131,7 +144,10 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = listOf(10, 2, 3, 4, 6, 7, 9)
+            values = listOf(10, 2, 3, 4, 6, 7, 9),
+            modifier = Modifier.noRippleClickable {
+                navigateToMyPageStressScore()
+            }
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -153,8 +169,14 @@ private fun MyStressEmotionChangeGraphScreen(
 @Composable
 private fun MyStressEmotionChangeGraphScreenPreview() {
     StrHatTheme {
+        val myWeeklyStressExampleState = MyWeeklyStressState(
+            nickname = "송민서",
+            weeklySummary = "사용자는 완벽주의적이고 내성적인 성향을 가지고 있어서 발표나 의견 충돌, 야근, 인적 손실, 신체적 피로, 그리고 가족 관련 걱정 등 다양한 요인들이 스트레스를 유발했을 것으로 판단됩니다. 이러한 스트레스 요인들이 하나씩 쌓이며 사용자의 마음과 몸에 부담을 주었을 것입니다. 스트레스 관리를 위해 업무에서 완벽을 추구하는 것보다 실수를 수용하고 동료와 의견을 잘 조율하며, 일과 휴식을 균형 있게 유지하는 것이 중요해 보입니다."
+        )
         MyStressEmotionChangeGraphScreen(
-            padding = PaddingValues(0.dp)
+            padding = PaddingValues(0.dp),
+            myWeeklyStressState = myWeeklyStressExampleState,
+            navigateToMyPageStressScore = {}
         )
     }
 }

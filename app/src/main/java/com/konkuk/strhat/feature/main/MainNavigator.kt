@@ -20,6 +20,7 @@ import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
 import com.konkuk.strhat.feature.mypage.navigation.navigateToChangeGraph
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
+import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPageStressScore
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecord
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecordResult
 import com.konkuk.strhat.feature.onboarding.navigation.navigateToOnBoarding
@@ -161,6 +162,10 @@ class MainNavigator(
 
     fun navigateToMySelfDiagnosisRecordResult() {
         navController.navigateToMySelfDiagnosisRecordResult()
+    }
+
+    fun navigateToMyPageStressScore() {
+        navController.navigateToMyPageStressScore()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =
