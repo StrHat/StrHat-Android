@@ -13,6 +13,7 @@ import com.konkuk.strhat.feature.mypage.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyPersonalityRoute
 import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordResultRoute
 import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordRoute
+import com.konkuk.strhat.feature.mypage.MyStressEmotionChangeGraphRoute
 import com.konkuk.strhat.feature.mypage.MyStressRoute
 
 fun NavController.navigateToMyPage(navOptions: NavOptions) {
@@ -104,6 +105,12 @@ fun NavGraphBuilder.myPageNavGraph(
         MySelfDiagnosisRecordResultRoute(
             padding = padding,
             navigateToMyPage = onNavigateToMyPage
+        )
+    }
+
+    composable<MyPageRoute.MyStressEmotionChangeGraph> {
+        MyStressEmotionChangeGraphRoute(
+            padding = padding
         )
     }
 }

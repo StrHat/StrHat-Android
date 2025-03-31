@@ -38,7 +38,7 @@ fun WeeklyBarChart(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(colors.Gray100)
             .padding(top = 40.dp, bottom = 10.dp)
     ) {

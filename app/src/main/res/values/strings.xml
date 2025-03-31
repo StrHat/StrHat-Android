@@ -193,4 +193,10 @@
     <string name="my_self_diagnosis_record_result_calendar_icon_description">calendar icon</string>
     <string name="my_self_diagnosis_record_result_date_month">월</string>
     <string name="my_self_diagnosis_record_result_date_day">일</string>
+
+    <!-- my stress change graph -->
+    <string name="my_graph_stress_change_title">스트레스 변화 그래프</string>
+    <string name="my_graph_stress_change_description">날짜를 선택하면 해당 날짜의 스트레스 점수,\n스트레스 원인 분석을 확인할 수 있어요!</string>
+    <string name="my_graph_emotion_change_title">감정 변화 그래프</string>
+    <string name="my_graph_emotion_change_description">날짜를 선택하면 해당 날짜의\n스틀햇의 피드백을 확인할 수 있어요!</string>
 </resources>
