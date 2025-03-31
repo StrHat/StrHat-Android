@@ -38,7 +38,7 @@ import com.konkuk.strhat.core.component.section.TitleSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
-import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
+import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -127,8 +127,9 @@ private fun DiaryAIFeedbackScreen(
                 )
             }
 
-            DiaryAIFeedbackSummaryBox(
-                diaryAIFeedbackSummary = diaryAIFeedbackState.diaryAIFeedbackSummary,
+            SummaryBox(
+                summary = diaryAIFeedbackState.diaryAIFeedbackSummary,
+                backgroundColor = colors.Gray100,
                 modifier = Modifier.padding(top = 10.dp)
             )
 

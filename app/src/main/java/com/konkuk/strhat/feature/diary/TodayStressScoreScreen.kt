@@ -24,7 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
-import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackSummaryBox
+import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.feature.diary.state.StressScoreState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -140,8 +140,9 @@ fun TodayStressScoreScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            DiaryAIFeedbackSummaryBox(
-                diaryAIFeedbackSummary = stressScoreState.analysis
+            SummaryBox(
+                summary = stressScoreState.analysis,
+                backgroundColor = colors.Gray100
             )
         }
 
