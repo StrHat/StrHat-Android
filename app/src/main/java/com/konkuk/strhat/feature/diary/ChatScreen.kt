@@ -78,6 +78,7 @@ private fun ChatScreen(
     ) {
         Column {
             ChatTopBar(
+                showQuitBtn = true,
                 onChatQuitBtnClick = {
                     showChatQuitDialog = true
                 }

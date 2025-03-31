@@ -25,10 +25,9 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun ChatTopBar(
     modifier: Modifier = Modifier,
-    onChatQuitBtnClick: () -> Unit
+    showQuitBtn: Boolean = true,
+    onChatQuitBtnClick: () -> Unit = {}
 ) {
-    var showChatQuitDialog by remember { mutableStateOf(false) }
-
     Column {
         Box(
             modifier = modifier
@@ -42,15 +41,17 @@ fun ChatTopBar(
                 color = colors.MainBlack,
                 modifier = Modifier.align(Alignment.Center),
             )
-            UnderlineButton(
-                btnText = "대화 그만하기",
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(top = 4.dp, end = 20.dp)
-                    .noRippleClickable {
-                        onChatQuitBtnClick()
-                    }
-            )
+            if (showQuitBtn) {
+                UnderlineButton(
+                    btnText = "대화 그만하기",
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(top = 4.dp, end = 20.dp)
+                        .noRippleClickable {
+                            onChatQuitBtnClick()
+                        }
+                )
+            }
         }
 
         HorizontalDivider(
