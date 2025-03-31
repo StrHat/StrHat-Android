@@ -162,7 +162,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = listOf(10, 2, 3, 4, 6, 7, 9),
+            values = myWeeklyStressState.weeklyStressScores,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageStressScore()
             }
@@ -178,7 +178,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = listOf(10, 2, 3, 4, 6, 7, 9),
+            values = myWeeklyStressState.weeklyEmotionScores,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageAIFeedback()
             }
