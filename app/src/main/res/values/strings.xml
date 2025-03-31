@@ -7,6 +7,9 @@
     <string name="dismiss">취소</string>
     <string name="next">다음</string>
     <string name="select">선택</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="week">주차</string>
 
     <!-- navigation -->
     <string name="home">홈</string>
@@ -191,8 +194,6 @@
     
     <!-- my self diagnosis record result -->
     <string name="my_self_diagnosis_record_result_calendar_icon_description">calendar icon</string>
-    <string name="my_self_diagnosis_record_result_date_month">월</string>
-    <string name="my_self_diagnosis_record_result_date_day">일</string>
 
     <!-- my stress change graph -->
     <string name="my_graph_stress_change_title">스트레스 변화 그래프</string>

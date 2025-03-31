@@ -18,6 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,6 +32,7 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.core.util.time.getWeekStateFromOffset
 import com.konkuk.strhat.feature.mypage.component.WeeklyBarChart
 import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import com.konkuk.strhat.ui.theme.StrHatTheme
@@ -57,6 +61,9 @@ private fun MyStressEmotionChangeGraphScreen(
     navigateToMyPageStressScore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var weekOffset by remember { mutableIntStateOf(0) }
+    val weekState = getWeekStateFromOffset(weekOffset)
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -88,33 +95,41 @@ private fun MyStressEmotionChangeGraphScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_left),
                     contentDescription = stringResource(R.string.diary_calendar_month_left_arrow_description),
-                    tint = colors.Gray300
+                    tint = colors.Gray300,
+                    modifier = Modifier.noRippleClickable {
+                        weekOffset += 1
+                    }
                 )
                 Text(
-                    text = "12",
+                    text = "${weekState.month}",
                     style = typography.head0_b_26,
                     color = colors.MainBlue
                 )
                 Text(
-                    text = "월",
+                    text = stringResource(R.string.month),
                     style = typography.head1_b_24,
                     color = colors.MainBlack
                 )
+
                 Spacer(modifier = Modifier.width(6.dp))
+
                 Text(
-                    text = "1",
+                    text = "${weekState.weekOfMonth}",
                     style = typography.head0_b_26,
                     color = colors.MainBlue
                 )
                 Text(
-                    text = "주차",
+                    text = stringResource(R.string.week),
                     style = typography.head1_b_24,
                     color = colors.MainBlack
                 )
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_right),
                     contentDescription = stringResource(R.string.diary_calendar_month_right_arrow_description),
-                    tint = colors.Gray300
+                    tint = colors.Gray300,
+                    modifier = Modifier.noRippleClickable {
+                        if (weekOffset > 0) weekOffset -= 1
+                    }
                 )
             }
         }

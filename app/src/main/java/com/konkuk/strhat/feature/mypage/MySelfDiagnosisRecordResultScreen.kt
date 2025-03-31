@@ -115,7 +115,7 @@ fun MySelfDiagnosisRecordResultScreen(
                     )
 
                     Text(
-                        text = stringResource(R.string.my_self_diagnosis_record_result_date_month),
+                        text = stringResource(R.string.month),
                         style = typography.head1_b_24,
                         color = colors.MainBlack
                     )
@@ -130,7 +130,7 @@ fun MySelfDiagnosisRecordResultScreen(
                     )
 
                     Text(
-                        text = stringResource(R.string.my_self_diagnosis_record_result_date_day),
+                        text = stringResource(R.string.day),
                         style = typography.head1_b_24,
                         color = colors.MainBlack
                     )
