@@ -217,10 +217,12 @@ private fun DiaryAIFeedbackScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
+            val isDiaryRoute = previousRoute?.contains("Diary") == true
+
             StrHatButton(
-                isDisabled = previousRoute?.contains("Diary") == true,
+                isDisabled = isDiaryRoute,
                 text =
-                    if (previousRoute?.contains("Diary") == true)
+                    if (isDiaryRoute)
                         stringResource(R.string.diary_ai_feedback_quit_button)
                     else
                         stringResource(R.string.confirm),
@@ -228,7 +230,7 @@ private fun DiaryAIFeedbackScreen(
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (previousRoute?.contains("Diary") == true)
+                    if (isDiaryRoute)
                         navigateToTodayStressScore()
                     else
                         popBackStack()

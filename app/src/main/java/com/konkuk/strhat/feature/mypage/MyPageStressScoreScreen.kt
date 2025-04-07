@@ -140,7 +140,7 @@ fun MyPageStressScoreScreen(
         }
 
         StrHatButton(
-            text = "이전으로 돌아가기",
+            text = stringResource(R.string.my_page_go_back_button),
             onClick = {
                 popBackStack()
             },

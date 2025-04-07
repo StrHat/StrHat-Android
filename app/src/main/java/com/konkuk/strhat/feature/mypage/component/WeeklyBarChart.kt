@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.domain.type.DayOfWeekType
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
@@ -101,10 +102,9 @@ fun WeeklyBarChart(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            val days = listOf("월", "화", "수", "목", "금", "토", "일")
-            days.forEach { day ->
+            DayOfWeekType.entries.forEach { day ->
                 Text(
-                    text = day,
+                    text = day.dayOfWeekType,
                     style = typography.body4_r_12,
                     textAlign = TextAlign.Center,
                     modifier = Modifier

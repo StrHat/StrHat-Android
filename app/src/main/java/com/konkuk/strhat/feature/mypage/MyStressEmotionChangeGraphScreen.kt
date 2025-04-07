@@ -140,7 +140,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "주차별 스트레스 요약",
+            text = stringResource(R.string.my_graph_stress_change_weekly_summary),
             style = typography.head1_b_24,
             color = colors.MainBlack
         )

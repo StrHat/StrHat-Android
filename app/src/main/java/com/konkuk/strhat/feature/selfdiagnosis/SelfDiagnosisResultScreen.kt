@@ -147,9 +147,7 @@ fun SelfDiagnosisResultScreen(
 
         StrHatButton(
             text = stringResource(R.string.self_diagnosis_result_to_self_diagnosis_main),
-            onClick = {
-                navigateToSelfDiagnosis()
-            },
+            onClick = navigateToSelfDiagnosis,
             modifier = Modifier.padding(bottom = 20.dp)
         )
     }

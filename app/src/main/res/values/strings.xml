@@ -152,6 +152,8 @@
     <string name="chat_select_chat_mode_description">스틀햇과 나누고 싶은 대화 모드를 선택해주세요!</string>
     <string name="chat_select_chat_mode_button">대화 모드 선택 버튼</string>
     <string name="chat_text_field_row_hint">메시지를 입력하세요</string>
+    <string name="chat_top_bar_title">스틀햇과의 대화</string>
+    <string name="chat_top_bar_quit_button">대화 그만하기</string>
 
     <!-- stress score screen -->
     <string name="stress_score_nickname_description">님의</string>
@@ -200,9 +202,11 @@
     <string name="my_graph_stress_change_description">날짜를 선택하면 해당 날짜의 스트레스 점수,\n스트레스 원인 분석을 확인할 수 있어요!</string>
     <string name="my_graph_emotion_change_title">감정 변화 그래프</string>
     <string name="my_graph_emotion_change_description">날짜를 선택하면 해당 날짜의\n스틀햇의 피드백을 확인할 수 있어요!</string>
+    <string name="my_graph_stress_change_weekly_summary">주차별 스트레스 요약</string>
 
     <!-- my page stress score -->
     <string name="my_page_stress_score_title">스트레스 점수는</string>
+    <string name="my_page_go_back_button">이전으로 돌아가기</string>
 
     <!-- my page ai feedback -->
     <string name="my_page_ai_feedback_chat_history_button">대화기록 조회하기</string>

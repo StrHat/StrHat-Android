@@ -213,9 +213,7 @@ fun MySelfDiagnosisRecordResultScreen(
 
         StrHatButton(
             text = stringResource(R.string.confirm),
-            onClick = {
-                navigateToMyPage()
-            },
+            onClick = navigateToMyPage,
             modifier = Modifier.padding(bottom = 20.dp)
         )
     }

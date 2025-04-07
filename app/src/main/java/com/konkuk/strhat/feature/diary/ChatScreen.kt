@@ -83,34 +83,28 @@ private fun ChatScreen(
                     showChatQuitDialog = true
                 }
             )
-
-            Column(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f),
+                state = lazyListState,
+                contentPadding = PaddingValues(vertical = 8.dp)
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    state = lazyListState,
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(messages) { chatMessage ->
-                        ChatBubble(
-                            message = chatMessage.message,
-                            isSentByUser = chatMessage.isMine
-                        )
-                    }
+                items(messages) { chatMessage ->
+                    ChatBubble(
+                        message = chatMessage.message,
+                        isSentByUser = chatMessage.isMine
+                    )
                 }
-                ChatTextFieldRow(
-                    message = inputText,
-                    onTextChange = onTextChange,
-                    onSendClick = onSendClick,
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .imePadding()
-                )
             }
+            ChatTextFieldRow(
+                message = inputText,
+                onTextChange = onTextChange,
+                onSendClick = onSendClick,
+                modifier = Modifier
+                    .padding(20.dp)
+                    .imePadding()
+            )
         }
     }
 
