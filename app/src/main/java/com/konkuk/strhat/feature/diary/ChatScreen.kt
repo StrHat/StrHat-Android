@@ -35,7 +35,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 @Composable
 fun ChatRoute(
     padding: PaddingValues,
-    navigateToStressScore: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val messages by viewModel.messages.collectAsState()
@@ -47,7 +47,7 @@ fun ChatRoute(
         inputText = inputText,
         onTextChange = { viewModel.updateInputText(it) },
         onSendClick = { viewModel.sendMessage() },
-        navigateToStressScore = navigateToStressScore
+        navigateToTodayStressScore = navigateToTodayStressScore
     )
 }
 
@@ -58,7 +58,7 @@ private fun ChatScreen(
     inputText: String,
     onTextChange: (String) -> Unit,
     onSendClick: () -> Unit,
-    navigateToStressScore: () -> Unit,
+    navigateToTodayStressScore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -78,38 +78,33 @@ private fun ChatScreen(
     ) {
         Column {
             ChatTopBar(
+                showQuitBtn = true,
                 onChatQuitBtnClick = {
                     showChatQuitDialog = true
                 }
             )
-
-            Column(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f),
+                state = lazyListState,
+                contentPadding = PaddingValues(vertical = 8.dp)
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    state = lazyListState,
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(messages) { chatMessage ->
-                        ChatBubble(
-                            message = chatMessage.message,
-                            isSentByUser = chatMessage.isMine
-                        )
-                    }
+                items(messages) { chatMessage ->
+                    ChatBubble(
+                        message = chatMessage.message,
+                        isSentByUser = chatMessage.isMine
+                    )
                 }
-                ChatTextFieldRow(
-                    message = inputText,
-                    onTextChange = onTextChange,
-                    onSendClick = onSendClick,
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .imePadding()
-                )
             }
+            ChatTextFieldRow(
+                message = inputText,
+                onTextChange = onTextChange,
+                onSendClick = onSendClick,
+                modifier = Modifier
+                    .padding(20.dp)
+                    .imePadding()
+            )
         }
     }
 
@@ -124,7 +119,7 @@ private fun ChatScreen(
                 descriptionResId = R.string.dialog_chat_description,
                 onConfirmButtonClick = {
                     showChatQuitDialog = false
-                    navigateToStressScore()
+                    navigateToTodayStressScore()
                 },
                 onDismissButtonClick = { showChatQuitDialog = false },
                 modifier = Modifier.padding(horizontal = 40.dp)
@@ -152,7 +147,7 @@ fun ChatScreenPreview() {
             inputText = "",
             onTextChange = {},
             onSendClick = {},
-            navigateToStressScore = {}
+            navigateToTodayStressScore = {}
         )
     }
 }

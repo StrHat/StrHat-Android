@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.UnderlineButton
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -25,10 +23,9 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun ChatTopBar(
     modifier: Modifier = Modifier,
-    onChatQuitBtnClick: () -> Unit
+    showQuitBtn: Boolean = true,
+    onChatQuitBtnClick: () -> Unit = {}
 ) {
-    var showChatQuitDialog by remember { mutableStateOf(false) }
-
     Column {
         Box(
             modifier = modifier
@@ -37,20 +34,22 @@ fun ChatTopBar(
                 .background(colors.MainWhite)
         ) {
             Text(
-                text = "스틀햇과의 대화",
+                text = stringResource(R.string.chat_top_bar_title),
                 style = typography.body1_b_16,
                 color = colors.MainBlack,
                 modifier = Modifier.align(Alignment.Center),
             )
-            UnderlineButton(
-                btnText = "대화 그만하기",
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(top = 4.dp, end = 20.dp)
-                    .noRippleClickable {
-                        onChatQuitBtnClick()
-                    }
-            )
+            if (showQuitBtn) {
+                UnderlineButton(
+                    btnText = stringResource(R.string.chat_top_bar_quit_button),
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(top = 4.dp, end = 20.dp)
+                        .noRippleClickable {
+                            onChatQuitBtnClick()
+                        }
+                )
+            }
         }
 
         HorizontalDivider(

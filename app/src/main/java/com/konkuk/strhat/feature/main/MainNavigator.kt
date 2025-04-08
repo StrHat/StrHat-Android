@@ -15,12 +15,19 @@ import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
-import com.konkuk.strhat.feature.diary.navigation.navigateToStressScore
+import com.konkuk.strhat.feature.diary.navigation.navigateToTodayStressScore
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
+import com.konkuk.strhat.feature.mypage.navigation.navigateToChangeGraph
 import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPage
+import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPageChatHistory
+import com.konkuk.strhat.feature.mypage.navigation.navigateToMyPageStressScore
+import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecord
+import com.konkuk.strhat.feature.mypage.navigation.navigateToMySelfDiagnosisRecordResult
 import com.konkuk.strhat.feature.onboarding.navigation.navigateToOnBoarding
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosis
+import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosisResult
+import com.konkuk.strhat.feature.selfdiagnosis.navigation.navigateToSelfDiagnosisTest
 
 class MainNavigator(
     val navController: NavHostController,
@@ -81,11 +88,33 @@ class MainNavigator(
         )
     }
 
+    fun navigateToDiary(navOptions: NavOptions? = null) {
+        navController.navigateToDiary(
+            navOptions ?: navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        )
+    }
+
+    fun navigateToSelfDiagnosis(navOptions: NavOptions? = null) {
+        navController.navigateToSelfDiagnosis(
+            navOptions ?: navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = false
+                }
+                launchSingleTop = true
+            }
+        )
+    }
+
     fun navigateToMyPage(navOptions: NavOptions? = null) {
         navController.navigateToMyPage(
             navOptions ?: navOptions {
                 popUpTo(navController.graph.findStartDestination().id) {
-                    inclusive = true
+                    inclusive = false
                 }
                 launchSingleTop = true
             }
@@ -112,8 +141,36 @@ class MainNavigator(
         navController.popBackStack(MainTabRoute.Diary, false)
     }
 
-    fun navigateToStressScore() {
-        navController.navigateToStressScore()
+    fun navigateToTodayStressScore() {
+        navController.navigateToTodayStressScore()
+    }
+
+    fun navigateToChangeGraph() {
+        navController.navigateToChangeGraph()
+    }
+
+    fun navigateToSelfDiagnosisTest() {
+        navController.navigateToSelfDiagnosisTest()
+    }
+
+    fun navigateToSelfDiagnosisResult() {
+        navController.navigateToSelfDiagnosisResult()
+    }
+
+    fun navigateToMySelfDiagnosisRecord() {
+        navController.navigateToMySelfDiagnosisRecord()
+    }
+
+    fun navigateToMySelfDiagnosisRecordResult() {
+        navController.navigateToMySelfDiagnosisRecordResult()
+    }
+
+    fun navigateToMyPageStressScore() {
+        navController.navigateToMyPageStressScore()
+    }
+
+    fun navigateToMyPageChatHistory() {
+        navController.navigateToMyPageChatHistory()
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

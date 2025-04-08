@@ -1,4 +1,4 @@
-package com.konkuk.strhat.feature.selfdiagnosis
+package com.konkuk.strhat.feature.mypage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.ui.theme.StrHatTheme
@@ -21,21 +20,20 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
-fun SelfDiagnosisRoute(
+fun MySelfDiagnosisRecordRoute(
     padding: PaddingValues,
-    navigateToSelfDiagnosisTest: () -> Unit,
-    viewModel: SelfDiagnosisViewModel = hiltViewModel()
+    navigateToMySelfDiagnosisRecordResult: () -> Unit,
 ) {
-    SelfDiagnosisScreen(
+    MySelfDiagnosisRecordScreen(
         padding = padding,
-        onTestBtnClick = navigateToSelfDiagnosisTest
+        onResultRecordBtnClick = navigateToMySelfDiagnosisRecordResult
     )
 }
 
 @Composable
-private fun SelfDiagnosisScreen(
+fun MySelfDiagnosisRecordScreen(
     padding: PaddingValues,
-    onTestBtnClick: () -> Unit,
+    onResultRecordBtnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -45,15 +43,23 @@ private fun SelfDiagnosisScreen(
             .padding(top = 70.dp, start = 20.dp, end = 20.dp)
     ) {
         Text(
-            text = stringResource(R.string.self_diagnosis_screen_stress_title),
+            text = stringResource(R.string.my_self_diagnosis_record_screen_title),
             style = typography.head1_b_24,
             color = colors.MainBlack
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = stringResource(R.string.self_diagnosis_description_PSS),
+            text = stringResource(R.string.my_self_diagnosis_record_stress_title),
+            style = typography.head2_b_20,
+            color = colors.MainBlack
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            text = stringResource(R.string.my_self_diagnosis_record_description_PSS),
             style = typography.body2_r_15,
             color = colors.Gray500
         )
@@ -61,14 +67,14 @@ private fun SelfDiagnosisScreen(
         Spacer(modifier = Modifier.height(18.dp))
 
         StrHatButton(
-            text = stringResource(R.string.self_diagnosis_PSS_button),
-            onClick = { onTestBtnClick() }
+            text = stringResource(R.string.my_self_diagnosis_record_PSS_button),
+            onClick = { onResultRecordBtnClick() }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = stringResource(R.string.self_diagnosis_description_SRI),
+            text = stringResource(R.string.my_self_diagnosis_record_description_SRI),
             style = typography.body2_r_15,
             color = colors.Gray500
         )
@@ -76,22 +82,22 @@ private fun SelfDiagnosisScreen(
         Spacer(modifier = Modifier.height(18.dp))
 
         StrHatButton(
-            text = stringResource(R.string.self_diagnosis_SRI_button),
-            onClick = { onTestBtnClick() }
+            text = stringResource(R.string.my_self_diagnosis_record_SRI_button),
+            onClick = { onResultRecordBtnClick() }
         )
 
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = stringResource(R.string.self_diagnosis_screen_depression_title),
-            style = typography.head1_b_24,
+            text = stringResource(R.string.my_self_diagnosis_record_depression_title),
+            style = typography.head2_b_20,
             color = colors.MainBlack
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(R.string.self_diagnosis_description_PHQ_9),
+            text = stringResource(R.string.my_self_diagnosis_record_description_PHQ_9),
             style = typography.body2_r_15,
             color = colors.Gray500
         )
@@ -99,19 +105,19 @@ private fun SelfDiagnosisScreen(
         Spacer(modifier = Modifier.height(18.dp))
 
         StrHatButton(
-            text = stringResource(R.string.self_diagnosis_PHQ_9_button),
-            onClick = { onTestBtnClick() }
+            text = stringResource(R.string.my_self_diagnosis_record_PHQ_9_button),
+            onClick = { onResultRecordBtnClick() }
         )
     }
 }
 
 @Preview
 @Composable
-fun SelfDiagnosisScreenPreview() {
+fun MySelfDiagnosisRecordScreenPreview() {
     StrHatTheme {
-        SelfDiagnosisScreen(
+        MySelfDiagnosisRecordScreen(
             padding = PaddingValues(),
-            onTestBtnClick = {}
+            onResultRecordBtnClick = {}
         )
     }
 }

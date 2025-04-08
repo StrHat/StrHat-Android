@@ -5,12 +5,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyAccountRoute
 import com.konkuk.strhat.feature.mypage.MyHealingRoute
+import com.konkuk.strhat.feature.mypage.MyPageChatHistoryRoute
 import com.konkuk.strhat.feature.mypage.MyPageRoute
+import com.konkuk.strhat.feature.mypage.MyPageStressScoreRoute
 import com.konkuk.strhat.feature.mypage.MyPersonalityRoute
+import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordResultRoute
+import com.konkuk.strhat.feature.mypage.MySelfDiagnosisRecordRoute
+import com.konkuk.strhat.feature.mypage.MyStressEmotionChangeGraphRoute
 import com.konkuk.strhat.feature.mypage.MyStressRoute
 
 fun NavController.navigateToMyPage(navOptions: NavOptions) {
@@ -33,10 +39,37 @@ fun NavController.navigateToPersonality() {
     navigate(MyPageRoute.Personality)
 }
 
+fun NavController.navigateToMySelfDiagnosisRecord() {
+    navigate(MyPageRoute.MySelfDiagnosisRecord)
+}
+
+fun NavController.navigateToMySelfDiagnosisRecordResult() {
+    navigate(MyPageRoute.MySelfDiagnosisRecordResult)
+}
+
+fun NavController.navigateToChangeGraph() {
+    navigate(MyPageRoute.MyStressEmotionChangeGraph)
+}
+
+fun NavController.navigateToMyPageStressScore() {
+    navigate(MyPageRoute.MyPageStressScore)
+}
+
+fun NavController.navigateToMyPageChatHistory() {
+    navigate(MyPageRoute.MyPageChatHistory)
+}
+
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
     onNavigateToLogin: () -> Unit,
+    onNavigateToMySelfDiagnosisRecord: () -> Unit,
+    onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
+    onNavigateToTodayStressScore: () -> Unit,
+    onNavigateToChangeGraph: () -> Unit,
+    onPopBackStack: () -> Unit,
+    onNavigateToMyPageStressScore: () -> Unit,
+    onNavigateToMyPageAIFeedback: () -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -46,7 +79,10 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToHealing = navController::navigateToHealing,
             navigateToStress = navController::navigateToStress,
             navigateToPersonality = navController::navigateToPersonality,
-            navigateToLogin = onNavigateToLogin
+            navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
+            navigateToLogin = onNavigateToLogin,
+            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            navigateToChangeGraph = onNavigateToChangeGraph
         )
     }
 
@@ -75,6 +111,42 @@ fun NavGraphBuilder.myPageNavGraph(
         MyPersonalityRoute(
             padding = padding,
             navigateToMyPage = onNavigateToMyPage
+        )
+    }
+
+    composable<MyPageRoute.MySelfDiagnosisRecord> {
+        MySelfDiagnosisRecordRoute(
+            padding = padding,
+            navigateToMySelfDiagnosisRecordResult = onNavigateToMySelfDiagnosisRecordResult
+        )
+    }
+
+    composable<MyPageRoute.MySelfDiagnosisRecordResult> {
+        MySelfDiagnosisRecordResultRoute(
+            padding = padding,
+            navigateToMyPage = onNavigateToMyPage
+        )
+    }
+
+    composable<MyPageRoute.MyStressEmotionChangeGraph> {
+        MyStressEmotionChangeGraphRoute(
+            padding = padding,
+            navigateToMyPageStressScore = onNavigateToMyPageStressScore,
+            navigateToMyPageAIFeedback = onNavigateToMyPageAIFeedback
+        )
+    }
+
+    composable<MyPageRoute.MyPageStressScore> {
+        MyPageStressScoreRoute(
+            padding = padding,
+            popBackStack = onPopBackStack
+        )
+    }
+
+    composable<MyPageRoute.MyPageChatHistory> {
+        MyPageChatHistoryRoute(
+            padding = padding,
+            popBackStack = onPopBackStack
         )
     }
 }

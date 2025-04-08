@@ -1,7 +1,7 @@
-package com.konkuk.strhat.feature.selfdiagnosis
+package com.konkuk.strhat.feature.mypage
 
 import androidx.lifecycle.ViewModel
-import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
+import com.konkuk.strhat.feature.mypage.state.MySelfDiagnosisRecordResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class SelfDiagnosisViewModel @Inject constructor() : ViewModel() {
-    private val _selfDiagnosisResultState = MutableStateFlow(SelfDiagnosisResultState())
-    val selfDiagnosisResultState = _selfDiagnosisResultState.asStateFlow()
+class MySelfDiagnosisRecordViewModel @Inject constructor() : ViewModel() {
+    private val _mySelfDiagnosisRecordResultState = MutableStateFlow(MySelfDiagnosisRecordResultState())
+    val mySelfDiagnosisRecordResultState = _mySelfDiagnosisRecordResultState.asStateFlow()
 
     init {
-        _selfDiagnosisResultState.update {
+        _mySelfDiagnosisRecordResultState.update {
             it.copy(
                 nickname = "송민서",
                 testType = "PSS",

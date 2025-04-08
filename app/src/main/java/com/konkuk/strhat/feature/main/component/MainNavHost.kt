@@ -41,19 +41,32 @@ fun MainNavHost(
                 onNavigateToAddDiary = navigator::navigateToAddDiary,
                 onNavigateToDiaryAIFeedback = navigator::navigateToDiaryAIFeedback,
                 onNavigateToChat = navigator::navigateToChat,
-                popBackStack = navigator::popBackStackInclusiveFalse,
                 onNavigateToHome = navigator::navigateToHome,
-                onNavigateToStressScore = navigator::navigateToStressScore
+                onNavigateToMyPage = navigator::navigateToMyPage,
+                onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
+                onPopBackStack = navigator::popBackStack,
+                onNavigateToMyPageChatHistory = navigator::navigateToMyPageChatHistory,
+                navController = navigator.navController
             )
 
             selfDiagnosisNavGraph(
                 padding = padding,
+                onNavigateToSelfDiagnosisTest = navigator::navigateToSelfDiagnosisTest,
+                onNavigateToSelfDiagnosisResult = navigator::navigateToSelfDiagnosisResult,
+                onNavigateToSelfDiagnosis = navigator::navigateToSelfDiagnosis
             )
 
             myPageNavGraph(
                 padding = padding,
                 onNavigateToMyPage = navigator::navigateToMyPage,
                 onNavigateToLogin = navigator::navigateToLogin,
+                onNavigateToMySelfDiagnosisRecord = navigator::navigateToMySelfDiagnosisRecord,
+                onNavigateToMySelfDiagnosisRecordResult = navigator::navigateToMySelfDiagnosisRecordResult,
+                onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
+                onNavigateToChangeGraph = navigator::navigateToChangeGraph,
+                onPopBackStack = navigator::popBackStack,
+                onNavigateToMyPageStressScore = navigator::navigateToMyPageStressScore,
+                onNavigateToMyPageAIFeedback = navigator::navigateToDiaryAIFeedback,
                 navController = navigator.navController
             )
 

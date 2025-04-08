@@ -7,19 +7,18 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
-import com.konkuk.strhat.core.navigation.Route
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRoute
 import com.konkuk.strhat.feature.diary.DiaryRoute
-import com.konkuk.strhat.feature.diary.StressScoreRoute
+import com.konkuk.strhat.feature.diary.TodayStressScoreRoute
 
 fun NavController.navigateToDiary(navOptions: NavOptions) {
     navigate(MainTabRoute.Diary, navOptions)
 }
 
 fun NavController.navigateToAddDiary() {
-    navigate(Route.AddDiary)
+    navigate(DiaryRoute.AddDiary)
 }
 
 fun NavController.navigateToDiaryAIFeedback() {
@@ -35,8 +34,8 @@ fun NavController.navigateToChat() {
     navigate(DiaryRoute.Chat)
 }
 
-fun NavController.navigateToStressScore() {
-    navigate(DiaryRoute.StressScore)
+fun NavController.navigateToTodayStressScore() {
+    navigate(DiaryRoute.TodayStressScore)
 }
 
 fun NavGraphBuilder.diaryNavGraph(
@@ -44,9 +43,12 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: () -> Unit,
     onNavigateToChat: () -> Unit,
-    popBackStack: () -> Unit,
     onNavigateToHome: () -> Unit,
-    onNavigateToStressScore: () -> Unit
+    onNavigateToMyPage: () -> Unit,
+    onNavigateToTodayStressScore: () -> Unit,
+    onPopBackStack: () -> Unit,
+    onNavigateToMyPageChatHistory: () -> Unit,
+    navController: NavController
 ) {
     composable<MainTabRoute.Diary> {
         DiaryRoute(
@@ -55,7 +57,7 @@ fun NavGraphBuilder.diaryNavGraph(
         )
     }
 
-    composable<Route.AddDiary> {
+    composable<DiaryRoute.AddDiary> {
         AddDiaryRoute(
             padding = padding,
             navigateToDiaryAIFeedback = onNavigateToDiaryAIFeedback
@@ -66,21 +68,26 @@ fun NavGraphBuilder.diaryNavGraph(
         DiaryAIFeedbackRoute(
             padding = padding,
             navigateToChat = onNavigateToChat,
-            navigateToDiaryMain = popBackStack
+            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            popBackStack = onPopBackStack,
+            navigateToMyPageChatHistory = onNavigateToMyPageChatHistory,
+            navController = navController
         )
     }
 
     composable<DiaryRoute.Chat> {
         ChatRoute(
             padding = padding,
-            navigateToStressScore = onNavigateToStressScore
+            navigateToTodayStressScore = onNavigateToTodayStressScore
         )
     }
 
-    composable<DiaryRoute.StressScore> {
-        StressScoreRoute(
+    composable<DiaryRoute.TodayStressScore> {
+        TodayStressScoreRoute(
             padding = padding,
-            navigateToHome = onNavigateToHome
+            navigateToHome = onNavigateToHome,
+            navigateToMyPage = onNavigateToMyPage,
+            navController = navController
         )
     }
 }
