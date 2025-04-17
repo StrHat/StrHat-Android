@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +41,7 @@ import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.section.TitleSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
+import com.konkuk.strhat.domain.entity.TotalDiaryModel
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
 import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
@@ -52,6 +54,7 @@ import kotlinx.datetime.todayIn
 @Composable
 fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
+    date: String,
     diaryFeedbackModel: DiaryFeedbackModel,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
@@ -62,7 +65,11 @@ fun DiaryAIFeedbackRoute(
     addDiaryViewModel: AddDiaryViewModel = hiltViewModel()
 ) {
     val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
-    val totalDiary by viewModel.totalDiary.collectAsState()
+    val totalDiary by addDiaryViewModel.totalDiaryState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        addDiaryViewModel.getTotalDiary(date)
+    }
 
     DiaryAIFeedbackScreen(
         padding = padding,
@@ -82,7 +89,7 @@ private fun DiaryAIFeedbackScreen(
     padding: PaddingValues,
     diaryFeedbackModel: DiaryFeedbackModel,
     diaryAIFeedbackState: DiaryAIFeedbackState,
-    totalDiary: String,
+    totalDiary: TotalDiaryModel,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
     popBackStack: () -> Unit,
@@ -267,7 +274,7 @@ private fun DiaryAIFeedbackScreen(
         ) {
             StrHatDialog(
                 titleResId = R.string.diary_ai_total_diary_button,
-                diary = totalDiary,
+                diary = totalDiary.content,
                 onConfirmButtonClick = { showTotalDiaryDialog = false },
                 onDismissButtonClick = { showTotalDiaryDialog = false }
             )
@@ -301,7 +308,7 @@ fun DiaryAIFeedbackScreenPreview() {
             padding = PaddingValues(),
             diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), ""),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
-            totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
+            totalDiary = TotalDiaryModel(""),
             navigateToChat = {},
             navigateToTodayStressScore = {},
             popBackStack = {},

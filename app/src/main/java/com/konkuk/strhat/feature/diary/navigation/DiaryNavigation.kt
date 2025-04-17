@@ -27,9 +27,9 @@ fun NavController.navigateToMyPageDiaryAIFeedback() {
     navigate(DiaryRoute.DiaryAIFeedback)
 }
 
-fun NavController.navigateToDiaryAIFeedback(summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String) {
+fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String) {
     navigate(
-        DiaryRoute.DiaryAIFeedback(summary, positiveKeywords, negativeKeywords, stressReliefSuggestions)
+        DiaryRoute.DiaryAIFeedback(date, summary, positiveKeywords, negativeKeywords, stressReliefSuggestions)
     ) {
         popUpTo(MainTabRoute.Diary) {
             inclusive = true
@@ -49,7 +49,7 @@ fun NavController.navigateToTodayStressScore() {
 fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
     onNavigateToAddDiary: () -> Unit,
-    onNavigateToDiaryAIFeedback: (DiaryFeedbackModel) -> Unit,
+    onNavigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
     onNavigateToChat: () -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
@@ -77,6 +77,7 @@ fun NavGraphBuilder.diaryNavGraph(
         val positiveKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().positiveKeywords
         val negativeKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().negativeKeywords
         val stressReliefSuggestions = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().stressReliefSuggestions
+        val date = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().date
 
         val diaryFeedbackModel = DiaryFeedbackModel(
             summary = summary,
@@ -87,6 +88,7 @@ fun NavGraphBuilder.diaryNavGraph(
 
         DiaryAIFeedbackRoute(
             padding = padding,
+            date = date,
             diaryFeedbackModel = diaryFeedbackModel,
             navigateToChat = onNavigateToChat,
             navigateToTodayStressScore = onNavigateToTodayStressScore,

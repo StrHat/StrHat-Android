@@ -131,12 +131,14 @@ class MainNavigator(
     }
 
     fun navigateToDiaryAIFeedback(
+        date: String,
         summary: String,
         positiveKeywords: List<String>,
         negativeKeywords: List<String>,
         stressReliefSuggestions: String
     ) {
         navController.navigateToDiaryAIFeedback(
+            date = date,
             summary = summary,
             positiveKeywords = positiveKeywords,
             negativeKeywords = negativeKeywords,

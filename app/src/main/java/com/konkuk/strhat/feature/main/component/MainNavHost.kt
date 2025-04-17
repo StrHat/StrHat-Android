@@ -39,12 +39,13 @@ fun MainNavHost(
             diaryNavGraph(
                 padding = padding,
                 onNavigateToAddDiary = navigator::navigateToAddDiary,
-                onNavigateToDiaryAIFeedback = {
+                onNavigateToDiaryAIFeedback = { date, feedback ->
                     navigator.navigateToDiaryAIFeedback(
-                        summary = it.summary,
-                        positiveKeywords = it.positiveKeywords,
-                        negativeKeywords = it.negativeKeywords,
-                        stressReliefSuggestions = it.stressReliefSuggestions
+                        date = date,
+                        summary = feedback.summary,
+                        positiveKeywords = feedback.positiveKeywords,
+                        negativeKeywords = feedback.negativeKeywords,
+                        stressReliefSuggestions = feedback.stressReliefSuggestions
                     )
                 },
                 onNavigateToChat = navigator::navigateToChat,

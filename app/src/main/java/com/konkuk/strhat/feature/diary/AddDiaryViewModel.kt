@@ -6,11 +6,11 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.EmotionType
+import com.konkuk.strhat.domain.entity.TotalDiaryModel
 import com.konkuk.strhat.domain.repository.DiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -33,8 +33,8 @@ class AddDiaryViewModel @Inject constructor(
     private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), ""))
     val diaryFeedbackState: StateFlow<DiaryFeedbackModel> = _diaryFeedbackState
 
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+    private val _totalDiaryState = MutableStateFlow(TotalDiaryModel(""))
+    val totalDiaryState: StateFlow<TotalDiaryModel> = _totalDiaryState
 
     fun postDiary(
         request: RequestAddDiaryDto
@@ -54,17 +54,38 @@ class AddDiaryViewModel @Inject constructor(
                         Timber.tag("save diary").d("일기 저장 성공")
                     }
                     .onFailure { error ->
-                        _errorMessage.update { error.message }
-
                         if (error is HttpException) {
                             val errorBody = error.response()?.errorBody()?.string()
-                            Timber.tag("save diary").e("서버 에러 메시지: $errorBody")
+                            Timber.tag("save diary").e("$errorBody")
                         } else {
                             Timber.tag("save diary").e(error, "일기 저장 실패")
                         }
                     }
             } catch (e: Exception) {
                 Timber.tag("save diary").e("일기 저장 서버 통신 오류")
+            }
+        }
+    }
+
+    fun getTotalDiary(
+        date: String
+    ) {
+        viewModelScope.launch {
+            try {
+                diaryRepository.getTotalDiary(date)
+                    .onSuccess { data ->
+                        _totalDiaryState.update {
+                            TotalDiaryModel(content = data.content)
+                        }
+                    }
+                    .onFailure { error ->
+                        if (error is HttpException) {
+                            val errorBody = error.response()?.errorBody()?.string()
+                            Timber.tag("get total diary").e("$errorBody")
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.tag("get total diary").e("일기 전문 보기 조회 오류")
             }
         }
     }

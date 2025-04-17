@@ -43,13 +43,13 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun AddDiaryRoute(
     padding: PaddingValues,
-    navigateToDiaryAIFeedback: (DiaryFeedbackModel) -> Unit,
+    navigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel()
 ) {
     AddDiaryScreen(
         padding = padding,
-        onGetFeedbackBtnClick = {
-            navigateToDiaryAIFeedback(viewModel.diaryFeedbackState.value)
+        onGetFeedbackBtnClick = { date ->
+            navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
         }
     )
 }
@@ -57,7 +57,7 @@ fun AddDiaryRoute(
 @Composable
 fun AddDiaryScreen(
     padding: PaddingValues,
-    onGetFeedbackBtnClick: () -> Unit,
+    onGetFeedbackBtnClick: (String) -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -154,8 +154,8 @@ fun AddDiaryScreen(
                     )
                 )
                 coroutineScope.launch {
-                    delay(4000) // 테스트 해보니 피드백 생성 주로 3초대 소요
-                    onGetFeedbackBtnClick()
+                    delay(5000) // 테스트 해보니 피드백 생성 주로 3초대 소요
+                    onGetFeedbackBtnClick(date)
                 }
             }
         )
