@@ -39,7 +39,14 @@ fun MainNavHost(
             diaryNavGraph(
                 padding = padding,
                 onNavigateToAddDiary = navigator::navigateToAddDiary,
-                onNavigateToDiaryAIFeedback = navigator::navigateToDiaryAIFeedback,
+                onNavigateToDiaryAIFeedback = {
+                    navigator.navigateToDiaryAIFeedback(
+                        summary = it.summary,
+                        positiveKeywords = it.positiveKeywords,
+                        negativeKeywords = it.negativeKeywords,
+                        stressReliefSuggestions = it.stressReliefSuggestions
+                    )
+                },
                 onNavigateToChat = navigator::navigateToChat,
                 onNavigateToHome = navigator::navigateToHome,
                 onNavigateToMyPage = navigator::navigateToMyPage,
@@ -66,7 +73,7 @@ fun MainNavHost(
                 onNavigateToChangeGraph = navigator::navigateToChangeGraph,
                 onPopBackStack = navigator::popBackStack,
                 onNavigateToMyPageStressScore = navigator::navigateToMyPageStressScore,
-                onNavigateToMyPageAIFeedback = navigator::navigateToDiaryAIFeedback,
+                onNavigateToMyPageAIFeedback = navigator::navigateToMyPageDiaryAIFeedback,
                 navController = navigator.navController
             )
 

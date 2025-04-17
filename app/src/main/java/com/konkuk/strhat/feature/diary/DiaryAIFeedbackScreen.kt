@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.bottomsheet.ChatModeBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.button.UnderlineButton
@@ -38,9 +39,9 @@ import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.section.TitleSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
-import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -51,18 +52,21 @@ import kotlinx.datetime.todayIn
 @Composable
 fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
+    diaryFeedbackModel: DiaryFeedbackModel,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
-    viewModel: DiaryAIFeedbackViewModel = hiltViewModel()
+    viewModel: DiaryAIFeedbackViewModel = hiltViewModel(),
+    addDiaryViewModel: AddDiaryViewModel = hiltViewModel()
 ) {
     val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
     val totalDiary by viewModel.totalDiary.collectAsState()
 
     DiaryAIFeedbackScreen(
         padding = padding,
+        diaryFeedbackModel = diaryFeedbackModel,
         diaryAIFeedbackState = diaryAIFeedbackState,
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
@@ -76,6 +80,7 @@ fun DiaryAIFeedbackRoute(
 @Composable
 private fun DiaryAIFeedbackScreen(
     padding: PaddingValues,
+    diaryFeedbackModel: DiaryFeedbackModel,
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: String,
     navigateToChat: () -> Unit,
@@ -143,7 +148,7 @@ private fun DiaryAIFeedbackScreen(
             }
 
             SummaryBox(
-                summary = diaryAIFeedbackState.diaryAIFeedbackSummary,
+                summary = diaryFeedbackModel.summary,
                 backgroundColor = colors.Gray100,
                 modifier = Modifier.padding(top = 10.dp)
             )
@@ -162,7 +167,7 @@ private fun DiaryAIFeedbackScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryAIFeedbackState.diaryAIFeedbackPositiveKeywords,
+                    keywords = diaryFeedbackModel.positiveKeywords,
                     feedBackBoxBackgroundColor = colors.SubBlue,
                     modifier = Modifier.weight(1f)
                 )
@@ -196,7 +201,7 @@ private fun DiaryAIFeedbackScreen(
                         .width(100.dp)
                 )
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryAIFeedbackState.diaryAIFeedbackNegativeKeywords,
+                    keywords = diaryFeedbackModel.negativeKeywords,
                     feedBackBoxBackgroundColor = colors.Gray100,
                     modifier = Modifier.weight(1f)
                 )
@@ -209,7 +214,7 @@ private fun DiaryAIFeedbackScreen(
             )
 
             DiaryAIFeedbackRecommendationBox(
-                diaryAIFeedbackRecommendation = diaryAIFeedbackState.diaryAIFeedbackRecommendation,
+                diaryAIFeedbackRecommendation = diaryFeedbackModel.stressReliefSuggestions,
                 modifier = Modifier.padding(top = 10.dp)
             )
         }
@@ -294,6 +299,7 @@ fun DiaryAIFeedbackScreenPreview() {
 
         DiaryAIFeedbackScreen(
             padding = PaddingValues(),
+            diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), ""),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = stringResource(R.string.diary_ai_feedback_total_diary_example),
             navigateToChat = {},

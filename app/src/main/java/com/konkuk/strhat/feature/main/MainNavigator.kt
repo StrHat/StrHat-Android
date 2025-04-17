@@ -15,6 +15,7 @@ import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
+import com.konkuk.strhat.feature.diary.navigation.navigateToMyPageDiaryAIFeedback
 import com.konkuk.strhat.feature.diary.navigation.navigateToTodayStressScore
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
 import com.konkuk.strhat.feature.login.navigation.navigateToLogin
@@ -125,8 +126,22 @@ class MainNavigator(
         navController.navigateToAddDiary()
     }
 
-    fun navigateToDiaryAIFeedback() {
-        navController.navigateToDiaryAIFeedback()
+    fun navigateToMyPageDiaryAIFeedback() {
+        navController.navigateToMyPageDiaryAIFeedback()
+    }
+
+    fun navigateToDiaryAIFeedback(
+        summary: String,
+        positiveKeywords: List<String>,
+        negativeKeywords: List<String>,
+        stressReliefSuggestions: String
+    ) {
+        navController.navigateToDiaryAIFeedback(
+            summary = summary,
+            positiveKeywords = positiveKeywords,
+            negativeKeywords = negativeKeywords,
+            stressReliefSuggestions = stressReliefSuggestions
+        )
     }
 
     fun navigateToChat() {
