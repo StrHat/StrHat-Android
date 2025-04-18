@@ -2,8 +2,10 @@ package com.konkuk.strhat.data.repositoryimpl
 
 import com.konkuk.strhat.data.datasource.DiaryDataSource
 import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.data.mapper.toDiaryExistenceModel
 import com.konkuk.strhat.data.mapper.toDiaryFeedbackModel
 import com.konkuk.strhat.data.mapper.toTotalDiaryModel
+import com.konkuk.strhat.domain.entity.DiaryExistenceModel
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
 import com.konkuk.strhat.domain.repository.DiaryRepository
@@ -22,5 +24,11 @@ class DiaryRepositoryImpl @Inject constructor(
         runCatching {
             val response = diaryDataSource.getTotalDiary(date)
             response.response.toTotalDiaryModel()
+        }
+
+    override suspend fun getDiaryExistence(date: String): Result<DiaryExistenceModel> =
+        runCatching {
+            val response = diaryDataSource.getDiaryExistence(date)
+            response.response.toDiaryExistenceModel()
         }
 }

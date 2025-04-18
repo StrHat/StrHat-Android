@@ -2,6 +2,7 @@ package com.konkuk.strhat.data.service
 
 import com.konkuk.strhat.data.dto.base.BaseResponse
 import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.data.dto.response.ResponseDiaryExistenceDto
 import com.konkuk.strhat.data.dto.response.ResponseSaveDiaryDto
 import com.konkuk.strhat.data.dto.response.ResponseTotalDiaryDto
 import retrofit2.http.Body
@@ -19,4 +20,9 @@ interface DiaryService {
     suspend fun getTotalDiary(
         @Query("date") date: String
     ): BaseResponse<ResponseTotalDiaryDto>
+
+    @GET("/api/v1/diary/exists")
+    suspend fun getDiaryExistence(
+        @Query("date") date: String
+    ): BaseResponse<ResponseDiaryExistenceDto>
 }
