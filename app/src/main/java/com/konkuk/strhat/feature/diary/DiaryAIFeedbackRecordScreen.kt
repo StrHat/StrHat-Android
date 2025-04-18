@@ -226,37 +226,32 @@ fun DiaryAIFeedbackRecordScreen(
             val isDiaryRoute = previousRoute?.contains("Diary") == true
 
             StrHatButton(
-                isDisabled = isDiaryRoute,
+                isDisabled = false,
                 text =
                 if (isDiaryRoute)
-                    stringResource(R.string.diary_ai_feedback_quit_button)
+                    stringResource(R.string.confirm)
                 else
-                    stringResource(R.string.confirm),
+                    stringResource(R.string.diary_ai_feedback_quit_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
-                onClick = {
-                    if (isDiaryRoute)
-                        navigateToTodayStressScore()
-                    else
-                        popBackStack()
-                }
+                onClick = popBackStack
             )
             StrHatButton(
                 isDisabled = false,
                 text =
                 if (previousRoute?.contains("Diary") == true)
-                    stringResource(R.string.diary_ai_feedback_chat_button)
+                    stringResource(R.string.my_page_ai_feedback_chat_history_button)
                 else
-                    stringResource(R.string.my_page_ai_feedback_chat_history_button),
+                    stringResource(R.string.diary_ai_feedback_chat_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
                     if (previousRoute?.contains("Diary") == true)
-                        isChatModeBottomSheetVisible = true
-                    else
                         navigateToMyPageChatHistory()
+                    else
+                        isChatModeBottomSheetVisible = true
                 }
             )
         }
