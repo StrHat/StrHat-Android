@@ -15,6 +15,7 @@ import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedback
+import com.konkuk.strhat.feature.diary.navigation.navigateToDiaryAIFeedbackRecord
 import com.konkuk.strhat.feature.diary.navigation.navigateToMyPageDiaryAIFeedback
 import com.konkuk.strhat.feature.diary.navigation.navigateToTodayStressScore
 import com.konkuk.strhat.feature.home.navigation.navigateToHome
@@ -188,6 +189,10 @@ class MainNavigator(
 
     fun navigateToMyPageChatHistory() {
         navController.navigateToMyPageChatHistory()
+    }
+
+    fun navigateToDiaryAIFeedbackRecord(date: String) {
+        navController.navigateToDiaryAIFeedbackRecord(date)
     }
 
     private inline fun <reified T : Route> isSameCurrentDestination(): Boolean =

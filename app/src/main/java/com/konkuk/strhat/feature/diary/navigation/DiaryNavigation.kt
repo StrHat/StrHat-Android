@@ -11,6 +11,7 @@ import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
+import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRecordRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRoute
 import com.konkuk.strhat.feature.diary.DiaryRoute
 import com.konkuk.strhat.feature.diary.TodayStressScoreRoute
@@ -38,6 +39,10 @@ fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, posit
     }
 }
 
+fun NavController.navigateToDiaryAIFeedbackRecord(date: String) {
+    navigate(DiaryRoute.DiaryAIFeedbackRecord(date))
+}
+
 fun NavController.navigateToChat() {
     navigate(DiaryRoute.Chat)
 }
@@ -50,6 +55,7 @@ fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
+    onNavigateToDiaryAIFeedbackRecord: (String) -> Unit,
     onNavigateToChat: () -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
@@ -61,7 +67,8 @@ fun NavGraphBuilder.diaryNavGraph(
     composable<MainTabRoute.Diary> {
         DiaryRoute(
             padding = padding,
-            navigateToAddDiary = onNavigateToAddDiary
+            navigateToAddDiary = onNavigateToAddDiary,
+            navigateToDiaryAIFeedback = onNavigateToDiaryAIFeedbackRecord
         )
     }
 
@@ -90,6 +97,20 @@ fun NavGraphBuilder.diaryNavGraph(
             padding = padding,
             date = date,
             diaryFeedbackModel = diaryFeedbackModel,
+            navigateToChat = onNavigateToChat,
+            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            popBackStack = onPopBackStack,
+            navigateToMyPageChatHistory = onNavigateToMyPageChatHistory,
+            navController = navController
+        )
+    }
+
+    composable<DiaryRoute.DiaryAIFeedbackRecord> { navBackStackEntry ->
+        val date = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedbackRecord>().date
+
+        DiaryAIFeedbackRecordRoute(
+            padding = padding,
+            date = date,
             navigateToChat = onNavigateToChat,
             navigateToTodayStressScore = onNavigateToTodayStressScore,
             popBackStack = onPopBackStack,

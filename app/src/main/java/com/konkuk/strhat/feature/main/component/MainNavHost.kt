@@ -54,6 +54,11 @@ fun MainNavHost(
                 onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
                 onPopBackStack = navigator::popBackStack,
                 onNavigateToMyPageChatHistory = navigator::navigateToMyPageChatHistory,
+                onNavigateToDiaryAIFeedbackRecord = { date ->
+                    navigator.navigateToDiaryAIFeedbackRecord(
+                        date = date
+                    )
+                },
                 navController = navigator.navController
             )
 

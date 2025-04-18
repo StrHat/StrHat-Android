@@ -60,7 +60,7 @@ sealed interface MyPageRoute: Route{
 
 sealed interface DiaryRoute : Route {
     @Serializable
-    data object AddDiary : Route
+    data object AddDiary : DiaryRoute
     @Serializable
     data class DiaryAIFeedback(
         val date: String,
@@ -68,11 +68,15 @@ sealed interface DiaryRoute : Route {
         val positiveKeywords: List<String>,
         val negativeKeywords: List<String>,
         val stressReliefSuggestions: String
-    ) : Route
+    ) : DiaryRoute
     @Serializable
-    data object Chat : Route
+    data class DiaryAIFeedbackRecord(
+        val date: String
+    ) : DiaryRoute
     @Serializable
-    data object TodayStressScore : Route
+    data object Chat : DiaryRoute
+    @Serializable
+    data object TodayStressScore : DiaryRoute
 }
 
 sealed interface SelfDiagnosisRoute : Route {
