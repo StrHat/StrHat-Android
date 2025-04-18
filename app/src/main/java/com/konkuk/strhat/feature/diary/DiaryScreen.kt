@@ -1,5 +1,6 @@
 package com.konkuk.strhat.feature.diary
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,10 +41,12 @@ import com.konkuk.strhat.core.util.KeyStorage.FIRST_DAY_OF_MONTH
 import com.konkuk.strhat.core.util.KeyStorage.MIN_OFFSET
 import com.konkuk.strhat.core.util.KeyStorage.PLUS_MINUS_OF_MONTH
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.domain.entity.DiaryExistenceModel
 import com.konkuk.strhat.feature.diary.component.AddDiaryFloatingButton
 import com.konkuk.strhat.feature.diary.component.CalendarDateCell
 import com.konkuk.strhat.feature.diary.component.CalendarDayOfWeekCell
 import com.konkuk.strhat.feature.diary.component.DiaryDateUnselectedEmptyView
+import com.konkuk.strhat.feature.diary.component.DiaryDateUnselectedEmptyViewPreview
 import com.konkuk.strhat.feature.diary.component.DiarySummaryView
 import com.konkuk.strhat.feature.diary.component.NoDiaryEmptyView
 import com.konkuk.strhat.feature.diary.state.Diary
@@ -63,12 +66,14 @@ fun DiaryRoute(
 ) {
     val selectedDate by viewModel.selectedDate.collectAsState()
     val selectedDiary by viewModel.selectedDiary.collectAsState()
+    val diaryExistenceState by viewModel.diaryExistenceState.collectAsState()
 
     DiaryScreen(
         padding = padding,
         selectedDate = selectedDate,
         selectedDiary = selectedDiary,
         onDateSelected = viewModel::onDateSelected,
+        diaryExistenceState = diaryExistenceState,
         onFloatingBtnClick = navigateToAddDiary
     )
 }
@@ -79,6 +84,7 @@ private fun DiaryScreen(
     selectedDate: LocalDate?,
     selectedDiary: Diary?,
     onDateSelected: (LocalDate) -> Unit,
+    diaryExistenceState: DiaryExistenceModel,
     onFloatingBtnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -187,8 +193,8 @@ private fun DiaryScreen(
                 selectedDate == null -> {
                     DiaryDateUnselectedEmptyView()
                 }
-                selectedDiary != null -> {
-                    DiarySummaryView(date = selectedDate, content = selectedDiary.content)
+                diaryExistenceState.hasDiary -> {
+                    diaryExistenceState.summary?.let { DiarySummaryView(date = selectedDate, content = it) }
                 }
                 else -> {
                     NoDiaryEmptyView()
@@ -213,6 +219,7 @@ fun DiaryScreenPreview() {
         padding = PaddingValues(0.dp),
         selectedDate = LocalDate(2025, 1, 1),
         selectedDiary = Diary(LocalDate(2025, 1, 1), "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ"),
+        diaryExistenceState = DiaryExistenceModel(true, 1, ""),
         onFloatingBtnClick = {},
         onDateSelected = {}
     )
