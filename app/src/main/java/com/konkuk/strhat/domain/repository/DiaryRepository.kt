@@ -9,4 +9,5 @@ interface DiaryRepository {
     suspend fun postDiary(request: RequestAddDiaryDto): Result<DiaryFeedbackModel>
     suspend fun getTotalDiary(date: String): Result<TotalDiaryModel>
     suspend fun getDiaryExistence(date: String): Result<DiaryExistenceModel>
+    suspend fun getDiaryFeedback(date: String): Result<DiaryFeedbackModel>
 }

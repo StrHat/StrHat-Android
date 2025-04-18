@@ -31,4 +31,10 @@ class DiaryRepositoryImpl @Inject constructor(
             val response = diaryDataSource.getDiaryExistence(date)
             response.response.toDiaryExistenceModel()
         }
+
+    override suspend fun getDiaryFeedback(date: String): Result<DiaryFeedbackModel> =
+        runCatching {
+            val response = diaryDataSource.getDiaryFeedback(date)
+            response.response.toDiaryFeedbackModel()
+        }
 }

@@ -10,4 +10,5 @@ interface DiaryDataSource {
     suspend fun postDiary(request: RequestAddDiaryDto): BaseResponse<ResponseSaveDiaryDto>
     suspend fun getTotalDiary(date: String): BaseResponse<ResponseTotalDiaryDto>
     suspend fun getDiaryExistence(date: String): BaseResponse<ResponseDiaryExistenceDto>
+    suspend fun getDiaryFeedback(date: String): BaseResponse<ResponseSaveDiaryDto>
 }

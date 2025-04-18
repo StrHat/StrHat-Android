@@ -20,4 +20,7 @@ class DiaryDataSourceImpl @Inject constructor(
 
     override suspend fun getDiaryExistence(date: String): BaseResponse<ResponseDiaryExistenceDto> =
         diaryService.getDiaryExistence(date)
+
+    override suspend fun getDiaryFeedback(date: String): BaseResponse<ResponseSaveDiaryDto> =
+        diaryService.getDiaryFeedback(date)
 }

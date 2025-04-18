@@ -25,4 +25,9 @@ interface DiaryService {
     suspend fun getDiaryExistence(
         @Query("date") date: String
     ): BaseResponse<ResponseDiaryExistenceDto>
+
+    @GET("/api/v1/diary/feedback")
+    suspend fun getDiaryFeedback(
+        @Query("date") date: String
+    ): BaseResponse<ResponseSaveDiaryDto>
 }
