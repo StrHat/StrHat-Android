@@ -213,4 +213,6 @@
 
     <!-- my page chat history -->
     <string name="my_page_chat_history_quit_button">그만 보기</string>
+
+    <string name="loading_description">응답을 기다리는 중입니다 ..</string>
 </resources>
