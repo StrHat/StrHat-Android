@@ -2,6 +2,7 @@ package com.konkuk.strhat.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.konkuk.strhat.BuildConfig
+import com.konkuk.strhat.core.network.TokenManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,24 @@ object NetworkModule {
     @Singleton
     fun providesLoggingInterceptor() = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    @Provides
+    @Singleton
+    fun providesAuthorizationInterceptor(
+        tokenManager: TokenManager
+    ): okhttp3.Interceptor = okhttp3.Interceptor { chain ->
+        // val token = tokenManager.getToken()
+        val token = if (BuildConfig.TOKEN.isNotBlank()) {
+            BuildConfig.TOKEN
+        } else {
+            tokenManager.getToken()
+        }
+
+        val request = chain.request().newBuilder()
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+        chain.proceed(request)
     }
 
     @Provides

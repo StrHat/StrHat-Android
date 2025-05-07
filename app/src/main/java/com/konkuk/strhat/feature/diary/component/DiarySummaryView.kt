@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.R
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -29,12 +30,14 @@ import kotlinx.datetime.LocalDate
 fun DiarySummaryView(
     date: LocalDate,
     content: String,
+    onSummaryViewClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
+            .noRippleClickable(onSummaryViewClick)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -92,6 +95,7 @@ fun DiarySummaryViewPreview(
         DiarySummaryView(
             date = LocalDate(2025, 3, 11),
             content = "일기 내용 요약입니다 일기 내용 요약입니다 일기 내용 요약입니다 일기 내용 요약입니다 일기 내용 요약입니다 일기 내용 요약입니다 일기 내용 요약입니다",
+            onSummaryViewClick = {},
             modifier = modifier.background(colors.MainWhite)
         )
     }

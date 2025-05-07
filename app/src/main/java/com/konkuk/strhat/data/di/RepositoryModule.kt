@@ -1,6 +1,8 @@
 package com.konkuk.strhat.data.di
 
+import com.konkuk.strhat.data.repositoryimpl.DiaryRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.HomeRepositoryImpl
+import com.konkuk.strhat.domain.repository.DiaryRepository
 import com.konkuk.strhat.domain.repository.HomeRepository
 import dagger.Binds
 import dagger.Module
@@ -14,4 +16,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsDiaryRepository(diaryRepositoryImpl: DiaryRepositoryImpl): DiaryRepository
 }

@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,31 +30,68 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.textfield.LongTextField
+import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.feature.diary.component.EmotionSelection
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AddDiaryRoute(
     padding: PaddingValues,
-    navigateToDiaryAIFeedback: () -> Unit
+    navigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
+    viewModel: AddDiaryViewModel = hiltViewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     AddDiaryScreen(
         padding = padding,
-        onGetFeedbackBtnClick = navigateToDiaryAIFeedback
+        onGetFeedbackBtnClick = { date ->
+            val diaryContent = viewModel.diaryContentState.value
+            val selectedEmotionIndex = viewModel.selectedEmotionIndexState.value
+
+            if (selectedEmotionIndex != -1 && diaryContent.length >= 20) {
+                val emotionScore = viewModel.emotionTypes[selectedEmotionIndex].score
+
+                viewModel.postDiary(
+                    request = RequestAddDiaryDto(
+                        date = date,
+                        emotion = emotionScore,
+                        content = diaryContent
+                    )
+                )
+
+                coroutineScope.launch {
+                    delay(5000)
+                    navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
+                }
+            }
+        }
     )
 }
 
 @Composable
 fun AddDiaryScreen(
     padding: PaddingValues,
-    onGetFeedbackBtnClick: () -> Unit,
+    onGetFeedbackBtnClick: (String) -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     var diaryContent by remember { mutableStateOf("") }
     var selectedEmotionIndex by remember { mutableStateOf(-1) }
+
+    LaunchedEffect(diaryContent) {
+        viewModel.diaryContentState.value = diaryContent
+    }
+
+    LaunchedEffect(selectedEmotionIndex) {
+        viewModel.selectedEmotionIndexState.value = selectedEmotionIndex
+    }
 
     Column(
         modifier = modifier
@@ -127,10 +166,13 @@ fun AddDiaryScreen(
         }
 
         StrHatButton(
-            isDisabled = diaryContent.length < 20,
+            isDisabled = diaryContent.length < 20 || selectedEmotionIndex == -1,
             text = stringResource(R.string.get_feedback_button),
             modifier = Modifier.padding(20.dp),
-            onClick = onGetFeedbackBtnClick
+            onClick = {
+                val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+                onGetFeedbackBtnClick(date)
+            }
         )
     }
 }

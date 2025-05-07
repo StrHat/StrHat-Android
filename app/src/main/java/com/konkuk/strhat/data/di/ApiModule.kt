@@ -1,5 +1,6 @@
 package com.konkuk.strhat.data.di
 
+import com.konkuk.strhat.data.service.DiaryService
 import com.konkuk.strhat.data.service.HomeService
 import dagger.Module
 import dagger.Provides
@@ -15,4 +16,9 @@ object ApiModule {
     @Singleton
     fun providesHomeService(retrofit: Retrofit): HomeService =
         retrofit.create(HomeService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesDiaryService(retrofit: Retrofit): DiaryService =
+        retrofit.create(DiaryService::class.java)
 }

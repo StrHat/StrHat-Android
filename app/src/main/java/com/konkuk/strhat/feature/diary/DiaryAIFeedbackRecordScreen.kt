@@ -25,12 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.bottomsheet.ChatModeBottomSheet
@@ -44,37 +42,34 @@ import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
-import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
-import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 
 @Composable
-fun DiaryAIFeedbackRoute(
+fun DiaryAIFeedbackRecordRoute(
     padding: PaddingValues,
     date: String,
-    diaryFeedbackModel: DiaryFeedbackModel,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
-    viewModel: DiaryAIFeedbackViewModel = hiltViewModel(),
+    viewModel: DiaryViewModel = hiltViewModel(),
     addDiaryViewModel: AddDiaryViewModel = hiltViewModel()
 ) {
-    val diaryAIFeedbackState by viewModel.diaryAIFeedbackState.collectAsState()
+    val diaryFeedbackState by viewModel.diaryFeedbackState.collectAsState()
     val totalDiary by addDiaryViewModel.totalDiaryState.collectAsState()
 
     LaunchedEffect(Unit) {
+        viewModel.getDiaryFeedback(date)
         addDiaryViewModel.getTotalDiary(date)
     }
 
-    DiaryAIFeedbackScreen(
+    DiaryAIFeedbackRecordScreen(
         padding = padding,
-        diaryFeedbackModel = diaryFeedbackModel,
-        diaryAIFeedbackState = diaryAIFeedbackState,
+        diaryFeedbackState = diaryFeedbackState,
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
         navigateToTodayStressScore = navigateToTodayStressScore,
@@ -85,10 +80,9 @@ fun DiaryAIFeedbackRoute(
 }
 
 @Composable
-private fun DiaryAIFeedbackScreen(
+fun DiaryAIFeedbackRecordScreen(
     padding: PaddingValues,
-    diaryFeedbackModel: DiaryFeedbackModel,
-    diaryAIFeedbackState: DiaryAIFeedbackState,
+    diaryFeedbackState: DiaryFeedbackModel,
     totalDiary: TotalDiaryModel,
     navigateToChat: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
@@ -155,7 +149,7 @@ private fun DiaryAIFeedbackScreen(
             }
 
             SummaryBox(
-                summary = diaryFeedbackModel.summary,
+                summary = diaryFeedbackState.summary,
                 backgroundColor = colors.Gray100,
                 modifier = Modifier.padding(top = 10.dp)
             )
@@ -174,7 +168,7 @@ private fun DiaryAIFeedbackScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryFeedbackModel.positiveKeywords,
+                    keywords = diaryFeedbackState.positiveKeywords,
                     feedBackBoxBackgroundColor = colors.SubBlue,
                     modifier = Modifier.weight(1f)
                 )
@@ -208,7 +202,7 @@ private fun DiaryAIFeedbackScreen(
                         .width(100.dp)
                 )
                 DiaryAIFeedbackKeywordBox(
-                    keywords = diaryFeedbackModel.negativeKeywords,
+                    keywords = diaryFeedbackState.negativeKeywords,
                     feedBackBoxBackgroundColor = colors.Gray100,
                     modifier = Modifier.weight(1f)
                 )
@@ -221,7 +215,7 @@ private fun DiaryAIFeedbackScreen(
             )
 
             DiaryAIFeedbackRecommendationBox(
-                diaryAIFeedbackRecommendation = diaryFeedbackModel.stressReliefSuggestions,
+                diaryAIFeedbackRecommendation = diaryFeedbackState.stressReliefSuggestions,
                 modifier = Modifier.padding(top = 10.dp)
             )
         }
@@ -232,37 +226,32 @@ private fun DiaryAIFeedbackScreen(
             val isDiaryRoute = previousRoute?.contains("Diary") == true
 
             StrHatButton(
-                isDisabled = isDiaryRoute,
+                isDisabled = false,
                 text =
-                    if (isDiaryRoute)
-                        stringResource(R.string.diary_ai_feedback_quit_button)
-                    else
-                        stringResource(R.string.confirm),
+                if (isDiaryRoute)
+                    stringResource(R.string.confirm)
+                else
+                    stringResource(R.string.diary_ai_feedback_quit_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
-                onClick = {
-                    if (isDiaryRoute)
-                        navigateToTodayStressScore()
-                    else
-                        popBackStack()
-                }
+                onClick = popBackStack
             )
             StrHatButton(
                 isDisabled = false,
                 text =
-                    if (isDiaryRoute)
-                        stringResource(R.string.diary_ai_feedback_chat_button)
-                    else
-                        stringResource(R.string.my_page_ai_feedback_chat_history_button),
+                if (previousRoute?.contains("Diary") == true)
+                    stringResource(R.string.my_page_ai_feedback_chat_history_button)
+                else
+                    stringResource(R.string.diary_ai_feedback_chat_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (isDiaryRoute)
-                        isChatModeBottomSheetVisible = true
-                    else
+                    if (previousRoute?.contains("Diary") == true)
                         navigateToMyPageChatHistory()
+                    else
+                        isChatModeBottomSheetVisible = true
                 }
             )
         }
@@ -289,32 +278,6 @@ private fun DiaryAIFeedbackScreen(
                 isChatModeBottomSheetVisible = false
             },
             navigateToChat = navigateToChat
-        )
-    }
-}
-
-@Preview
-@Composable
-fun DiaryAIFeedbackScreenPreview() {
-    StrHatTheme {
-        val diaryAIFeedbackExampleState = DiaryAIFeedbackState(
-            diaryAIFeedbackSummary = stringResource(R.string.diary_ai_feedback_summary_example),
-            diaryAIFeedbackPositiveKeywords = listOf("긍정1", "긍정2", "긍정3"),
-            diaryAIFeedbackNegativeKeywords = listOf("부정1", "부정2", "부정3"),
-            diaryAIFeedbackRecommendation = stringResource(R.string.diary_ai_feedback_recommendation_example)
-        )
-
-        DiaryAIFeedbackScreen(
-            padding = PaddingValues(),
-            diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), ""),
-            diaryAIFeedbackState = diaryAIFeedbackExampleState,
-            totalDiary = TotalDiaryModel(""),
-            navigateToChat = {},
-            navigateToTodayStressScore = {},
-            popBackStack = {},
-            navigateToMyPageChatHistory = {},
-            navController = rememberNavController(),
-            modifier = Modifier.background(colors.MainWhite)
         )
     }
 }
