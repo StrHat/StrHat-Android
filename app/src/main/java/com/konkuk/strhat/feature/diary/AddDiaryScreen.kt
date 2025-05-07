@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,10 +47,30 @@ fun AddDiaryRoute(
     navigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     AddDiaryScreen(
         padding = padding,
         onGetFeedbackBtnClick = { date ->
-            navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
+            val diaryContent = viewModel.diaryContentState.value
+            val selectedEmotionIndex = viewModel.selectedEmotionIndexState.value
+
+            if (selectedEmotionIndex != -1 && diaryContent.length >= 20) {
+                val emotionScore = viewModel.emotionTypes[selectedEmotionIndex].score
+
+                viewModel.postDiary(
+                    request = RequestAddDiaryDto(
+                        date = date,
+                        emotion = emotionScore,
+                        content = diaryContent
+                    )
+                )
+
+                coroutineScope.launch {
+                    delay(5000)
+                    navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
+                }
+            }
         }
     )
 }
@@ -64,7 +85,13 @@ fun AddDiaryScreen(
     var diaryContent by remember { mutableStateOf("") }
     var selectedEmotionIndex by remember { mutableStateOf(-1) }
 
-    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(diaryContent) {
+        viewModel.diaryContentState.value = diaryContent
+    }
+
+    LaunchedEffect(selectedEmotionIndex) {
+        viewModel.selectedEmotionIndexState.value = selectedEmotionIndex
+    }
 
     Column(
         modifier = modifier
@@ -144,19 +171,7 @@ fun AddDiaryScreen(
             modifier = Modifier.padding(20.dp),
             onClick = {
                 val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-                val emotionScore = viewModel.emotionTypes[selectedEmotionIndex].score
-
-                viewModel.postDiary(
-                    request = RequestAddDiaryDto(
-                        date = date,
-                        emotion = emotionScore,
-                        content = diaryContent
-                    )
-                )
-                coroutineScope.launch {
-                    delay(5000) // 테스트 해보니 피드백 생성 주로 3초대 소요
-                    onGetFeedbackBtnClick(date)
-                }
+                onGetFeedbackBtnClick(date)
             }
         )
     }

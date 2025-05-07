@@ -36,6 +36,9 @@ class AddDiaryViewModel @Inject constructor(
     private val _totalDiaryState = MutableStateFlow(TotalDiaryModel(""))
     val totalDiaryState: StateFlow<TotalDiaryModel> = _totalDiaryState
 
+    val diaryContentState = MutableStateFlow("")
+    val selectedEmotionIndexState = MutableStateFlow(-1)
+
     fun postDiary(
         request: RequestAddDiaryDto
     ) {

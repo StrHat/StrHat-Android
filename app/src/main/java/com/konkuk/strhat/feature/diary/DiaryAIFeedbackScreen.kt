@@ -251,7 +251,7 @@ private fun DiaryAIFeedbackScreen(
             StrHatButton(
                 isDisabled = false,
                 text =
-                    if (previousRoute?.contains("Diary") == true)
+                    if (isDiaryRoute)
                         stringResource(R.string.diary_ai_feedback_chat_button)
                     else
                         stringResource(R.string.my_page_ai_feedback_chat_history_button),
@@ -259,7 +259,7 @@ private fun DiaryAIFeedbackScreen(
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (previousRoute?.contains("Diary") == true)
+                    if (isDiaryRoute)
                         isChatModeBottomSheetVisible = true
                     else
                         navigateToMyPageChatHistory()
