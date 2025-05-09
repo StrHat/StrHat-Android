@@ -136,14 +136,16 @@ class MainNavigator(
         summary: String,
         positiveKeywords: List<String>,
         negativeKeywords: List<String>,
-        stressReliefSuggestions: String
+        stressReliefSuggestions: String,
+        diaryId: Int
     ) {
         navController.navigateToDiaryAIFeedback(
             date = date,
             summary = summary,
             positiveKeywords = positiveKeywords,
             negativeKeywords = negativeKeywords,
-            stressReliefSuggestions = stressReliefSuggestions
+            stressReliefSuggestions = stressReliefSuggestions,
+            diaryId = diaryId
         )
     }
 

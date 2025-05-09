@@ -11,15 +11,18 @@ fun ResponseSaveDiaryDto.toDiaryFeedbackModel() = DiaryFeedbackModel(
     summary = summary,
     positiveKeywords = positiveKeywords,
     negativeKeywords = negativeKeywords,
-    stressReliefSuggestions = stressReliefSuggestions
+    stressReliefSuggestions = stressReliefSuggestions,
+    diaryId = diaryId
 )
 
 fun ResponseTotalDiaryDto.toTotalDiaryModel() = TotalDiaryModel(
-    content = content
+    content = content,
+    diaryId = diaryId
 )
 
 fun ResponseDiaryExistenceDto.toDiaryExistenceModel() = DiaryExistenceModel(
     hasDiary = hasDiary,
     emotion = emotion,
-    summary = summary
+    summary = summary,
+    diaryId = diaryId
 )

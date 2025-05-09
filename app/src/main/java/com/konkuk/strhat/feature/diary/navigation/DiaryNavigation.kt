@@ -28,9 +28,9 @@ fun NavController.navigateToMyPageDiaryAIFeedback() {
     navigate(DiaryRoute.DiaryAIFeedback)
 }
 
-fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String) {
+fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String, diaryId: Int) {
     navigate(
-        DiaryRoute.DiaryAIFeedback(date, summary, positiveKeywords, negativeKeywords, stressReliefSuggestions)
+        DiaryRoute.DiaryAIFeedback(date, summary, positiveKeywords, negativeKeywords, stressReliefSuggestions, diaryId)
     ) {
         popUpTo(MainTabRoute.Diary) {
             inclusive = true
@@ -84,13 +84,15 @@ fun NavGraphBuilder.diaryNavGraph(
         val positiveKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().positiveKeywords
         val negativeKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().negativeKeywords
         val stressReliefSuggestions = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().stressReliefSuggestions
+        val diaryId = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().diaryId
         val date = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().date
 
         val diaryFeedbackModel = DiaryFeedbackModel(
             summary = summary,
             positiveKeywords = positiveKeywords,
             negativeKeywords = negativeKeywords,
-            stressReliefSuggestions = stressReliefSuggestions
+            stressReliefSuggestions = stressReliefSuggestions,
+            diaryId = diaryId
         )
 
         DiaryAIFeedbackRoute(

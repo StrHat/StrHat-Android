@@ -45,7 +45,8 @@ fun MainNavHost(
                         summary = feedback.summary,
                         positiveKeywords = feedback.positiveKeywords,
                         negativeKeywords = feedback.negativeKeywords,
-                        stressReliefSuggestions = feedback.stressReliefSuggestions
+                        stressReliefSuggestions = feedback.stressReliefSuggestions,
+                        diaryId = feedback.diaryId
                     )
                 },
                 onNavigateToChat = navigator::navigateToChat,

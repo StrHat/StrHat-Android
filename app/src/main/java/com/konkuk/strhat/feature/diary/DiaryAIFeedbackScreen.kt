@@ -306,9 +306,9 @@ fun DiaryAIFeedbackScreenPreview() {
 
         DiaryAIFeedbackScreen(
             padding = PaddingValues(),
-            diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), ""),
+            diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), "", 1),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
-            totalDiary = TotalDiaryModel(""),
+            totalDiary = TotalDiaryModel("", 1),
             navigateToChat = {},
             navigateToTodayStressScore = {},
             popBackStack = {},

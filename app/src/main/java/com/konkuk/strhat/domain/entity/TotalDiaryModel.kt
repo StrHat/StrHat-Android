@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TotalDiaryModel(
-    val content: String
+    val content: String,
+    val diaryId: Int
 )

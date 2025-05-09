@@ -67,7 +67,8 @@ sealed interface DiaryRoute : Route {
         val summary: String,
         val positiveKeywords: List<String>,
         val negativeKeywords: List<String>,
-        val stressReliefSuggestions: String
+        val stressReliefSuggestions: String,
+        val diaryId: Int
     ) : DiaryRoute
     @Serializable
     data class DiaryAIFeedbackRecord(

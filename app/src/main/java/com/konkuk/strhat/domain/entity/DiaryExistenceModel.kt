@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class DiaryExistenceModel(
     val hasDiary: Boolean,
     val emotion: Int?,
-    val summary: String?
+    val summary: String?,
+    val diaryId: Int?
 )

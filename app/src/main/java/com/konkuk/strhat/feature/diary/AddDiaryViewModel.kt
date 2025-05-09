@@ -30,10 +30,10 @@ class AddDiaryViewModel @Inject constructor(
         EmotionType(R.drawable.ic_strhat_green, 5)
     )
 
-    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), ""))
+    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), "", 1))
     val diaryFeedbackState: StateFlow<DiaryFeedbackModel> = _diaryFeedbackState
 
-    private val _totalDiaryState = MutableStateFlow(TotalDiaryModel(""))
+    private val _totalDiaryState = MutableStateFlow(TotalDiaryModel("", 1))
     val totalDiaryState: StateFlow<TotalDiaryModel> = _totalDiaryState
 
     val diaryContentState = MutableStateFlow("")
@@ -52,6 +52,7 @@ class AddDiaryViewModel @Inject constructor(
                                 positiveKeywords = data.positiveKeywords,
                                 negativeKeywords = data.negativeKeywords,
                                 stressReliefSuggestions = data.stressReliefSuggestions,
+                                diaryId = data.diaryId
                             )
                         }
                         Timber.tag("save diary").d("일기 저장 성공")
@@ -78,7 +79,10 @@ class AddDiaryViewModel @Inject constructor(
                 diaryRepository.getTotalDiary(date)
                     .onSuccess { data ->
                         _totalDiaryState.update {
-                            TotalDiaryModel(content = data.content)
+                            TotalDiaryModel(
+                                content = data.content,
+                                diaryId = data.diaryId
+                            )
                         }
                     }
                     .onFailure { error ->

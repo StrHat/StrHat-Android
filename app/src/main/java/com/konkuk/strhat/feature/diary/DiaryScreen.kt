@@ -226,7 +226,7 @@ fun DiaryScreenPreview() {
         padding = PaddingValues(0.dp),
         selectedDate = LocalDate(2025, 1, 1),
         selectedDiary = Diary(LocalDate(2025, 1, 1), "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ"),
-        diaryExistenceState = DiaryExistenceModel(true, 1, ""),
+        diaryExistenceState = DiaryExistenceModel(true, 1, "", 1),
         onFloatingBtnClick = {},
         onSummaryViewClick = {},
         onDateSelected = {}

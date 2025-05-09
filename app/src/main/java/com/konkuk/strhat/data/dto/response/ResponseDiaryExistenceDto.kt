@@ -10,5 +10,7 @@ data class ResponseDiaryExistenceDto(
     @SerialName("emotion")
     val emotion: Int?,
     @SerialName("summary")
-    val summary: String?
+    val summary: String?,
+    @SerialName("diaryId")
+    val diaryId: Int?
 )

@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ResponseTotalDiaryDto(
     @SerialName("content")
-    val content: String
+    val content: String,
+    @SerialName("diaryId")
+    val diaryId: Int
 )
