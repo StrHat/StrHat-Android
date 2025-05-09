@@ -43,9 +43,7 @@ import com.konkuk.strhat.domain.entity.TotalDiaryModel
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun DiaryAIFeedbackRecordRoute(
@@ -69,6 +67,7 @@ fun DiaryAIFeedbackRecordRoute(
 
     DiaryAIFeedbackRecordScreen(
         padding = padding,
+        date = date,
         diaryFeedbackState = diaryFeedbackState,
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
@@ -82,6 +81,7 @@ fun DiaryAIFeedbackRecordRoute(
 @Composable
 fun DiaryAIFeedbackRecordScreen(
     padding: PaddingValues,
+    date: String,
     diaryFeedbackState: DiaryFeedbackModel,
     totalDiary: TotalDiaryModel,
     navigateToChat: () -> Unit,
@@ -98,13 +98,13 @@ fun DiaryAIFeedbackRecordScreen(
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
     var isChatModeBottomSheetVisible by remember { mutableStateOf(false) }
 
-    val today = remember {
-        Clock.System.todayIn(TimeZone.currentSystemDefault())
+    val parsedDate = remember(date) {
+        LocalDate.parse(date)
     }
 
     val formattedDate = stringResource(
         id = R.string.diary_ai_feedback_date,
-        today.year, today.monthNumber, today.dayOfMonth
+        parsedDate.year, parsedDate.monthNumber, parsedDate.dayOfMonth
     )
 
     Column(
