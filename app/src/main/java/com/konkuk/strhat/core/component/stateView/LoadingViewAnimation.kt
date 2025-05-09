@@ -1,5 +1,6 @@
 package com.konkuk.strhat.core.component.stateView
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -25,13 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.konkuk.strhat.R
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 import kotlinx.coroutines.delay
 
 @Composable
-fun LoadingViewAnimation() {
+fun LoadingViewAnimation(
+    @StringRes loadingDescription: Int
+) {
     val activeStep = remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -74,7 +76,7 @@ fun LoadingViewAnimation() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = stringResource(R.string.loading_description),
+            text = stringResource(loadingDescription),
             color = colors.Gray500,
             style = typography.body3_m_14,
             textAlign = TextAlign.Center

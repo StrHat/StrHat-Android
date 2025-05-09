@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.konkuk.strhat.R
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 
 @Composable
 fun LoadingScreen(
+    loadingDescription: Int,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -22,7 +24,7 @@ fun LoadingScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        LoadingViewAnimation()
+        LoadingViewAnimation(loadingDescription)
     }
 }
 
@@ -30,6 +32,6 @@ fun LoadingScreen(
 @Composable
 private fun ShowLoadingScreen() {
     StrHatTheme {
-        LoadingScreen()
+        LoadingScreen(R.string.loading_description)
     }
 }
