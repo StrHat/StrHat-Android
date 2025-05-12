@@ -101,4 +101,7 @@ dependencies {
     // Date Time Picker
     implementation(libs.compose.date.time.picker)
     implementation(libs.kotlinx.datetime)
+
+    // Kakao
+    implementation(libs.kakao.user)
 }
