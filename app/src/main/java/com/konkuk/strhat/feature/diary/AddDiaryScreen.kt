@@ -68,7 +68,7 @@ fun AddDiaryRoute(
                 )
 
                 coroutineScope.launch {
-                    delay(5000)
+                    delay(10000)
                     navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
                 }
             }
