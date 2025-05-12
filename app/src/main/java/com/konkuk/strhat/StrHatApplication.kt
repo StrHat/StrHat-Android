@@ -10,6 +10,7 @@ class StrHatApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         setTimber()
+        initKakaoSdk()
     }
 
     private fun setTimber() {
