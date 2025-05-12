@@ -10,7 +10,10 @@ import com.kakao.sdk.user.UserApiClient
 import com.konkuk.strhat.core.network.TokenManager
 import com.konkuk.strhat.domain.entity.KakaoAccessTokenModel
 import com.konkuk.strhat.domain.usecase.KakaoLoginUseCase
+import com.konkuk.strhat.feature.login.model.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
@@ -23,6 +26,9 @@ class LoginViewModel @Inject constructor(
     private val kakaoLoginUseCase: KakaoLoginUseCase,
     private val tokenManager: TokenManager
 ) : ViewModel() {
+    private val _loginResult = MutableStateFlow<LoginResult?>(null)
+    val loginResult: StateFlow<LoginResult?> = _loginResult
+
     fun loginWithKakao(context: Context) {
         viewModelScope.launch {
             runCatching {
@@ -61,10 +67,14 @@ class LoginViewModel @Inject constructor(
                     if (response.userExists) {
                         response.authorization?.let { tokenManager.saveToken(it) }
                         response.refreshToken?.let { tokenManager.saveRefreshToken(it) }
-                        Timber.tag("kakao login").d("기존 유저 로그인 완료")
+                        _loginResult.value = LoginResult(isSuccess = true, isExistingUser = true)
                     } else {
                         tokenManager.saveKakaoId(response.kakaoId)
-                        Timber.tag("kakao login").d("신규 유저 → 회원가입 필요")
+                        _loginResult.value = LoginResult(
+                            isSuccess = true,
+                            isExistingUser = false,
+                            kakaoId = response.kakaoId.toLong()
+                        )
                     }
                 }
                 .onFailure {

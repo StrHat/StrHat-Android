@@ -13,6 +13,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -35,6 +37,18 @@ fun LoginRoute(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val loginResult = viewModel.loginResult.collectAsStateWithLifecycle()
+
+    LaunchedEffect(loginResult.value) {
+        if (loginResult.value?.isSuccess == true) {
+            if (loginResult.value?.isExistingUser == true) {
+                // TODO: navigateToHome()
+            } else {
+                navigateToOnBoarding()
+            }
+        }
+    }
+
     LoginScreen(
         padding = padding,
         onButtonClick = { viewModel.loginWithKakao(context = context) }
