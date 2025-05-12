@@ -47,9 +47,7 @@ import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBo
 import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun DiaryAIFeedbackRoute(
@@ -57,7 +55,7 @@ fun DiaryAIFeedbackRoute(
     date: String,
     diaryFeedbackModel: DiaryFeedbackModel,
     navigateToChat: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
@@ -73,6 +71,7 @@ fun DiaryAIFeedbackRoute(
 
     DiaryAIFeedbackScreen(
         padding = padding,
+        date = date,
         diaryFeedbackModel = diaryFeedbackModel,
         diaryAIFeedbackState = diaryAIFeedbackState,
         totalDiary = totalDiary,
@@ -87,11 +86,12 @@ fun DiaryAIFeedbackRoute(
 @Composable
 private fun DiaryAIFeedbackScreen(
     padding: PaddingValues,
+    date: String,
     diaryFeedbackModel: DiaryFeedbackModel,
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: TotalDiaryModel,
     navigateToChat: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
@@ -104,13 +104,13 @@ private fun DiaryAIFeedbackScreen(
     var showTotalDiaryDialog by remember { mutableStateOf(false) }
     var isChatModeBottomSheetVisible by remember { mutableStateOf(false) }
 
-    val today = remember {
-        Clock.System.todayIn(TimeZone.currentSystemDefault())
+    val parsedDate = remember(date) {
+        LocalDate.parse(date)
     }
 
     val formattedDate = stringResource(
         id = R.string.diary_ai_feedback_date,
-        today.year, today.monthNumber, today.dayOfMonth
+        parsedDate.year, parsedDate.monthNumber, parsedDate.dayOfMonth
     )
 
     Column(
@@ -229,40 +229,26 @@ private fun DiaryAIFeedbackScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
-            val isDiaryRoute = previousRoute?.contains("Diary") == true
+            val isDiaryRoute = previousRoute?.contains("Add") == true
 
             StrHatButton(
-                isDisabled = isDiaryRoute,
-                text =
-                    if (isDiaryRoute)
-                        stringResource(R.string.diary_ai_feedback_quit_button)
-                    else
-                        stringResource(R.string.confirm),
+                isDisabled = true,
+                text = stringResource(R.string.diary_ai_feedback_quit_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (isDiaryRoute)
-                        navigateToTodayStressScore()
-                    else
-                        popBackStack()
+                    navigateToTodayStressScore(date)
                 }
             )
             StrHatButton(
                 isDisabled = false,
-                text =
-                    if (isDiaryRoute)
-                        stringResource(R.string.diary_ai_feedback_chat_button)
-                    else
-                        stringResource(R.string.my_page_ai_feedback_chat_history_button),
+                text = stringResource(R.string.diary_ai_feedback_chat_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (isDiaryRoute)
-                        isChatModeBottomSheetVisible = true
-                    else
-                        navigateToMyPageChatHistory()
+                    isChatModeBottomSheetVisible = true
                 }
             )
         }
@@ -306,6 +292,7 @@ fun DiaryAIFeedbackScreenPreview() {
 
         DiaryAIFeedbackScreen(
             padding = PaddingValues(),
+            date = "2025-01-01",
             diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), "", 1),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = TotalDiaryModel("", 1),

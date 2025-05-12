@@ -161,8 +161,8 @@ class MainNavigator(
         navController.popBackStack(MainTabRoute.Diary, false)
     }
 
-    fun navigateToTodayStressScore() {
-        navController.navigateToTodayStressScore()
+    fun navigateToTodayStressScore(date: String) {
+        navController.navigateToTodayStressScore(date)
     }
 
     fun navigateToChangeGraph() {

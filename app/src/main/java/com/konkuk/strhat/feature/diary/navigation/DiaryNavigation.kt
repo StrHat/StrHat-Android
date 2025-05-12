@@ -47,8 +47,8 @@ fun NavController.navigateToChat() {
     navigate(DiaryRoute.Chat)
 }
 
-fun NavController.navigateToTodayStressScore() {
-    navigate(DiaryRoute.TodayStressScore)
+fun NavController.navigateToTodayStressScore(date: String) {
+    navigate(DiaryRoute.TodayStressScore(date))
 }
 
 fun NavGraphBuilder.diaryNavGraph(
@@ -59,7 +59,7 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToChat: () -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
-    onNavigateToTodayStressScore: () -> Unit,
+    onNavigateToTodayStressScore: (String) -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageChatHistory: () -> Unit,
     navController: NavController
@@ -128,9 +128,12 @@ fun NavGraphBuilder.diaryNavGraph(
         )
     }
 
-    composable<DiaryRoute.TodayStressScore> {
+    composable<DiaryRoute.TodayStressScore> { navBackStackEntry ->
+        val date = navBackStackEntry.toRoute<DiaryRoute.TodayStressScore>().date
+
         TodayStressScoreRoute(
             padding = padding,
+            date = date,
             navigateToHome = onNavigateToHome,
             navigateToMyPage = onNavigateToMyPage,
             navController = navController
