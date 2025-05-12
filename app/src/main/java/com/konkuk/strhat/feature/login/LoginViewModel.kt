@@ -7,16 +7,21 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.konkuk.strhat.core.network.TokenManager
+import com.konkuk.strhat.domain.entity.KakaoAccessTokenModel
+import com.konkuk.strhat.domain.usecase.KakaoLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-
+    private val kakaoLoginUseCase: KakaoLoginUseCase,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
     fun loginWithKakao(context: Context) {
         viewModelScope.launch {
@@ -29,13 +34,16 @@ class LoginViewModel @Inject constructor(
                         }
                     }
                 }
-            }.onSuccess {
+            }.onSuccess { token ->
+                val accessToken = token.accessToken
+                login(KakaoAccessTokenModel(accessToken))
             }.onFailure {
+                Timber.tag("kakao login").e(it, "카카오 로그인 실패")
             }
         }
     }
 
-    fun performKakaoLogin(context: Context, callback: (OAuthToken?, Throwable?) -> Unit) {
+    private fun performKakaoLogin(context: Context, callback: (OAuthToken?, Throwable?) -> Unit) {
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
             UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
                 if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
@@ -43,6 +51,25 @@ class LoginViewModel @Inject constructor(
             }
         } else {
             UserApiClient.instance.loginWithKakaoAccount(context = context, callback = callback)
+        }
+    }
+
+    private fun login(accessToken: KakaoAccessTokenModel){
+        viewModelScope.launch {
+            kakaoLoginUseCase(accessToken)
+                .onSuccess { response ->
+                    if (response.userExists) {
+                        response.authorization?.let { tokenManager.saveToken(it) }
+                        response.refreshToken?.let { tokenManager.saveRefreshToken(it) }
+                        Timber.tag("kakao login").d("기존 유저 로그인 완료")
+                    } else {
+                        tokenManager.saveKakaoId(response.kakaoId)
+                        Timber.tag("kakao login").d("신규 유저 → 회원가입 필요")
+                    }
+                }
+                .onFailure {
+                    Timber.tag("kakao login").e(it, "카카오 로그인 실패")
+                }
         }
     }
 }
