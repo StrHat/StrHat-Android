@@ -65,7 +65,6 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToLogin: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
-    onNavigateToTodayStressScore: () -> Unit,
     onNavigateToChangeGraph: () -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: () -> Unit,
@@ -81,7 +80,7 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToPersonality = navController::navigateToPersonality,
             navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
             navigateToLogin = onNavigateToLogin,
-            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            navigateToMyPageStressScore = onNavigateToMyPageStressScore,
             navigateToChangeGraph = onNavigateToChangeGraph
         )
     }

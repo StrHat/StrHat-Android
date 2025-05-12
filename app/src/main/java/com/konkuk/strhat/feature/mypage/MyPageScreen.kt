@@ -49,7 +49,7 @@ fun MyPageRoute(
     navigateToPersonality: () -> Unit,
     navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
@@ -66,7 +66,7 @@ fun MyPageRoute(
         navigateToPersonality = navigateToPersonality,
         navigateToLogin = navigateToLogin,
         navigateToMySelfDiagnosisRecord = navigateToMySelfDiagnosisRecord,
-        navigateToTodayStressScore = navigateToTodayStressScore,
+        navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToChangeGraph = navigateToChangeGraph,
         myPageModel = myPageModel
     )
@@ -81,7 +81,7 @@ private fun MyPageScreen(
     navigateToPersonality: () -> Unit,
     navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
     myPageModel: MyPageModel
 ) {
@@ -331,7 +331,7 @@ private fun MyPageScreen(
             color = colors.MainBlack,
             modifier = Modifier.padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToTodayStressScore()
+                    navigateToMyPageStressScore()
                 }
         )
         HorizontalDivider(
@@ -403,7 +403,7 @@ private fun PreviewMyPageScreen() {
             navigateToPersonality = {},
             navigateToLogin = {},
             navigateToMySelfDiagnosisRecord = {},
-            navigateToTodayStressScore = {},
+            navigateToMyPageStressScore = {},
             navigateToChangeGraph = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
