@@ -12,8 +12,8 @@ fun MyPageModel.toDomain(): MyPageModel {
     return MyPageModel(
         nickname = nickname,
         birth = age,
-        gender = GenderType.toGenderType(gender),
-        job = JobType.toJobType(job),
+        gender = GenderType.fromDisplay(gender).toString(),
+        job = JobType.fromDisplay(job).toString(),
         hobbyHealingStyle = hobbyHealingStyle,
         stressReliefStyle = stressReliefStyle,
         personality = personality

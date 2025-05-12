@@ -29,17 +29,24 @@ object NetworkModule {
     fun providesAuthorizationInterceptor(
         tokenManager: TokenManager
     ): okhttp3.Interceptor = okhttp3.Interceptor { chain ->
-        // val token = tokenManager.getToken()
-        val token = if (BuildConfig.TOKEN.isNotBlank()) {
-            BuildConfig.TOKEN
-        } else {
-            tokenManager.getToken()
+        val request = chain.request()
+        val url = request.url.toString()
+
+        if (!shouldAddAuthorization(url)) {
+            return@Interceptor chain.proceed(request)
         }
 
-        val request = chain.request().newBuilder()
+        val token = tokenManager.getToken()
+
+        val newRequest = chain.request().newBuilder()
             .addHeader("Authorization", "Bearer $token")
             .build()
-        chain.proceed(request)
+        chain.proceed(newRequest)
+    }
+
+    private fun shouldAddAuthorization(url: String): Boolean {
+        return !url.contains("/api/v1/auth/kakao") &&
+                !url.contains("/api/v1/users/sign-up")
     }
 
     @Provides

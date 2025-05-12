@@ -1,13 +1,13 @@
 package com.konkuk.strhat.domain.type
 
 enum class GenderType(
-    val type: String
+    val displayName: String
 ){
-    MALE(type = "남성"),
-    FEMALE(type = "여성");
+    MALE(displayName = "남자"),
+    FEMALE(displayName = "여자");
 
-    companion object{
-        fun toGenderType(gender: String): String =
-            entries.find { it.name.equals(gender, ignoreCase = true) }?.type?:MALE.type
+    companion object {
+        fun fromDisplay(display: String): GenderType =
+            entries.find { it.displayName == display } ?: MALE
     }
 }

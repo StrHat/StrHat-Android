@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.YearSelectableButton
 import com.konkuk.strhat.core.component.button.StrHatButton
@@ -31,7 +30,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun OnBoardingNickNameRoute(
     padding: PaddingValues,
     navigateToGender: () -> Unit,
-    viewModel: OnBoardingViewModel = hiltViewModel()
+    viewModel: OnBoardingViewModel
 ) {
     val nickName by viewModel.nickName.collectAsState()
     val selectedYear by viewModel.selectedYear.collectAsState()

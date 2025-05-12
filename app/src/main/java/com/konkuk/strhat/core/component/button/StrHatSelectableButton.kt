@@ -73,7 +73,7 @@ fun StrHatSelectableButton(
 @Composable
 private fun PreviewStrHatSelectableButton() {
     val options = listOf(
-        "남성", "여성"
+        "남자", "여자"
     )
     var selectedOption by remember { mutableStateOf("") }
     StrHatTheme {

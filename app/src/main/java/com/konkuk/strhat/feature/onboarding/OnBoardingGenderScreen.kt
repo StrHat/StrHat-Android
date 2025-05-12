@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.button.StrHatSelectableButtons
@@ -32,7 +31,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun OnBoardingGenderRoute(
     padding: PaddingValues,
     navigateToHobby: () -> Unit,
-    viewModel: OnBoardingViewModel = hiltViewModel()
+    viewModel: OnBoardingViewModel
 ) {
     val selectedOption by viewModel.selectedOption.collectAsState()
 
@@ -47,6 +46,8 @@ fun OnBoardingGenderRoute(
         progress = progress,
         selectedOption = selectedOption,
         onOptionSelected = viewModel::updateSelectedOption,
+        selectedJob = viewModel.selectedJob.collectAsState().value,
+        onJobSelected = viewModel::updateSelectedJob,
         navigateToHobby = navigateToHobby
     )
 
@@ -58,6 +59,8 @@ fun OnBoardingGenderScreen(
     progress: Float,
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
+    selectedJob: String,
+    onJobSelected: (String) -> Unit,
     navigateToHobby: () -> Unit
 ) {
     Box(
@@ -69,7 +72,9 @@ fun OnBoardingGenderScreen(
         OnBoardingGenderSection(
             progress = progress,
             selectedOption = selectedOption,
-            onOptionSelected = onOptionSelected
+            onOptionSelected = onOptionSelected,
+            selectedJob = selectedJob,
+            onJobSelected = onJobSelected
         )
 
         StrHatButton(
@@ -89,10 +94,12 @@ fun OnBoardingGenderSection(
     progress: Float,
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
+    selectedJob: String,
+    onJobSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val options = listOf(
-        "남성", "여성"
+        "남자", "여자"
     )
 
     Column(
@@ -118,7 +125,10 @@ fun OnBoardingGenderSection(
             style = typography.title1_b_18,
             modifier = Modifier.padding(bottom = 15.dp)
         )
-        JobDropDown(onJobSelected = {})
+        JobDropDown(
+            selectedJob = selectedJob,
+            onJobSelected = onJobSelected
+        )
     }
 }
 
@@ -135,6 +145,8 @@ private fun PreviewOnBoardingGenderScreen() {
             progress = 0f,
             selectedOption = "",
             onOptionSelected = {},
+            selectedJob = "",
+            onJobSelected = {},
             navigateToHobby = {}
         )
     }

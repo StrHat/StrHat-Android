@@ -1,20 +1,14 @@
 package com.konkuk.strhat.domain.type
 
 enum class JobType(
-    val type: String
+    val displayName: String
 ) {
-    STUDENT(
-        type = "대학생"
-    ),
-    JOBSEEKER(
-        type = "취준생"
-    ),
-    WORKER(
-        type = "직장인"
-    );
+    STUDENT(displayName = "대학생"),
+    JOBSEEKER(displayName = "취준생"),
+    WORKER(displayName = "직장인");
 
     companion object {
-        fun toJobType(job: String): String =
-            entries.find { it.name.equals(job, ignoreCase = true) }?.type ?: STUDENT.type
+        fun fromDisplay(display: String): JobType =
+            entries.find { it.displayName == display } ?: STUDENT
     }
 }
