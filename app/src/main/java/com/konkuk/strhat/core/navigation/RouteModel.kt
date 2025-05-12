@@ -75,7 +75,9 @@ sealed interface DiaryRoute : Route {
         val date: String
     ) : DiaryRoute
     @Serializable
-    data object Chat : DiaryRoute
+    data class Chat(
+        val diaryId: Int
+    ) : DiaryRoute
     @Serializable
     data class TodayStressScore(
         val date: String

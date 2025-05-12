@@ -25,6 +25,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
+import com.konkuk.strhat.data.dto.request.RequestChatDto
 import com.konkuk.strhat.feature.diary.component.ChatBubble
 import com.konkuk.strhat.feature.diary.component.ChatTextFieldRow
 import com.konkuk.strhat.feature.diary.component.ChatTopBar
@@ -35,6 +36,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 @Composable
 fun ChatRoute(
     padding: PaddingValues,
+    diaryId: Int,
     navigateToTodayStressScore: (String) -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
@@ -46,7 +48,13 @@ fun ChatRoute(
         messages = messages,
         inputText = inputText,
         onTextChange = { viewModel.updateInputText(it) },
-        onSendClick = { viewModel.sendMessage() },
+        onSendClick = {
+            viewModel.sendMessage()
+            viewModel.postChat(
+                request = RequestChatDto(userMessage = inputText),  // chatMode 추가해야 함
+                diaryId = diaryId
+            )
+        },
         navigateToTodayStressScore = navigateToTodayStressScore
     )
 }

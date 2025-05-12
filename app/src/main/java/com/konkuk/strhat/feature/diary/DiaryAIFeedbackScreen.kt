@@ -54,10 +54,8 @@ fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     date: String,
     diaryFeedbackModel: DiaryFeedbackModel,
-    navigateToChat: () -> Unit,
+    navigateToChat: (Int) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
-    popBackStack: () -> Unit,
-    navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel(),
     addDiaryViewModel: AddDiaryViewModel = hiltViewModel()
@@ -77,8 +75,6 @@ fun DiaryAIFeedbackRoute(
         totalDiary = totalDiary,
         navigateToChat = navigateToChat,
         navigateToTodayStressScore = navigateToTodayStressScore,
-        popBackStack = popBackStack,
-        navigateToMyPageChatHistory = navigateToMyPageChatHistory,
         navController = navController
     )
 }
@@ -90,10 +86,8 @@ private fun DiaryAIFeedbackScreen(
     diaryFeedbackModel: DiaryFeedbackModel,
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: TotalDiaryModel,
-    navigateToChat: () -> Unit,
+    navigateToChat: (Int) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
-    popBackStack: () -> Unit,
-    navigateToMyPageChatHistory: () -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -229,8 +223,6 @@ private fun DiaryAIFeedbackScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
-            val isDiaryRoute = previousRoute?.contains("Add") == true
-
             StrHatButton(
                 isDisabled = true,
                 text = stringResource(R.string.diary_ai_feedback_quit_button),
@@ -271,10 +263,12 @@ private fun DiaryAIFeedbackScreen(
         ChatModeBottomSheet(
             isVisible = isChatModeBottomSheetVisible,
             onDismiss = { isChatModeBottomSheetVisible = false },
-            onChatModeSelected = { selectedMode ->
+            onChatModeSelected = {
                 isChatModeBottomSheetVisible = false
             },
-            navigateToChat = navigateToChat
+            navigateToChat = {
+                navigateToChat(diaryFeedbackModel.diaryId)
+            }
         )
     }
 }
@@ -298,8 +292,6 @@ fun DiaryAIFeedbackScreenPreview() {
             totalDiary = TotalDiaryModel("", 1),
             navigateToChat = {},
             navigateToTodayStressScore = {},
-            popBackStack = {},
-            navigateToMyPageChatHistory = {},
             navController = rememberNavController(),
             modifier = Modifier.background(colors.MainWhite)
         )

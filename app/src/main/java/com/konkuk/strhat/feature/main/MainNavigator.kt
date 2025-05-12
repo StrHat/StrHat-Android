@@ -149,8 +149,8 @@ class MainNavigator(
         )
     }
 
-    fun navigateToChat() {
-        navController.navigateToChat()
+    fun navigateToChat(diaryId: Int) {
+        navController.navigateToChat(diaryId)
     }
 
     fun popBackStack() {

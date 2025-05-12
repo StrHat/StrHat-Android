@@ -49,7 +49,7 @@ import kotlinx.datetime.LocalDate
 fun DiaryAIFeedbackRecordRoute(
     padding: PaddingValues,
     date: String,
-    navigateToChat: () -> Unit,
+    navigateToChat: (Int) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
@@ -84,7 +84,7 @@ fun DiaryAIFeedbackRecordScreen(
     date: String,
     diaryFeedbackState: DiaryFeedbackModel,
     totalDiary: TotalDiaryModel,
-    navigateToChat: () -> Unit,
+    navigateToChat: (Int) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
     navigateToMyPageChatHistory: () -> Unit,
@@ -277,7 +277,9 @@ fun DiaryAIFeedbackRecordScreen(
             onChatModeSelected = { selectedMode ->
                 isChatModeBottomSheetVisible = false
             },
-            navigateToChat = navigateToChat
+            navigateToChat = {
+                navigateToChat(totalDiary.diaryId)
+            }
         )
     }
 }
