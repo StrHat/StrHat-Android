@@ -1,5 +1,6 @@
 package com.konkuk.strhat.data.di
 
+import com.konkuk.strhat.data.service.ChatService
 import com.konkuk.strhat.data.service.DiaryService
 import com.konkuk.strhat.data.service.HomeService
 import com.konkuk.strhat.data.service.StressScoreService
@@ -27,4 +28,9 @@ object ApiModule {
     @Singleton
     fun providesStressScoreService(retrofit: Retrofit): StressScoreService =
         retrofit.create(StressScoreService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesChatService(retrofit: Retrofit): ChatService =
+        retrofit.create(ChatService::class.java)
 }

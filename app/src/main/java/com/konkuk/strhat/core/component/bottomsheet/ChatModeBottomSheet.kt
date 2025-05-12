@@ -85,20 +85,20 @@ fun ChatModeBottomSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         HeartButton(
-                            modeText = ChatModeType.EMPATHY.chatModeType,
-                            isModeSelected = (selectedMode == ChatModeType.EMPATHY.chatModeType),
+                            modeText = ChatModeType.EMPATHY_MODE.chatMode,
+                            isModeSelected = (selectedMode == ChatModeType.EMPATHY_MODE.chatMode),
                             onModeClick = { mode, _ ->
-                                selectedMode = if (selectedMode == ChatModeType.EMPATHY.chatModeType) null else ChatModeType.EMPATHY.chatModeType
+                                selectedMode = if (selectedMode == ChatModeType.EMPATHY_MODE.chatMode) null else ChatModeType.EMPATHY_MODE.chatMode
                             }
                         )
 
                         Spacer(modifier = Modifier.width(50.dp))
 
                         HeartButton(
-                            modeText = ChatModeType.SOLUTION.chatModeType,
-                            isModeSelected = (selectedMode == ChatModeType.SOLUTION.chatModeType),
+                            modeText = ChatModeType.SOLUTION_MODE.chatMode,
+                            isModeSelected = (selectedMode == ChatModeType.SOLUTION_MODE.chatMode),
                             onModeClick = { mode, _ ->
-                                selectedMode = if (selectedMode == ChatModeType.SOLUTION.chatModeType) null else ChatModeType.SOLUTION.chatModeType
+                                selectedMode = if (selectedMode == ChatModeType.SOLUTION_MODE.chatMode) null else ChatModeType.SOLUTION_MODE.chatMode
                             }
                         )
                     }

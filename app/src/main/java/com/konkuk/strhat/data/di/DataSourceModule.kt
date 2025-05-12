@@ -1,8 +1,10 @@
 package com.konkuk.strhat.data.di
 
+import com.konkuk.strhat.data.datasource.ChatDataSource
 import com.konkuk.strhat.data.datasource.DiaryDataSource
 import com.konkuk.strhat.data.datasource.HomeDataSource
 import com.konkuk.strhat.data.datasource.StressScoreDataSource
+import com.konkuk.strhat.data.datasourceimpl.ChatDataSourceImpl
 import com.konkuk.strhat.data.datasourceimpl.DiaryDataSourceImpl
 import com.konkuk.strhat.data.datasourceimpl.HomeDataSourceImpl
 import com.konkuk.strhat.data.datasourceimpl.StressScoreDataSourceImpl
@@ -26,4 +28,8 @@ abstract class DataSourceModule {
     @Binds
     @Singleton
     abstract fun bindsStressScoreDataSource(stressScoreDataSourceImpl: StressScoreDataSourceImpl): StressScoreDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsChatDataSource(chatDataSourceImpl: ChatDataSourceImpl): ChatDataSource
 }

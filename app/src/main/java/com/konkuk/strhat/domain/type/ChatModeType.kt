@@ -1,12 +1,12 @@
 package com.konkuk.strhat.domain.type
 
 enum class ChatModeType (
-    val chatModeType: String
+    val chatMode: String
 ) {
-    EMPATHY(
-        chatModeType = "공감"
+    EMPATHY_MODE(
+        chatMode = "공감"
     ),
-    SOLUTION(
-        chatModeType = "해결책"
+    SOLUTION_MODE(
+        chatMode = "해결책"
     )
 }
