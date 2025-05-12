@@ -1,9 +1,12 @@
 package com.konkuk.strhat.data.repositoryimpl
 
 import com.konkuk.strhat.data.datasource.AuthDataSource
+import com.konkuk.strhat.data.mapper.toRequestSignUpDto
 import com.konkuk.strhat.data.mapper.toRequestkakaoLoginDto
 import com.konkuk.strhat.domain.entity.KakaoAccessTokenModel
 import com.konkuk.strhat.domain.entity.KakaoLoginModel
+import com.konkuk.strhat.domain.entity.SignUpModel
+import com.konkuk.strhat.domain.entity.TokenModel
 import com.konkuk.strhat.domain.repository.AuthRepository
 import javax.inject.Inject
 
@@ -31,6 +34,21 @@ class AuthRepositoryImpl @Inject constructor(
                 userExists = userExists,
                 kakaoId = kakaoId,
                 authorization = accessToken,
+                refreshToken = refreshToken
+            )
+        }
+
+    override suspend fun postSignUp(signUpRequest: SignUpModel): Result<TokenModel> =
+        runCatching {
+            val response = authDataSource.postSignUp(signUpRequest.toRequestSignUpDto())
+
+            val accessToken = response.headers()["authorization"]
+                ?: throw IllegalStateException("Authorization 헤더 없음")
+            val refreshToken = response.headers()["refresh-token"]
+                ?: throw IllegalStateException("RefreshToken 헤더 없음")
+
+            TokenModel(
+                accessToken = accessToken,
                 refreshToken = refreshToken
             )
         }

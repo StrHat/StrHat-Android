@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.konkuk.strhat.feature.diary.navigation.diaryNavGraph
 import com.konkuk.strhat.feature.home.navigation.homeNavGraph
 import com.konkuk.strhat.feature.login.navigation.loginNavGraph
 import com.konkuk.strhat.feature.main.MainNavigator
 import com.konkuk.strhat.feature.mypage.navigation.myPageNavGraph
+import com.konkuk.strhat.feature.onboarding.OnBoardingViewModel
 import com.konkuk.strhat.feature.onboarding.navigation.onBoardingNavGraph
 import com.konkuk.strhat.feature.selfdiagnosis.navigation.selfDiagnosisNavGraph
 import com.konkuk.strhat.feature.splash.navigation.splashNavGraph
@@ -23,6 +25,7 @@ fun MainNavHost(
     navigator: MainNavigator,
     padding: PaddingValues
 ) {
+    val onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -96,7 +99,8 @@ fun MainNavHost(
             onBoardingNavGraph(
                 padding = padding,
                 onNavigateToHome = navigator::navigateToHome,
-                navController = navigator.navController
+                navController = navigator.navController,
+                viewModel = onBoardingViewModel
             )
         }
     }

@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.progressbar.AnimatedProgressBar
@@ -28,7 +27,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 fun OnBoardingHobbyRoute(
     padding: PaddingValues,
     navigateToStress: () -> Unit,
-    viewModel: OnBoardingViewModel = hiltViewModel()
+    viewModel: OnBoardingViewModel
 ) {
     val hobby by viewModel.hobby.collectAsState()
 
@@ -68,10 +67,10 @@ fun OnBoardingHobbyScreen(
         )
 
         StrHatButton(
-            isDisabled = if (hobby.isEmpty()) true else false,
+            isDisabled = if (hobby.length < 20) true else false,
             text = stringResource(R.string.next),
             onClick = {
-                if (hobby.isNotEmpty())
+                if (hobby.length >= 20)
                     navigateToStress()
             },
             modifier = Modifier.align(Alignment.BottomCenter)

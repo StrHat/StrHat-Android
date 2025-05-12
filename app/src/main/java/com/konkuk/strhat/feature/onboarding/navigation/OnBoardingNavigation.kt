@@ -11,6 +11,7 @@ import com.konkuk.strhat.feature.onboarding.OnBoardingNickNameRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingPersonalityRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingStressRoute
 import com.konkuk.strhat.feature.onboarding.OnBoardingSuccessRoute
+import com.konkuk.strhat.feature.onboarding.OnBoardingViewModel
 
 fun NavController.navigateToOnBoarding() {
     navigate(OnBoardingRoute.NickName)
@@ -39,47 +40,54 @@ fun NavController.navigateToSuccess() {
 fun NavGraphBuilder.onBoardingNavGraph(
     padding: PaddingValues,
     onNavigateToHome: () -> Unit,
-    navController: NavController
+    navController: NavController,
+    viewModel: OnBoardingViewModel
 ) {
     composable<OnBoardingRoute.NickName> {
         OnBoardingNickNameRoute(
             padding = padding,
-            navigateToGender = navController::navigateToGender
+            navigateToGender = navController::navigateToGender,
+            viewModel = viewModel
         )
     }
 
     composable<OnBoardingRoute.Gender> {
         OnBoardingGenderRoute(
             padding = padding,
-            navigateToHobby = navController::navigateToHobby
+            navigateToHobby = navController::navigateToHobby,
+            viewModel = viewModel
         )
     }
 
     composable<OnBoardingRoute.Hobby> {
         OnBoardingHobbyRoute(
             padding = padding,
-            navigateToStress = navController::navigateToStress
+            navigateToStress = navController::navigateToStress,
+            viewModel = viewModel
         )
     }
 
     composable<OnBoardingRoute.Stress> {
         OnBoardingStressRoute(
             padding = padding,
-            navigateToPersonality = navController::navigateToPersonality
+            navigateToPersonality = navController::navigateToPersonality,
+            viewModel = viewModel
         )
     }
 
     composable<OnBoardingRoute.Personality> {
         OnBoardingPersonalityRoute(
             padding = padding,
-            navigateToSuccess = navController::navigateToSuccess
+            navigateToSuccess = navController::navigateToSuccess,
+            viewModel = viewModel
         )
     }
 
     composable<OnBoardingRoute.Success> {
         OnBoardingSuccessRoute(
             padding = padding,
-            navigateToHome = onNavigateToHome
+            navigateToHome = onNavigateToHome,
+            viewModel = viewModel
         )
     }
 }

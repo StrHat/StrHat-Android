@@ -4,6 +4,7 @@ import com.konkuk.strhat.domain.repository.AuthRepository
 import com.konkuk.strhat.domain.repository.HomeRepository
 import com.konkuk.strhat.domain.usecase.HomeUseCase
 import com.konkuk.strhat.domain.usecase.KakaoLoginUseCase
+import com.konkuk.strhat.domain.usecase.SignUpUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +25,10 @@ object UseCaseModule {
     fun providesKakaoLoginUseCase(
         authRepository: AuthRepository
     ): KakaoLoginUseCase = KakaoLoginUseCase(authRepository)
+
+    @Provides
+    @Singleton
+    fun providesSignUpUseCase(
+        authRepository: AuthRepository
+    ): SignUpUseCase = SignUpUseCase(authRepository)
 }

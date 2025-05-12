@@ -1,6 +1,7 @@
 package com.konkuk.strhat.data.service
 
 import com.konkuk.strhat.data.dto.base.BaseResponse
+import com.konkuk.strhat.data.dto.request.RequestSignUpDto
 import com.konkuk.strhat.data.dto.request.RequestkakaoLoginDto
 import com.konkuk.strhat.data.dto.response.ResponseKakaoLoginDto
 import retrofit2.Response
@@ -12,4 +13,9 @@ interface AuthService {
     suspend fun kakaoLogin(
         @Body kakaoLoginRequest: RequestkakaoLoginDto
     ): Response<BaseResponse<ResponseKakaoLoginDto>>
+
+    @POST("/api/v1/users/sign-up")
+    suspend fun signUp(
+        @Body signUpRequest: RequestSignUpDto
+    ): Response<Unit>
 }
