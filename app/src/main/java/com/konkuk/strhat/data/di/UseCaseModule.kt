@@ -7,6 +7,7 @@ import com.konkuk.strhat.domain.usecase.GetUserInfoUseCase
 import com.konkuk.strhat.domain.usecase.HomeUseCase
 import com.konkuk.strhat.domain.usecase.KakaoLoginUseCase
 import com.konkuk.strhat.domain.usecase.PatchHobbyHealingInfoUseCase
+import com.konkuk.strhat.domain.usecase.PatchPersonalityInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchStressReliefInfoUseCase
 import com.konkuk.strhat.domain.usecase.SignUpUseCase
 import dagger.Module
@@ -53,4 +54,11 @@ object UseCaseModule {
     fun providesPatchStressReliefInfoUseCase(
         userRepository: UserRepository
     ): PatchStressReliefInfoUseCase = PatchStressReliefInfoUseCase(userRepository)
+
+    @Provides
+    @Singleton
+    fun providesPatchPersonalityInfoUseCase(
+        userRepository: UserRepository
+    ): PatchPersonalityInfoUseCase = PatchPersonalityInfoUseCase(userRepository)
+
 }

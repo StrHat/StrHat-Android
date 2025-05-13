@@ -6,6 +6,7 @@ import com.konkuk.strhat.core.network.TokenManager
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.domain.usecase.GetUserInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchHobbyHealingInfoUseCase
+import com.konkuk.strhat.domain.usecase.PatchPersonalityInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchStressReliefInfoUseCase
 import com.konkuk.strhat.domain.usecase.SignOutUseCase
 import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
@@ -22,6 +23,7 @@ class MyPageViewModel @Inject constructor(
     private val userInfoUseCase: GetUserInfoUseCase,
     private val patchHobbyHealingInfoUseCase: PatchHobbyHealingInfoUseCase,
     private val patchStressReliefInfoUseCase: PatchStressReliefInfoUseCase,
+    private val patchPersonalityInfoUseCase: PatchPersonalityInfoUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val tokenManager: TokenManager
 ) : ViewModel() {
@@ -117,6 +119,19 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             val stress = _myPageModel.value.stressReliefStyle
             patchStressReliefInfoUseCase(stress)
+                .onSuccess {
+                    onComplete()
+                }
+                .onFailure {
+                    Timber.e("유저 정보 수정 실패: ${it.message}")
+                }
+        }
+    }
+
+    fun patchPersonalityInfo(onComplete: () -> Unit) {
+        viewModelScope.launch {
+            val personality = _myPageModel.value.personality
+            patchPersonalityInfoUseCase(personality)
                 .onSuccess {
                     onComplete()
                 }

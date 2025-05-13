@@ -8,4 +8,5 @@ interface UserDataSource {
     suspend fun getUserInfo(): BaseResponse<ResponseUserInfoDto>
     suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Response<Unit>
     suspend fun patchStressReliefInfo(stressReliefStyle: String): Response<Unit>
+    suspend fun patchPersonalityInfo(personality: String): Response<Unit>
 }

@@ -25,4 +25,9 @@ class UserRepositoryImpl @Inject constructor(
             userDataSource.patchStressReliefInfo(stressReliefStyle)
         }
 
+    override suspend fun patchPersonalityInfo(personality: String): Result<Unit> =
+        runCatching {
+            userDataSource.patchPersonalityInfo(personality)
+        }
+
 }

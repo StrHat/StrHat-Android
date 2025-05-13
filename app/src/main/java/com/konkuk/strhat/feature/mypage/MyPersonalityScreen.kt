@@ -41,7 +41,11 @@ fun MyPersonalityRoute(
         padding = padding,
         personality = myPageModel.personality,
         onPersonalityChange = viewModel::updatePersonality,
-        navigateToMyPage = navigateToMyPage
+        navigateToMyPage = {
+            viewModel.patchPersonalityInfo {
+                navigateToMyPage()
+            }
+        }
     )
 }
 
