@@ -5,6 +5,7 @@ import com.konkuk.strhat.data.dto.base.BaseResponse
 import com.konkuk.strhat.data.dto.request.RequestHobbyHealingDto
 import com.konkuk.strhat.data.dto.request.RequestPersonalityDto
 import com.konkuk.strhat.data.dto.request.RequestStressReliefDto
+import com.konkuk.strhat.data.dto.request.RequestUserInfoDto
 import com.konkuk.strhat.data.dto.response.ResponseUserInfoDto
 import com.konkuk.strhat.data.service.UserService
 import retrofit2.Response
@@ -15,6 +16,9 @@ class UserDataSourceImpl @Inject constructor(
 ): UserDataSource {
     override suspend fun getUserInfo(): BaseResponse<ResponseUserInfoDto> =
         userService.getUserInfo()
+
+    override suspend fun patchUserInfo(userInfo: RequestUserInfoDto): Response<Unit> =
+        userService.patchUserInfo(userInfo)
 
     override suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Response<Unit> =
         userService.patchHobbyHealingInfo(RequestHobbyHealingDto(hobbyHealingStyle))

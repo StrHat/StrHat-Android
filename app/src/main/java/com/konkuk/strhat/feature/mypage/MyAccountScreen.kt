@@ -51,7 +51,11 @@ fun MyAccountRoute(
         onOptionSelected = viewModel::updateGender,
         selectedJob = myPageModel.job,
         onJobSelected = viewModel::updateJob,
-        navigateToMyPage = navigateToMyPage
+        navigateToMyPage = {
+            viewModel.patchUserInfo {
+                navigateToMyPage()
+            }
+        }
     )
 }
 

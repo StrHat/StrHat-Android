@@ -1,6 +1,7 @@
 package com.konkuk.strhat.data.repositoryimpl
 
 import com.konkuk.strhat.data.datasource.UserDataSource
+import com.konkuk.strhat.data.mapper.toRequestUserInfoDto
 import com.konkuk.strhat.data.mapper.toUserInfoModel
 import com.konkuk.strhat.domain.entity.UserInfoModel
 import com.konkuk.strhat.domain.repository.UserRepository
@@ -13,6 +14,21 @@ class UserRepositoryImpl @Inject constructor(
         runCatching {
             val response = userDataSource.getUserInfo()
             response.response.toUserInfoModel()
+        }
+
+    override suspend fun patchUserInfo(
+        nickname: String,
+        birth: Int,
+        gender: String,
+        job: String
+    ): Result<Unit> =
+        runCatching {
+            val dto = toRequestUserInfoDto(nickname, birth, gender, job)
+            userDataSource.patchUserInfo(dto)
+        }.mapCatching {
+            if (!it.isSuccessful) {
+                throw Exception("유저 정보 수정 실패: ${it.code()}")
+            }
         }
 
     override suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Result<Unit> =

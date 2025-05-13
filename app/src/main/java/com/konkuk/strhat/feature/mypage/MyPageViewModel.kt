@@ -8,6 +8,7 @@ import com.konkuk.strhat.domain.usecase.GetUserInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchHobbyHealingInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchPersonalityInfoUseCase
 import com.konkuk.strhat.domain.usecase.PatchStressReliefInfoUseCase
+import com.konkuk.strhat.domain.usecase.PatchUserInfoUseCase
 import com.konkuk.strhat.domain.usecase.SignOutUseCase
 import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userInfoUseCase: GetUserInfoUseCase,
+    private val patchUserInfoUseCase: PatchUserInfoUseCase,
     private val patchHobbyHealingInfoUseCase: PatchHobbyHealingInfoUseCase,
     private val patchStressReliefInfoUseCase: PatchStressReliefInfoUseCase,
     private val patchPersonalityInfoUseCase: PatchPersonalityInfoUseCase,
@@ -102,6 +104,22 @@ class MyPageViewModel @Inject constructor(
         _myPageModel.value = _myPageModel.value.copy(personality = personality)
     }
 
+    fun patchUserInfo(onComplete: () -> Unit) {
+        viewModelScope.launch {
+            val user = _myPageModel.value
+            patchUserInfoUseCase(
+                nickname = user.nickname,
+                birth = user.birth,
+                gender = user.gender,
+                job = user.job
+            ).onSuccess {
+                onComplete()
+            }.onFailure {
+                Timber.e("유저 정보 수정 실패: ${it.message}")
+            }
+        }
+    }
+
     fun patchHealingInfo(onComplete: () -> Unit) {
         viewModelScope.launch {
             val healing = _myPageModel.value.hobbyHealingStyle
@@ -143,8 +161,6 @@ class MyPageViewModel @Inject constructor(
 
     fun signOut(){
         viewModelScope.launch {
-            Timber.d("📡 로그아웃 요청 토큰: ${tokenManager.getToken()}")
-
             signOutUseCase()
                 .onSuccess {
                     tokenManager.triggerLogout()

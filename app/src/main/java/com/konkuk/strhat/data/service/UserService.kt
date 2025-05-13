@@ -4,6 +4,7 @@ import com.konkuk.strhat.data.dto.base.BaseResponse
 import com.konkuk.strhat.data.dto.request.RequestHobbyHealingDto
 import com.konkuk.strhat.data.dto.request.RequestPersonalityDto
 import com.konkuk.strhat.data.dto.request.RequestStressReliefDto
+import com.konkuk.strhat.data.dto.request.RequestUserInfoDto
 import com.konkuk.strhat.data.dto.response.ResponseUserInfoDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -29,4 +30,8 @@ interface UserService {
         @Body requestPersonalityDto: RequestPersonalityDto
     ): Response<Unit>
 
+    @PATCH("/api/v1/users/info")
+    suspend fun patchUserInfo(
+        @Body requestUserInfoDto: RequestUserInfoDto
+    ): Response<Unit>
 }
