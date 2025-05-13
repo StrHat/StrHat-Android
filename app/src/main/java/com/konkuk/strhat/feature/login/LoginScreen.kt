@@ -34,6 +34,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun LoginRoute(
     padding: PaddingValues,
     navigateToOnBoarding: () -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -42,7 +43,7 @@ fun LoginRoute(
     LaunchedEffect(loginResult.value) {
         if (loginResult.value?.isSuccess == true) {
             if (loginResult.value?.isExistingUser == true) {
-                // TODO: navigateToHome()
+                navigateToHome()
             } else {
                 navigateToOnBoarding()
             }

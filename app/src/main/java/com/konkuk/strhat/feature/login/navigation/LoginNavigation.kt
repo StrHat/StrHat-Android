@@ -14,12 +14,14 @@ fun NavController.navigateToLogin(navOptions: NavOptions) {
 
 fun NavGraphBuilder.loginNavGraph(
     padding: PaddingValues,
-    onNavigateToOnBoarding: () -> Unit
+    onNavigateToOnBoarding: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
     composable<Login> {
         LoginRoute(
             padding = padding,
-            navigateToOnBoarding = onNavigateToOnBoarding
+            navigateToOnBoarding = onNavigateToOnBoarding,
+            navigateToHome = onNavigateToHome
         )
     }
 }

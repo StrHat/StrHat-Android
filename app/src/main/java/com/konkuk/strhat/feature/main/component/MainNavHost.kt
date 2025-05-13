@@ -93,7 +93,8 @@ fun MainNavHost(
 
             loginNavGraph(
                 padding = padding,
-                onNavigateToOnBoarding = navigator::navigateToOnBoarding
+                onNavigateToOnBoarding = navigator::navigateToOnBoarding,
+                onNavigateToHome = navigator::navigateToHome
             )
 
             onBoardingNavGraph(
