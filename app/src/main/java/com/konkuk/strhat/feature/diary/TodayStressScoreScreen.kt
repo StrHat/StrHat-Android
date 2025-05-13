@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,10 +29,12 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
+import com.konkuk.strhat.core.component.stateView.LoadingScreen
 import com.konkuk.strhat.domain.entity.StressScoreModel
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import kotlinx.coroutines.delay
 
 @Composable
 fun TodayStressScoreRoute(
@@ -42,18 +46,28 @@ fun TodayStressScoreRoute(
     viewModel: StressScoreViewModel = hiltViewModel()
 ) {
     val stressScoreState by viewModel.stressScoreState.collectAsState()
+    var showContent by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.getStressScore(date)
+        delay(5000)
+        showContent = true
     }
 
-    TodayStressScoreScreen(
-        padding = padding,
-        stressScoreState = stressScoreState,
-        navigateToHome = navigateToHome,
-        navigateToMyPage = navigateToMyPage,
-        navController = navController
-    )
+    if (!showContent) {
+        LoadingScreen(
+            loadingDescription = R.string.chat_feedback_loading,
+            modifier = Modifier.fillMaxSize()
+        )
+    } else {
+        TodayStressScoreScreen(
+            padding = padding,
+            stressScoreState = stressScoreState,
+            navigateToHome = navigateToHome,
+            navigateToMyPage = navigateToMyPage,
+            navController = navController
+        )
+    }
 }
 
 @Composable
