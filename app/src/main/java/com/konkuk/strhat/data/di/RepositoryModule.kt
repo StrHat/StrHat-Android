@@ -3,9 +3,11 @@ package com.konkuk.strhat.data.di
 import com.konkuk.strhat.data.repositoryimpl.AuthRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.DiaryRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.HomeRepositoryImpl
+import com.konkuk.strhat.data.repositoryimpl.UserRepositoryImpl
 import com.konkuk.strhat.domain.repository.AuthRepository
 import com.konkuk.strhat.domain.repository.DiaryRepository
 import com.konkuk.strhat.domain.repository.HomeRepository
+import com.konkuk.strhat.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,4 +28,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 }

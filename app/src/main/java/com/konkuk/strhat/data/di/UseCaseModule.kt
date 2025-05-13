@@ -2,6 +2,8 @@ package com.konkuk.strhat.data.di
 
 import com.konkuk.strhat.domain.repository.AuthRepository
 import com.konkuk.strhat.domain.repository.HomeRepository
+import com.konkuk.strhat.domain.repository.UserRepository
+import com.konkuk.strhat.domain.usecase.GetUserInfoUseCase
 import com.konkuk.strhat.domain.usecase.HomeUseCase
 import com.konkuk.strhat.domain.usecase.KakaoLoginUseCase
 import com.konkuk.strhat.domain.usecase.SignUpUseCase
@@ -31,4 +33,10 @@ object UseCaseModule {
     fun providesSignUpUseCase(
         authRepository: AuthRepository
     ): SignUpUseCase = SignUpUseCase(authRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetUserInfoUseCase(
+        userRepository: UserRepository
+    ): GetUserInfoUseCase = GetUserInfoUseCase(userRepository)
 }

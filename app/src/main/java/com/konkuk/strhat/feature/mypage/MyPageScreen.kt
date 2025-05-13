@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -224,7 +225,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.hobbyHealingStyle,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -261,7 +264,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.stressReliefStyle,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -298,7 +303,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.personality,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -313,7 +320,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_graph),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToChangeGraph()
                 }
@@ -328,7 +336,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_stress_score),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToTodayStressScore()
                 }
@@ -343,7 +352,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_record),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToMySelfDiagnosisRecord()
                 }
