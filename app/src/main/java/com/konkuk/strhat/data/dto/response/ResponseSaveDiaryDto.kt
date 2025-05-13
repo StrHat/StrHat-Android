@@ -12,5 +12,7 @@ data class ResponseSaveDiaryDto(
     @SerialName("negativeKeywords")
     val negativeKeywords: List<String>,
     @SerialName("stressReliefSuggestions")
-    val stressReliefSuggestions: String
+    val stressReliefSuggestions: String,
+    @SerialName("diaryId")
+    val diaryId: Int
 )

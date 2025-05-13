@@ -50,7 +50,7 @@ fun MyPageRoute(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
@@ -66,7 +66,7 @@ fun MyPageRoute(
         navigateToStress = navigateToStress,
         navigateToPersonality = navigateToPersonality,
         navigateToMySelfDiagnosisRecord = navigateToMySelfDiagnosisRecord,
-        navigateToTodayStressScore = navigateToTodayStressScore,
+        navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToChangeGraph = navigateToChangeGraph,
         onSignOutClick = { viewModel.signOut() },
         myPageModel = myPageModel
@@ -81,7 +81,7 @@ private fun MyPageScreen(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
     onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
@@ -342,7 +342,7 @@ private fun MyPageScreen(
             modifier = Modifier
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToTodayStressScore()
+                    navigateToMyPageStressScore()
                 }
         )
         HorizontalDivider(
@@ -414,7 +414,7 @@ private fun PreviewMyPageScreen() {
             navigateToStress = {},
             navigateToPersonality = {},
             navigateToMySelfDiagnosisRecord = {},
-            navigateToTodayStressScore = {},
+            navigateToMyPageStressScore = {},
             navigateToChangeGraph = {},
             onSignOutClick = {},
             myPageModel = MyPageModel(

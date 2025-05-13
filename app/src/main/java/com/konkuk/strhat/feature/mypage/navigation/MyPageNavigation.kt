@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.konkuk.strhat.core.navigation.DiaryRoute
+import androidx.navigation.toRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.MyPageRoute
 import com.konkuk.strhat.feature.mypage.MyAccountRoute
@@ -55,8 +55,8 @@ fun NavController.navigateToMyPageStressScore() {
     navigate(MyPageRoute.MyPageStressScore)
 }
 
-fun NavController.navigateToMyPageChatHistory() {
-    navigate(MyPageRoute.MyPageChatHistory)
+fun NavController.navigateToMyPageChatHistory(diaryId: Int) {
+    navigate(MyPageRoute.MyPageChatHistory(diaryId))
 }
 
 fun NavGraphBuilder.myPageNavGraph(
@@ -64,7 +64,6 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToMyPage: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
-    onNavigateToTodayStressScore: () -> Unit,
     onNavigateToChangeGraph: () -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: () -> Unit,
@@ -79,7 +78,7 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToStress = navController::navigateToStress,
             navigateToPersonality = navController::navigateToPersonality,
             navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
-            navigateToTodayStressScore = onNavigateToTodayStressScore,
+            navigateToMyPageStressScore = onNavigateToMyPageStressScore,
             navigateToChangeGraph = onNavigateToChangeGraph
         )
     }
@@ -141,9 +140,12 @@ fun NavGraphBuilder.myPageNavGraph(
         )
     }
 
-    composable<MyPageRoute.MyPageChatHistory> {
+    composable<MyPageRoute.MyPageChatHistory> { navBackStackEntry ->
+        val diaryId = navBackStackEntry.toRoute<MyPageRoute.MyPageChatHistory>().diaryId
+
         MyPageChatHistoryRoute(
             padding = padding,
+            diaryId = diaryId,
             popBackStack = onPopBackStack
         )
     }

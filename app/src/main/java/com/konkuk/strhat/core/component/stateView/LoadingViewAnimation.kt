@@ -48,7 +48,7 @@ fun LoadingViewAnimation(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colors.Gray200),
+            .background(colors.MainWhite),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -73,7 +73,7 @@ fun LoadingViewAnimation(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = stringResource(loadingDescription),

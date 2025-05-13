@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -20,24 +21,30 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.domain.entity.ChatHistoryModel
+import com.konkuk.strhat.domain.type.ChatSenderType
 import com.konkuk.strhat.feature.diary.ChatViewModel
 import com.konkuk.strhat.feature.diary.component.ChatBubble
 import com.konkuk.strhat.feature.diary.component.ChatTopBar
-import com.konkuk.strhat.feature.diary.state.ChatMessage
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 
 @Composable
 fun MyPageChatHistoryRoute(
     padding: PaddingValues,
+    diaryId: Int,
     popBackStack: () -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    val messages by viewModel.messages.collectAsState()
+    val chatHistoryModel by viewModel.chatHistoryModel.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getChatHistory(diaryId)
+    }
 
     MyPageChatHistoryScreen(
         padding = padding,
-        messages = messages,
+        chatHistoryModel = chatHistoryModel,
         popBackStack = popBackStack
     )
 }
@@ -45,7 +52,7 @@ fun MyPageChatHistoryRoute(
 @Composable
 private fun MyPageChatHistoryScreen(
     padding: PaddingValues,
-    messages: List<ChatMessage>,
+    chatHistoryModel: ChatHistoryModel,
     popBackStack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -73,10 +80,10 @@ private fun MyPageChatHistoryScreen(
                     state = lazyListState,
                     contentPadding = PaddingValues(vertical = 8.dp)
                 ) {
-                    items(messages) { chatMessage ->
+                    items(chatHistoryModel.chatMessages) { chatMessage ->
                         ChatBubble(
-                            message = chatMessage.message,
-                            isSentByUser = chatMessage.isMine
+                            message = chatMessage.content,
+                            isSentByUser = chatMessage.sender == ChatSenderType.USER
                         )
                     }
                 }
@@ -98,16 +105,7 @@ private fun MyPageChatHistoryScreenPreview() {
     StrHatTheme {
         MyPageChatHistoryScreen(
             padding = PaddingValues(),
-            messages = listOf(
-                ChatMessage("안녕하세요 송민서님 오늘의 일기 분석 결과 ...", false),
-                ChatMessage("나는 요즘 이러이러하고 .. 저러저러하고 .. 그래서 고민이야", true),
-                ChatMessage("~~ 를 추천 드려요! ... 해보는 건 어떨까요?", false),
-                ChatMessage("...를 하면 힘들지 않을까? 더 좋은 해결법은 없어?", true),
-                ChatMessage("...를 하기에는 힘드시군요. 그렇다면 ...는 어떠신가요?", false),
-                ChatMessage("그게 좋겠다! 그럼 ... 이 고민은 어쩔까?", true),
-                ChatMessage("... 고민에 대해서는 ~~ 방법을 추천 드려요!", false),
-                ChatMessage("좋은 해결책이야!", true)
-            ),
+            chatHistoryModel = ChatHistoryModel(emptyList()),
             popBackStack = {}
         )
     }

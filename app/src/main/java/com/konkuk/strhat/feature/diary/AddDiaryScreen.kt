@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,8 +30,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
+import com.konkuk.strhat.core.component.stateView.LoadingScreen
 import com.konkuk.strhat.core.component.textfield.LongTextField
-import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.domain.entity.AddDiaryModel
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.feature.diary.component.EmotionSelection
 import com.konkuk.strhat.ui.theme.StrHatTheme
@@ -48,31 +50,44 @@ fun AddDiaryRoute(
     viewModel: AddDiaryViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var isLoading by remember { mutableStateOf(false) }
 
-    AddDiaryScreen(
-        padding = padding,
-        onGetFeedbackBtnClick = { date ->
-            val diaryContent = viewModel.diaryContentState.value
-            val selectedEmotionIndex = viewModel.selectedEmotionIndexState.value
+    if (isLoading) {
+        LoadingScreen(
+            loadingDescription = R.string.add_diary_feedback_loading,
+            modifier = Modifier.fillMaxSize()
+        )
+    } else {
+        AddDiaryScreen(
+            padding = padding,
+            onGetFeedbackBtnClick = { date ->
+                val diaryContent = viewModel.diaryContentState.value
+                val selectedEmotionIndex = viewModel.selectedEmotionIndexState.value
 
-            if (selectedEmotionIndex != -1 && diaryContent.length >= 20) {
-                val emotionScore = viewModel.emotionTypes[selectedEmotionIndex].score
+                if (selectedEmotionIndex != -1 && diaryContent.length >= 20) {
+                    val emotionScore = viewModel.emotionTypes[selectedEmotionIndex].score
 
-                viewModel.postDiary(
-                    request = RequestAddDiaryDto(
-                        date = date,
-                        emotion = emotionScore,
-                        content = diaryContent
+                    viewModel.postDiary(
+                        request = AddDiaryModel(
+                            date = date,
+                            emotion = emotionScore,
+                            content = diaryContent
+                        )
                     )
-                )
 
-                coroutineScope.launch {
-                    delay(5000)
-                    navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
+                    isLoading = true
+
+                    coroutineScope.launch {
+                        delay(9000)
+                        navigateToDiaryAIFeedback(date, viewModel.diaryFeedbackState.value)
+
+                        delay(300)
+                        isLoading = false
+                    }
                 }
             }
-        }
-    )
+        )
+    }
 }
 
 @Composable
@@ -83,7 +98,7 @@ fun AddDiaryScreen(
     modifier: Modifier = Modifier
 ) {
     var diaryContent by remember { mutableStateOf("") }
-    var selectedEmotionIndex by remember { mutableStateOf(-1) }
+    var selectedEmotionIndex by remember { mutableIntStateOf(-1) }
 
     LaunchedEffect(diaryContent) {
         viewModel.diaryContentState.value = diaryContent

@@ -27,10 +27,10 @@ class DiaryViewModel @Inject constructor(
     private val _selectedDiary = MutableStateFlow<Diary?>(null)
     val selectedDiary = _selectedDiary.asStateFlow()
 
-    private val _diaryExistenceState = MutableStateFlow(DiaryExistenceModel(false, null, null))
+    private val _diaryExistenceState = MutableStateFlow(DiaryExistenceModel(false, null, null, null))
     val diaryExistenceState: StateFlow<DiaryExistenceModel> = _diaryExistenceState
 
-    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), ""))
+    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), "", 1))
     val diaryFeedbackState: StateFlow<DiaryFeedbackModel> = _diaryFeedbackState
 
     fun onDateSelected(date: LocalDate) {
@@ -50,7 +50,8 @@ class DiaryViewModel @Inject constructor(
                             DiaryExistenceModel(
                                 hasDiary = data.hasDiary,
                                 emotion = data.emotion,
-                                summary = data.summary
+                                summary = data.summary,
+                                diaryId = data.diaryId
                             )
                         }
                     }
@@ -78,7 +79,8 @@ class DiaryViewModel @Inject constructor(
                                 summary = data.summary,
                                 positiveKeywords = data.positiveKeywords,
                                 negativeKeywords = data.negativeKeywords,
-                                stressReliefSuggestions = data.stressReliefSuggestions
+                                stressReliefSuggestions = data.stressReliefSuggestions,
+                                diaryId = data.diaryId
                             )
                         }
                     }

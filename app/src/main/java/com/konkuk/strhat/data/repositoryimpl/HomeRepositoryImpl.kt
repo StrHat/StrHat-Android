@@ -11,7 +11,7 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     override suspend fun getHomeData(): Result<HomeModel> =
         runCatching {
-            val response = homeDataSource.getHomeData()
-            response.response.toHomeModel() ?: throw Exception("Response data is null")
+            val response = homeDataSource.getHomeData().response
+            response.toHomeModel()
         }
 }

@@ -25,6 +25,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
+import com.konkuk.strhat.domain.entity.SendChatModel
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.component.ChatBubble
 import com.konkuk.strhat.feature.diary.component.ChatTextFieldRow
 import com.konkuk.strhat.feature.diary.component.ChatTopBar
@@ -35,7 +37,10 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 @Composable
 fun ChatRoute(
     padding: PaddingValues,
-    navigateToTodayStressScore: () -> Unit,
+    diaryId: Int,
+    date: String,
+    chatMode: ChatModeType,
+    navigateToTodayStressScore: (String) -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val messages by viewModel.messages.collectAsState()
@@ -43,10 +48,20 @@ fun ChatRoute(
 
     ChatScreen(
         padding = padding,
+        date = date,
         messages = messages,
         inputText = inputText,
         onTextChange = { viewModel.updateInputText(it) },
-        onSendClick = { viewModel.sendMessage() },
+        onSendClick = {
+            viewModel.sendMessage()
+            viewModel.postChat(
+                request = SendChatModel(
+                    userMessage = inputText,
+                    chatMode = chatMode
+                ),
+                diaryId = diaryId
+            )
+        },
         navigateToTodayStressScore = navigateToTodayStressScore
     )
 }
@@ -54,11 +69,12 @@ fun ChatRoute(
 @Composable
 private fun ChatScreen(
     padding: PaddingValues,
+    date: String,
     messages: List<ChatMessage>,
     inputText: String,
     onTextChange: (String) -> Unit,
     onSendClick: () -> Unit,
-    navigateToTodayStressScore: () -> Unit,
+    navigateToTodayStressScore: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
@@ -119,7 +135,7 @@ private fun ChatScreen(
                 descriptionResId = R.string.dialog_chat_description,
                 onConfirmButtonClick = {
                     showChatQuitDialog = false
-                    navigateToTodayStressScore()
+                    navigateToTodayStressScore(date)
                 },
                 onDismissButtonClick = { showChatQuitDialog = false },
                 modifier = Modifier.padding(horizontal = 40.dp)
@@ -134,6 +150,7 @@ fun ChatScreenPreview() {
     StrHatTheme {
         ChatScreen(
             padding = PaddingValues(),
+            date = "2025-05-01",
             messages = listOf(
                 ChatMessage("안녕하세요 송민서님 오늘의 일기 분석 결과 ...", false),
                 ChatMessage("나는 요즘 이러이러하고 .. 저러저러하고 .. 그래서 고민이야", true),
