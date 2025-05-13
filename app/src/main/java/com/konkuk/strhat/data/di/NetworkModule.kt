@@ -2,6 +2,7 @@ package com.konkuk.strhat.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.konkuk.strhat.BuildConfig
+import com.konkuk.strhat.core.network.TokenAuthenticator
 import com.konkuk.strhat.core.network.TokenManager
 import dagger.Module
 import dagger.Provides
@@ -44,6 +45,13 @@ object NetworkModule {
         chain.proceed(newRequest)
     }
 
+    @Provides
+    @Singleton
+    fun providesTokenAuthenticator(
+        tokenManager: TokenManager,
+        retrofit: Retrofit
+    ): TokenAuthenticator = TokenAuthenticator(tokenManager, retrofit)
+
     private fun shouldAddAuthorization(url: String): Boolean {
         return !url.contains("/api/v1/auth/kakao") &&
                 !url.contains("/api/v1/users/sign-up")
@@ -53,10 +61,12 @@ object NetworkModule {
     @Singleton
     fun providesOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        authorizationInterceptor: okhttp3.Interceptor
+        authorizationInterceptor: okhttp3.Interceptor,
+        tokenAuthenticator: TokenAuthenticator
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(authorizationInterceptor)
+        .authenticator(tokenAuthenticator)
         .build()
 
     @Provides
