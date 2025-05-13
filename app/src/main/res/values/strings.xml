@@ -131,6 +131,12 @@
     <string name="home_empty_image_description">일기 미작성 이미지</string>
     <string name="home_empty_description">오늘은 어떤 일이 있었는지 궁금해요!\n일기를 작성하러 가볼까요?</string>
     <string name="home_empty_sub_description">일기는 일기탭에서 작성 가능해요!</string>
+    
+    <string name="home_empty_feedback">아직 피드백을 받지 못했네요!\n피드백을 받으러 가볼까요?</string>
+    <string name="home_empty_stressScore_title">아직 스트레스 점수를 받지 못했어요</string>
+    <string name="home_empty_stressScore_description">오늘의 스트레스 상태를 확인하고, 나를 더 잘 이해해보세요 :)</string>
+    <string name="home_empty_feedback_image_description">피드백 미작성 이미지</string>
+
 
 
 
