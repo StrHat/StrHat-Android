@@ -8,4 +8,5 @@ import com.konkuk.strhat.domain.entity.TokenModel
 interface AuthRepository {
     suspend fun postKakaoLogin(kakaoAccessToken: KakaoAccessTokenModel): Result<KakaoLoginModel>
     suspend fun postSignUp(signUpRequest: SignUpModel): Result<TokenModel>
+    suspend fun postSignOut(): Result<Unit>
 }

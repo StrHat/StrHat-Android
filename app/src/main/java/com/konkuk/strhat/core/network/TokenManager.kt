@@ -37,4 +37,18 @@ class TokenManager @Inject constructor(
     fun saveKakaoId(kakaoId: Long) {
         sharedPreferences.edit().putLong(KEY_KAKAO_ID, kakaoId).apply()
     }
+
+    fun clear() {
+        sharedPreferences.edit().clear().apply()
+    }
+
+    private var onLogoutCallback: (() -> Unit)? = null
+
+    fun setLogoutCallback(callback: () -> Unit) {
+        onLogoutCallback = callback
+    }
+
+    fun triggerLogout() {
+        onLogoutCallback?.invoke()
+    }
 }

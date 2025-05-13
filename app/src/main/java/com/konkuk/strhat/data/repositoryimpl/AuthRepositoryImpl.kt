@@ -52,4 +52,12 @@ class AuthRepositoryImpl @Inject constructor(
                 refreshToken = refreshToken
             )
         }
+
+    override suspend fun postSignOut(): Result<Unit> =
+        runCatching {
+            val response = authDataSource.postSignOut()
+            if (!response.isSuccessful) {
+                throw Exception("로그아웃 실패: ${response.code()}")
+            }
+        }
 }

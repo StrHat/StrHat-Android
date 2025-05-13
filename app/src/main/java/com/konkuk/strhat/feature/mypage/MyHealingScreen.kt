@@ -42,7 +42,11 @@ fun MyHealingRoute(
         padding = padding,
         healing = myPageModel.hobbyHealingStyle,
         onHealingChange = viewModel::updateHealing,
-        navigateToMyPage = navigateToMyPage
+        navigateToMyPage = {
+            viewModel.patchHealingInfo {
+                navigateToMyPage()
+            }
+        }
     )
 }
 

@@ -62,7 +62,6 @@ fun NavController.navigateToMyPageChatHistory(diaryId: Int) {
 fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
-    onNavigateToLogin: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
     onNavigateToChangeGraph: () -> Unit,
@@ -79,7 +78,6 @@ fun NavGraphBuilder.myPageNavGraph(
             navigateToStress = navController::navigateToStress,
             navigateToPersonality = navController::navigateToPersonality,
             navigateToMySelfDiagnosisRecord = onNavigateToMySelfDiagnosisRecord,
-            navigateToLogin = onNavigateToLogin,
             navigateToMyPageStressScore = onNavigateToMyPageStressScore,
             navigateToChangeGraph = onNavigateToChangeGraph
         )

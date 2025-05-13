@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -39,6 +40,7 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.util.Calendar
 
 @Composable
 fun MyPageRoute(
@@ -47,7 +49,6 @@ fun MyPageRoute(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
-    navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
@@ -64,10 +65,10 @@ fun MyPageRoute(
         navigateToHealing = navigateToHealing,
         navigateToStress = navigateToStress,
         navigateToPersonality = navigateToPersonality,
-        navigateToLogin = navigateToLogin,
         navigateToMySelfDiagnosisRecord = navigateToMySelfDiagnosisRecord,
         navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToChangeGraph = navigateToChangeGraph,
+        onSignOutClick = { viewModel.signOut() },
         myPageModel = myPageModel
     )
 }
@@ -79,13 +80,15 @@ private fun MyPageScreen(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
-    navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
+    onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
 ) {
     var isLogoutDialogVisible by remember { mutableStateOf(false) }
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    val age = currentYear - myPageModel.birth + 1
 
     Column(
         modifier = Modifier
@@ -136,7 +139,7 @@ private fun MyPageScreen(
                     )
 
                     Text(
-                        text = myPageModel.birth.toString(),
+                        text = age.toString(),
                         style = typography.head2_r_20,
                         color = colors.Gray400
                     )
@@ -225,7 +228,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.hobbyHealingStyle,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -262,7 +267,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.stressReliefStyle,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -299,7 +306,9 @@ private fun MyPageScreen(
             Text(
                 text = myPageModel.personality,
                 style = typography.body2_r_15,
-                color = colors.Gray500
+                color = colors.Gray500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
 
@@ -314,7 +323,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_graph),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToChangeGraph()
                 }
@@ -329,7 +339,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_stress_score),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToMyPageStressScore()
                 }
@@ -344,7 +355,8 @@ private fun MyPageScreen(
             text = stringResource(R.string.my_more_record),
             style = typography.body1_r_16,
             color = colors.MainBlack,
-            modifier = Modifier.padding(bottom = 15.dp)
+            modifier = Modifier
+                .padding(bottom = 15.dp)
                 .noRippleClickable {
                     navigateToMySelfDiagnosisRecord()
                 }
@@ -379,7 +391,7 @@ private fun MyPageScreen(
                 descriptionResId = R.string.dialog_logout_description,
                 onConfirmButtonClick = {
                     isLogoutDialogVisible = false
-                    navigateToLogin()
+                    onSignOutClick()
                 },
                 onDismissButtonClick = { isLogoutDialogVisible = false }
             )
@@ -401,10 +413,10 @@ private fun PreviewMyPageScreen() {
             navigateToHealing = {},
             navigateToStress = {},
             navigateToPersonality = {},
-            navigateToLogin = {},
             navigateToMySelfDiagnosisRecord = {},
             navigateToMyPageStressScore = {},
             navigateToChangeGraph = {},
+            onSignOutClick = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,
