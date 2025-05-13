@@ -153,8 +153,8 @@ private fun PreviewMyAccountScreen() {
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,
-                gender = "MALE",
-                job = "STUDENT",
+                gender = "",
+                job = "",
                 hobbyHealingStyle = "1. 혼자만의 시간을 보내며 독서를 좋아함. ...",
                 stressReliefStyle = "1. 집 앞 공원에 나가 찬 공기를 ...",
                 personality = "1. 내성적인 편임 ..."

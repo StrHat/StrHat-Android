@@ -40,6 +40,7 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.util.Calendar
 
 @Composable
 fun MyPageRoute(
@@ -86,6 +87,8 @@ private fun MyPageScreen(
     myPageModel: MyPageModel
 ) {
     var isLogoutDialogVisible by remember { mutableStateOf(false) }
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    val age = currentYear - myPageModel.birth + 1
 
     Column(
         modifier = Modifier
@@ -136,7 +139,7 @@ private fun MyPageScreen(
                     )
 
                     Text(
-                        text = myPageModel.birth.toString(),
+                        text = age.toString(),
                         style = typography.head2_r_20,
                         color = colors.Gray400
                     )
