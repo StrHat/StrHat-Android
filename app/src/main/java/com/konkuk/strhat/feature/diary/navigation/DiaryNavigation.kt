@@ -62,7 +62,7 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToMyPage: () -> Unit,
     onNavigateToTodayStressScore: (String) -> Unit,
     onPopBackStack: () -> Unit,
-    onNavigateToMyPageChatHistory: () -> Unit,
+    onNavigateToMyPageChatHistory: (Int) -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.Diary> {

@@ -2,6 +2,7 @@ package com.konkuk.strhat.feature.diary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.konkuk.strhat.domain.entity.ChatHistoryModel
 import com.konkuk.strhat.domain.entity.ChatModel
 import com.konkuk.strhat.domain.entity.SendChatModel
 import com.konkuk.strhat.domain.repository.ChatRepository
@@ -22,6 +23,9 @@ class ChatViewModel @Inject constructor(
 ) : ViewModel() {
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages = _messages.asStateFlow()
+
+    private val _chatHistoryModel = MutableStateFlow(ChatHistoryModel(emptyList()))
+    val chatHistoryModel: StateFlow<ChatHistoryModel> = _chatHistoryModel
 
     private val _inputText = MutableStateFlow("")
     val inputText = _inputText.asStateFlow()
@@ -65,6 +69,31 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun getChatHistory(
+        diaryId: Int
+    ) {
+        viewModelScope.launch {
+            try {
+                chatRepository.getChatHistory(diaryId)
+                    .onSuccess { data ->
+                        _chatHistoryModel.update {
+                            ChatHistoryModel(
+                                chatMessages = data.chatMessages
+                            )
+                        }
+                    }
+                    .onFailure {
+                        if (it is HttpException) {
+                            val errorBody = it.response()?.errorBody()?.string()
+                            Timber.tag("get chat history").e("$errorBody")
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.tag("get chat history").e("대화 기록 조회 오류")
+            }
+        }
+    }
+
     fun sendMessage() {
         val text = _inputText.value
         if (text.isBlank()) return
@@ -73,7 +102,7 @@ class ChatViewModel @Inject constructor(
             message = text,
             isMine = true
         )
-        _messages.value = _messages.value + newMessage
+        _messages.value += newMessage
         _inputText.value = ""
     }
 }

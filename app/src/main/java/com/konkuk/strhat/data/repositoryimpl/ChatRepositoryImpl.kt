@@ -1,8 +1,10 @@
 package com.konkuk.strhat.data.repositoryimpl
 
 import com.konkuk.strhat.data.datasource.ChatDataSource
+import com.konkuk.strhat.data.mapper.toChatHistoryModel
 import com.konkuk.strhat.data.mapper.toChatModel
 import com.konkuk.strhat.data.mapper.toRequestChatDto
+import com.konkuk.strhat.domain.entity.ChatHistoryModel
 import com.konkuk.strhat.domain.entity.ChatModel
 import com.konkuk.strhat.domain.entity.SendChatModel
 import com.konkuk.strhat.domain.repository.ChatRepository
@@ -15,5 +17,11 @@ class ChatRepositoryImpl @Inject constructor(
         runCatching {
             val response = chatDataSource.postChat(request.toRequestChatDto(), diaryId).response
             response.toChatModel()
+        }
+
+    override suspend fun getChatHistory(diaryId: Int): Result<ChatHistoryModel> =
+        runCatching {
+            val response = chatDataSource.getChatHistory(diaryId).response
+            response.toChatHistoryModel()
         }
 }

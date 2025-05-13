@@ -53,7 +53,7 @@ fun DiaryAIFeedbackRecordRoute(
     navigateToChat: (Int, String, ChatModeType) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
-    navigateToMyPageChatHistory: () -> Unit,
+    navigateToMyPageChatHistory: (Int) -> Unit,
     navController: NavController,
     viewModel: DiaryViewModel = hiltViewModel(),
     addDiaryViewModel: AddDiaryViewModel = hiltViewModel()
@@ -88,7 +88,7 @@ fun DiaryAIFeedbackRecordScreen(
     navigateToChat: (Int, String, ChatModeType) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     popBackStack: () -> Unit,
-    navigateToMyPageChatHistory: () -> Unit,
+    navigateToMyPageChatHistory: (Int) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -250,7 +250,7 @@ fun DiaryAIFeedbackRecordScreen(
                     .weight(1f),
                 onClick = {
                     if (previousRoute?.contains("Diary") == true)
-                        navigateToMyPageChatHistory()
+                        navigateToMyPageChatHistory(diaryFeedbackModel.diaryId)
                     else
                         isChatModeBottomSheetVisible = true
                 }

@@ -190,8 +190,8 @@ class MainNavigator(
         navController.navigateToMyPageStressScore()
     }
 
-    fun navigateToMyPageChatHistory() {
-        navController.navigateToMyPageChatHistory()
+    fun navigateToMyPageChatHistory(diaryId: Int) {
+        navController.navigateToMyPageChatHistory(diaryId)
     }
 
     fun navigateToDiaryAIFeedbackRecord(date: String) {
