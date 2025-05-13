@@ -2,8 +2,8 @@ package com.konkuk.strhat.feature.diary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.konkuk.strhat.data.dto.request.RequestChatDto
 import com.konkuk.strhat.domain.entity.ChatModel
+import com.konkuk.strhat.domain.entity.SendChatModel
 import com.konkuk.strhat.domain.repository.ChatRepository
 import com.konkuk.strhat.feature.diary.state.ChatMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +34,7 @@ class ChatViewModel @Inject constructor(
     }
 
     fun postChat(
-        request: RequestChatDto,
+        request: SendChatModel,
         diaryId: Int
     ) {
         viewModelScope.launch {

@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRecordRoute
@@ -43,8 +44,8 @@ fun NavController.navigateToDiaryAIFeedbackRecord(date: String) {
     navigate(DiaryRoute.DiaryAIFeedbackRecord(date))
 }
 
-fun NavController.navigateToChat(diaryId: Int) {
-    navigate(DiaryRoute.Chat)
+fun NavController.navigateToChat(diaryId: Int, date: String, chatMode: ChatModeType) {
+    navigate(DiaryRoute.Chat(diaryId, date, chatMode))
 }
 
 fun NavController.navigateToTodayStressScore(date: String) {
@@ -56,7 +57,7 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
     onNavigateToDiaryAIFeedbackRecord: (String) -> Unit,
-    onNavigateToChat: (Int) -> Unit,
+    onNavigateToChat: (Int, String, ChatModeType) -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
     onNavigateToTodayStressScore: (String) -> Unit,
@@ -121,10 +122,14 @@ fun NavGraphBuilder.diaryNavGraph(
 
     composable<DiaryRoute.Chat> { navBackStackEntry ->
         val diaryId = navBackStackEntry.toRoute<DiaryRoute.Chat>().diaryId
+        val date = navBackStackEntry.toRoute<DiaryRoute.Chat>().date
+        val chatMode = navBackStackEntry.toRoute<DiaryRoute.Chat>().chatMode
 
         ChatRoute(
             padding = padding,
             diaryId = diaryId,
+            date = date,
+            chatMode = chatMode,
             navigateToTodayStressScore = onNavigateToTodayStressScore
         )
     }

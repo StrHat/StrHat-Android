@@ -1,10 +1,10 @@
-package com.konkuk.strhat.data.dto.request
+package com.konkuk.strhat.domain.entity
 
 import com.konkuk.strhat.domain.type.ChatModeType
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestChatDto(
+data class SendChatModel(
     val userMessage: String,
     val chatMode: ChatModeType
 )

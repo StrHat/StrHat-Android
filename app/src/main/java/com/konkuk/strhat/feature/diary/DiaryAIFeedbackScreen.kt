@@ -42,6 +42,7 @@ import com.konkuk.strhat.core.component.section.TitleSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackKeywordBox
 import com.konkuk.strhat.feature.diary.component.DiaryAIFeedbackRecommendationBox
 import com.konkuk.strhat.feature.diary.state.DiaryAIFeedbackState
@@ -54,7 +55,7 @@ fun DiaryAIFeedbackRoute(
     padding: PaddingValues,
     date: String,
     diaryFeedbackModel: DiaryFeedbackModel,
-    navigateToChat: (Int) -> Unit,
+    navigateToChat: (Int, String, ChatModeType) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     navController: NavController,
     viewModel: DiaryAIFeedbackViewModel = hiltViewModel(),
@@ -86,7 +87,7 @@ private fun DiaryAIFeedbackScreen(
     diaryFeedbackModel: DiaryFeedbackModel,
     diaryAIFeedbackState: DiaryAIFeedbackState,
     totalDiary: TotalDiaryModel,
-    navigateToChat: (Int) -> Unit,
+    navigateToChat: (Int, String, ChatModeType) -> Unit,
     navigateToTodayStressScore: (String) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier
@@ -263,11 +264,11 @@ private fun DiaryAIFeedbackScreen(
         ChatModeBottomSheet(
             isVisible = isChatModeBottomSheetVisible,
             onDismiss = { isChatModeBottomSheetVisible = false },
-            onChatModeSelected = {
+            onChatModeSelected = { selectedMode ->
                 isChatModeBottomSheetVisible = false
-            },
-            navigateToChat = {
-                navigateToChat(diaryFeedbackModel.diaryId)
+                selectedMode?.let {
+                    navigateToChat(diaryFeedbackModel.diaryId, date, it)
+                }
             }
         )
     }
@@ -290,7 +291,7 @@ fun DiaryAIFeedbackScreenPreview() {
             diaryFeedbackModel = DiaryFeedbackModel("", listOf(), listOf(), "", 1),
             diaryAIFeedbackState = diaryAIFeedbackExampleState,
             totalDiary = TotalDiaryModel("", 1),
-            navigateToChat = {},
+            navigateToChat = { _, _, _ -> },
             navigateToTodayStressScore = {},
             navController = rememberNavController(),
             modifier = Modifier.background(colors.MainWhite)

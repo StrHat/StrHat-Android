@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
@@ -149,8 +150,8 @@ class MainNavigator(
         )
     }
 
-    fun navigateToChat(diaryId: Int) {
-        navController.navigateToChat(diaryId)
+    fun navigateToChat(diaryId: Int, date: String, chatMode: ChatModeType) {
+        navController.navigateToChat(diaryId, date, chatMode)
     }
 
     fun popBackStack() {

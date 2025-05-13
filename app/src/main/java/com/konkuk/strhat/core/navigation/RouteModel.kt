@@ -1,5 +1,6 @@
 package com.konkuk.strhat.core.navigation
 
+import com.konkuk.strhat.domain.type.ChatModeType
 import kotlinx.serialization.Serializable
 
 sealed interface Route {
@@ -76,7 +77,9 @@ sealed interface DiaryRoute : Route {
     ) : DiaryRoute
     @Serializable
     data class Chat(
-        val diaryId: Int
+        val diaryId: Int,
+        val date: String,
+        val chatMode: ChatModeType
     ) : DiaryRoute
     @Serializable
     data class TodayStressScore(
