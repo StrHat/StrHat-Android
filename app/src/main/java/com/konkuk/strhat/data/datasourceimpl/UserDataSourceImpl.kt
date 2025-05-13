@@ -2,8 +2,10 @@ package com.konkuk.strhat.data.datasourceimpl
 
 import com.konkuk.strhat.data.datasource.UserDataSource
 import com.konkuk.strhat.data.dto.base.BaseResponse
+import com.konkuk.strhat.data.dto.request.RequestHobbyHealingDto
 import com.konkuk.strhat.data.dto.response.ResponseUserInfoDto
 import com.konkuk.strhat.data.service.UserService
+import retrofit2.Response
 import javax.inject.Inject
 
 class UserDataSourceImpl @Inject constructor(
@@ -11,5 +13,8 @@ class UserDataSourceImpl @Inject constructor(
 ): UserDataSource {
     override suspend fun getUserInfo(): BaseResponse<ResponseUserInfoDto> =
         userService.getUserInfo()
+
+    override suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Response<Unit> =
+        userService.patchHobbyHealingInfo(RequestHobbyHealingDto(hobbyHealingStyle))
 
 }

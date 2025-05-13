@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.konkuk.strhat.core.network.TokenManager
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.domain.usecase.GetUserInfoUseCase
+import com.konkuk.strhat.domain.usecase.PatchHobbyHealingInfoUseCase
 import com.konkuk.strhat.domain.usecase.SignOutUseCase
 import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val userInfoUseCase: GetUserInfoUseCase,
+    private val patchHobbyHealingInfoUseCase: PatchHobbyHealingInfoUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val tokenManager: TokenManager
 ) : ViewModel() {
@@ -94,6 +96,19 @@ class MyPageViewModel @Inject constructor(
 
     fun updatePersonality(personality: String) {
         _myPageModel.value = _myPageModel.value.copy(personality = personality)
+    }
+
+    fun patchHealingInfo(onComplete: () -> Unit) {
+        viewModelScope.launch {
+            val healing = _myPageModel.value.hobbyHealingStyle
+            patchHobbyHealingInfoUseCase(healing)
+                .onSuccess {
+                    onComplete()
+                }
+                .onFailure {
+                    Timber.e("유저 정보 수정 실패: ${it.message}")
+                }
+        }
     }
 
     fun signOut(){

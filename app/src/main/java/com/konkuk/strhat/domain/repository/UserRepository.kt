@@ -4,4 +4,5 @@ import com.konkuk.strhat.domain.entity.UserInfoModel
 
 interface UserRepository {
     suspend fun getUserInfo(): Result<UserInfoModel>
+    suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Result<Unit>
 }

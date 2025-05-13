@@ -14,4 +14,9 @@ class UserRepositoryImpl @Inject constructor(
             val response = userDataSource.getUserInfo()
             response.response.toUserInfoModel()
         }
+
+    override suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Result<Unit> =
+        runCatching {
+            userDataSource.patchHobbyHealingInfo(hobbyHealingStyle)
+        }
 }
