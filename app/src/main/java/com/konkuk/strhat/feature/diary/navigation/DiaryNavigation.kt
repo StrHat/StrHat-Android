@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import com.konkuk.strhat.core.navigation.DiaryRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.AddDiaryRoute
 import com.konkuk.strhat.feature.diary.ChatRoute
 import com.konkuk.strhat.feature.diary.DiaryAIFeedbackRecordRoute
@@ -28,9 +29,9 @@ fun NavController.navigateToMyPageDiaryAIFeedback() {
     navigate(DiaryRoute.DiaryAIFeedback)
 }
 
-fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String) {
+fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String, diaryId: Int) {
     navigate(
-        DiaryRoute.DiaryAIFeedback(date, summary, positiveKeywords, negativeKeywords, stressReliefSuggestions)
+        DiaryRoute.DiaryAIFeedback(date, summary, positiveKeywords, negativeKeywords, stressReliefSuggestions, diaryId)
     ) {
         popUpTo(MainTabRoute.Diary) {
             inclusive = true
@@ -43,12 +44,12 @@ fun NavController.navigateToDiaryAIFeedbackRecord(date: String) {
     navigate(DiaryRoute.DiaryAIFeedbackRecord(date))
 }
 
-fun NavController.navigateToChat() {
-    navigate(DiaryRoute.Chat)
+fun NavController.navigateToChat(diaryId: Int, date: String, chatMode: ChatModeType) {
+    navigate(DiaryRoute.Chat(diaryId, date, chatMode))
 }
 
-fun NavController.navigateToTodayStressScore() {
-    navigate(DiaryRoute.TodayStressScore)
+fun NavController.navigateToTodayStressScore(date: String) {
+    navigate(DiaryRoute.TodayStressScore(date))
 }
 
 fun NavGraphBuilder.diaryNavGraph(
@@ -56,12 +57,12 @@ fun NavGraphBuilder.diaryNavGraph(
     onNavigateToAddDiary: () -> Unit,
     onNavigateToDiaryAIFeedback: (String, DiaryFeedbackModel) -> Unit,
     onNavigateToDiaryAIFeedbackRecord: (String) -> Unit,
-    onNavigateToChat: () -> Unit,
+    onNavigateToChat: (Int, String, ChatModeType) -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToMyPage: () -> Unit,
-    onNavigateToTodayStressScore: () -> Unit,
+    onNavigateToTodayStressScore: (String) -> Unit,
     onPopBackStack: () -> Unit,
-    onNavigateToMyPageChatHistory: () -> Unit,
+    onNavigateToMyPageChatHistory: (Int) -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.Diary> {
@@ -84,13 +85,15 @@ fun NavGraphBuilder.diaryNavGraph(
         val positiveKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().positiveKeywords
         val negativeKeywords = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().negativeKeywords
         val stressReliefSuggestions = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().stressReliefSuggestions
+        val diaryId = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().diaryId
         val date = navBackStackEntry.toRoute<DiaryRoute.DiaryAIFeedback>().date
 
         val diaryFeedbackModel = DiaryFeedbackModel(
             summary = summary,
             positiveKeywords = positiveKeywords,
             negativeKeywords = negativeKeywords,
-            stressReliefSuggestions = stressReliefSuggestions
+            stressReliefSuggestions = stressReliefSuggestions,
+            diaryId = diaryId
         )
 
         DiaryAIFeedbackRoute(
@@ -99,8 +102,6 @@ fun NavGraphBuilder.diaryNavGraph(
             diaryFeedbackModel = diaryFeedbackModel,
             navigateToChat = onNavigateToChat,
             navigateToTodayStressScore = onNavigateToTodayStressScore,
-            popBackStack = onPopBackStack,
-            navigateToMyPageChatHistory = onNavigateToMyPageChatHistory,
             navController = navController
         )
     }
@@ -119,16 +120,26 @@ fun NavGraphBuilder.diaryNavGraph(
         )
     }
 
-    composable<DiaryRoute.Chat> {
+    composable<DiaryRoute.Chat> { navBackStackEntry ->
+        val diaryId = navBackStackEntry.toRoute<DiaryRoute.Chat>().diaryId
+        val date = navBackStackEntry.toRoute<DiaryRoute.Chat>().date
+        val chatMode = navBackStackEntry.toRoute<DiaryRoute.Chat>().chatMode
+
         ChatRoute(
             padding = padding,
+            diaryId = diaryId,
+            date = date,
+            chatMode = chatMode,
             navigateToTodayStressScore = onNavigateToTodayStressScore
         )
     }
 
-    composable<DiaryRoute.TodayStressScore> {
+    composable<DiaryRoute.TodayStressScore> { navBackStackEntry ->
+        val date = navBackStackEntry.toRoute<DiaryRoute.TodayStressScore>().date
+
         TodayStressScoreRoute(
             padding = padding,
+            date = date,
             navigateToHome = onNavigateToHome,
             navigateToMyPage = onNavigateToMyPage,
             navController = navController

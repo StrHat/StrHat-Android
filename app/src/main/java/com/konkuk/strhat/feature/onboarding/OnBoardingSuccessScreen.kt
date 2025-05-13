@@ -13,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.component.progressbar.AnimatedProgressBar
@@ -33,18 +32,22 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun OnBoardingSuccessRoute(
     padding: PaddingValues,
     navigateToHome: () -> Unit,
-    viewModel: OnBoardingViewModel = hiltViewModel()
+    viewModel: OnBoardingViewModel
 ) {
     LaunchedEffect(Unit) {
         viewModel.updateProgress(6 / 6f)
     }
 
-    val progress by viewModel.progress.collectAsState()
+    val progress by viewModel.progress.collectAsStateWithLifecycle()
 
     OnBoardingSuccessScreen(
         padding = padding,
         progress = progress,
-        navigateToHome = navigateToHome
+        onClick = {
+            viewModel.requestSignUp(
+                onSuccess = navigateToHome
+            )
+        }
     )
 }
 
@@ -52,7 +55,7 @@ fun OnBoardingSuccessRoute(
 fun OnBoardingSuccessScreen(
     padding: PaddingValues,
     progress: Float,
-    navigateToHome: () -> Unit
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -65,7 +68,7 @@ fun OnBoardingSuccessScreen(
         StrHatButton(
             isDisabled = false,
             text = stringResource(R.string.onboarding_success_button),
-            onClick = navigateToHome,
+            onClick = onClick,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
@@ -114,7 +117,7 @@ private fun PreviewOnBoardingSuccessScreen() {
         OnBoardingSuccessScreen(
             padding = PaddingValues(),
             progress = 0f,
-            navigateToHome = {}
+            onClick = {}
         )
     }
 }

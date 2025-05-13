@@ -93,6 +93,7 @@
     <string name="add_today_diary_title">오늘의 일기 작성하기</string>
     <string name="get_feedback_button">피드백 받기</string>
     <string name="diary_summary_title">%1$d년 %2$d월 %3$d일 일기</string>
+    <string name="add_diary_feedback_loading">스틀햇이 열심히 피드백을 생성하고 있어요 🙂\n\n조금만 기다려 주세요!</string>
 
     <!-- my -->
     <string name="my_title">계정 정보</string>
@@ -154,6 +155,7 @@
     <string name="chat_text_field_row_hint">메시지를 입력하세요</string>
     <string name="chat_top_bar_title">스틀햇과의 대화</string>
     <string name="chat_top_bar_quit_button">대화 그만하기</string>
+    <string name="chat_feedback_loading">스틀햇이 스트레스 점수를 계산하고 있어요 📝\n\n오늘을 한번 되돌아봅시다!</string>
 
     <!-- stress score screen -->
     <string name="stress_score_nickname_description">님의</string>

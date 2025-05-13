@@ -28,7 +28,7 @@ import com.konkuk.strhat.core.component.dropdown.JobDropDown
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.component.textfield.ShortTextField
 import com.konkuk.strhat.domain.entity.MyPageModel
-import com.konkuk.strhat.domain.type.GenderType
+import com.konkuk.strhat.domain.type.JobType
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
@@ -49,6 +49,8 @@ fun MyAccountRoute(
         onNickNameChange = viewModel::updateNickName,
         onYearSelected = viewModel::updateBirth,
         onOptionSelected = viewModel::updateGender,
+        selectedJob = myPageModel.job,
+        onJobSelected = viewModel::updateJob,
         navigateToMyPage = navigateToMyPage
     )
 }
@@ -60,11 +62,12 @@ private fun MyAccountScreen(
     onNickNameChange: (String) -> Unit,
     onYearSelected: (Int) -> Unit,
     onOptionSelected: (String) -> Unit,
+    selectedJob: String,
+    onJobSelected: (String) -> Unit,
     navigateToMyPage: () -> Unit,
 ) {
     val options = listOf(
-        GenderType.MALE.type,
-        GenderType.FEMALE.type
+        "남자", "여자"
     )
 
     Box(
@@ -120,7 +123,10 @@ private fun MyAccountScreen(
                 style = typography.title1_b_18,
                 modifier = Modifier.padding(bottom = 15.dp)
             )
-            JobDropDown(onJobSelected = {})
+            JobDropDown(
+                selectedJob = selectedJob,
+                onJobSelected = onJobSelected
+            )
 
         }
 
@@ -156,6 +162,8 @@ private fun PreviewMyAccountScreen() {
             onNickNameChange = {},
             onYearSelected = {},
             onOptionSelected = {},
+            selectedJob = JobType.STUDENT.displayName,
+            onJobSelected = {},
             navigateToMyPage = {}
         )
     }

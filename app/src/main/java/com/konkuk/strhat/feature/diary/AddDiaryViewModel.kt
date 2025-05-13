@@ -3,7 +3,7 @@ package com.konkuk.strhat.feature.diary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.konkuk.strhat.R
-import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.domain.entity.AddDiaryModel
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.EmotionType
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
@@ -30,17 +30,17 @@ class AddDiaryViewModel @Inject constructor(
         EmotionType(R.drawable.ic_strhat_green, 5)
     )
 
-    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), ""))
+    private val _diaryFeedbackState = MutableStateFlow(DiaryFeedbackModel("", emptyList(), emptyList(), "", 1))
     val diaryFeedbackState: StateFlow<DiaryFeedbackModel> = _diaryFeedbackState
 
-    private val _totalDiaryState = MutableStateFlow(TotalDiaryModel(""))
+    private val _totalDiaryState = MutableStateFlow(TotalDiaryModel("", 1))
     val totalDiaryState: StateFlow<TotalDiaryModel> = _totalDiaryState
 
     val diaryContentState = MutableStateFlow("")
     val selectedEmotionIndexState = MutableStateFlow(-1)
 
     fun postDiary(
-        request: RequestAddDiaryDto
+        request: AddDiaryModel
     ) {
         viewModelScope.launch {
             try {
@@ -52,6 +52,7 @@ class AddDiaryViewModel @Inject constructor(
                                 positiveKeywords = data.positiveKeywords,
                                 negativeKeywords = data.negativeKeywords,
                                 stressReliefSuggestions = data.stressReliefSuggestions,
+                                diaryId = data.diaryId
                             )
                         }
                         Timber.tag("save diary").d("일기 저장 성공")
@@ -78,7 +79,10 @@ class AddDiaryViewModel @Inject constructor(
                 diaryRepository.getTotalDiary(date)
                     .onSuccess { data ->
                         _totalDiaryState.update {
-                            TotalDiaryModel(content = data.content)
+                            TotalDiaryModel(
+                                content = data.content,
+                                diaryId = data.diaryId
+                            )
                         }
                     }
                     .onFailure { error ->

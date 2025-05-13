@@ -26,7 +26,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", properties["base.url"].toString())
-        buildConfigField("String", "TOKEN", properties["token"].toString())
+
+        val kakaoNativeAppKey = properties["kakao.native.app.key"].toString()
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", "\"$kakaoNativeAppKey\"")
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = kakaoNativeAppKey
     }
 
     buildTypes {
@@ -101,4 +104,7 @@ dependencies {
     // Date Time Picker
     implementation(libs.compose.date.time.picker)
     implementation(libs.kotlinx.datetime)
+
+    // Kakao
+    implementation(libs.kakao.user)
 }

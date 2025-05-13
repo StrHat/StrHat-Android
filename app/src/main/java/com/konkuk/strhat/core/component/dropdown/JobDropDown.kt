@@ -38,11 +38,11 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun JobDropDown(
+    selectedJob: String,
     onJobSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isDropDownMenuExpanded by remember { mutableStateOf(false) }
-    var selectedJob by remember { mutableStateOf(JobType.STUDENT.type) }
     var dropdownWidth by remember { mutableStateOf(0.dp) }
 
     val density = LocalDensity.current
@@ -95,51 +95,22 @@ fun JobDropDown(
                 .background(color = colors.MainWhite)
                 .width(dropdownWidth)
         ) {
-            DropdownMenuItem(
-                text = {
-                    val style = setDropDownMenuTextStyle(selectedJob, JobType.STUDENT.type)
-                    Text(
-                        text = JobType.STUDENT.type,
-                        color = style.color,
-                        style = style.typography
-                    )
-                },
-                onClick = {
-                    selectedJob = JobType.STUDENT.type
-                    onJobSelected(JobType.STUDENT.type)
-                    isDropDownMenuExpanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = {
-                    val style = setDropDownMenuTextStyle(selectedJob, JobType.JOBSEEKER.type)
-                    Text(
-                        text = JobType.JOBSEEKER.type,
-                        color = style.color,
-                        style = style.typography
-                    )
-                },
-                onClick = {
-                    selectedJob = JobType.JOBSEEKER.type
-                    onJobSelected(JobType.JOBSEEKER.type)
-                    isDropDownMenuExpanded = false
-                }
-            )
-            DropdownMenuItem(
-                text = {
-                    val style = setDropDownMenuTextStyle(selectedJob, JobType.WORKER.type)
-                    Text(
-                        text = JobType.WORKER.type,
-                        color = style.color,
-                        style = style.typography
-                    )
-                },
-                onClick = {
-                    selectedJob = JobType.WORKER.type
-                    onJobSelected(JobType.WORKER.type)
-                    isDropDownMenuExpanded = false
-                }
-            )
+            JobType.entries.forEach { job ->
+                DropdownMenuItem(
+                    text = {
+                        val style = setDropDownMenuTextStyle(selectedJob, job.displayName)
+                        Text(
+                            text = job.displayName,
+                            color = style.color,
+                            style = style.typography
+                        )
+                    },
+                    onClick = {
+                        onJobSelected(job.displayName)
+                        isDropDownMenuExpanded = false
+                    }
+                )
+            }
         }
     }
 }
@@ -152,7 +123,10 @@ private fun PreviewJobDropDown() {
             .background(color = colors.MainWhite)
             .fillMaxSize()
     ) {
-        JobDropDown(onJobSelected = {})
+        JobDropDown(
+            selectedJob = JobType.STUDENT.displayName,
+            onJobSelected = {}
+        )
     }
 
 }

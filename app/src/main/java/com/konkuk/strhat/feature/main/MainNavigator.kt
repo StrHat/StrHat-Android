@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.Route
+import com.konkuk.strhat.domain.type.ChatModeType
 import com.konkuk.strhat.feature.diary.navigation.navigateToAddDiary
 import com.konkuk.strhat.feature.diary.navigation.navigateToChat
 import com.konkuk.strhat.feature.diary.navigation.navigateToDiary
@@ -38,7 +39,7 @@ class MainNavigator(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val startDestination = MainTabRoute.Home
+    val startDestination = Route.Splash
 
     val currentTab: MainTab?
         @Composable get() = MainTab.entries.find { tab ->
@@ -136,19 +137,21 @@ class MainNavigator(
         summary: String,
         positiveKeywords: List<String>,
         negativeKeywords: List<String>,
-        stressReliefSuggestions: String
+        stressReliefSuggestions: String,
+        diaryId: Int
     ) {
         navController.navigateToDiaryAIFeedback(
             date = date,
             summary = summary,
             positiveKeywords = positiveKeywords,
             negativeKeywords = negativeKeywords,
-            stressReliefSuggestions = stressReliefSuggestions
+            stressReliefSuggestions = stressReliefSuggestions,
+            diaryId = diaryId
         )
     }
 
-    fun navigateToChat() {
-        navController.navigateToChat()
+    fun navigateToChat(diaryId: Int, date: String, chatMode: ChatModeType) {
+        navController.navigateToChat(diaryId, date, chatMode)
     }
 
     fun popBackStack() {
@@ -159,8 +162,8 @@ class MainNavigator(
         navController.popBackStack(MainTabRoute.Diary, false)
     }
 
-    fun navigateToTodayStressScore() {
-        navController.navigateToTodayStressScore()
+    fun navigateToTodayStressScore(date: String) {
+        navController.navigateToTodayStressScore(date)
     }
 
     fun navigateToChangeGraph() {
@@ -187,8 +190,8 @@ class MainNavigator(
         navController.navigateToMyPageStressScore()
     }
 
-    fun navigateToMyPageChatHistory() {
-        navController.navigateToMyPageChatHistory()
+    fun navigateToMyPageChatHistory(diaryId: Int) {
+        navController.navigateToMyPageChatHistory(diaryId)
     }
 
     fun navigateToDiaryAIFeedbackRecord(date: String) {

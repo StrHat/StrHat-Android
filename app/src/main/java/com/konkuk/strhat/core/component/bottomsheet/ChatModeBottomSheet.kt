@@ -40,11 +40,10 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun ChatModeBottomSheet(
     isVisible: Boolean,
     onDismiss: () -> Unit,
-    onChatModeSelected: (String?) -> Unit,
-    navigateToChat: () -> Unit,
+    onChatModeSelected: (ChatModeType?) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var selectedMode by remember { mutableStateOf<String?>(null) }
+    var selectedMode by remember { mutableStateOf<ChatModeType?>(null) }
 
     if (isVisible) {
         Box(
@@ -85,20 +84,20 @@ fun ChatModeBottomSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         HeartButton(
-                            modeText = ChatModeType.EMPATHY.chatModeType,
-                            isModeSelected = (selectedMode == ChatModeType.EMPATHY.chatModeType),
-                            onModeClick = { mode, _ ->
-                                selectedMode = if (selectedMode == ChatModeType.EMPATHY.chatModeType) null else ChatModeType.EMPATHY.chatModeType
+                            modeText = ChatModeType.EMPATHY_MODE.chatMode,
+                            isModeSelected = (selectedMode == ChatModeType.EMPATHY_MODE),
+                            onModeClick = { _, _ ->
+                                selectedMode = if (selectedMode == ChatModeType.EMPATHY_MODE) null else ChatModeType.EMPATHY_MODE
                             }
                         )
 
                         Spacer(modifier = Modifier.width(50.dp))
 
                         HeartButton(
-                            modeText = ChatModeType.SOLUTION.chatModeType,
-                            isModeSelected = (selectedMode == ChatModeType.SOLUTION.chatModeType),
-                            onModeClick = { mode, _ ->
-                                selectedMode = if (selectedMode == ChatModeType.SOLUTION.chatModeType) null else ChatModeType.SOLUTION.chatModeType
+                            modeText = ChatModeType.SOLUTION_MODE.chatMode,
+                            isModeSelected = (selectedMode == ChatModeType.SOLUTION_MODE),
+                            onModeClick = { _, _ ->
+                                selectedMode = if (selectedMode == ChatModeType.SOLUTION_MODE) null else ChatModeType.SOLUTION_MODE
                             }
                         )
                     }
@@ -109,7 +108,6 @@ fun ChatModeBottomSheet(
                         onClick = {
                             onChatModeSelected(selectedMode)
                             onDismiss()
-                            navigateToChat()
                         }
                     )
                 }
@@ -143,8 +141,7 @@ private fun ChatModeBottomSheetPreview() {
             ChatModeBottomSheet(
                 isVisible = isVisible,
                 onDismiss = { setVisible(false) },
-                onChatModeSelected = {},
-                navigateToChat = {}
+                onChatModeSelected = {}
             )
         }
     }

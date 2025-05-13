@@ -1,5 +1,6 @@
 package com.konkuk.strhat.core.navigation
 
+import com.konkuk.strhat.domain.type.ChatModeType
 import kotlinx.serialization.Serializable
 
 sealed interface Route {
@@ -55,7 +56,9 @@ sealed interface MyPageRoute: Route{
     @Serializable
     data object MyPageStressScore: MyPageRoute
     @Serializable
-    data object MyPageChatHistory: MyPageRoute
+    data class MyPageChatHistory(
+        val diaryId: Int
+    ): MyPageRoute
 }
 
 sealed interface DiaryRoute : Route {
@@ -67,16 +70,23 @@ sealed interface DiaryRoute : Route {
         val summary: String,
         val positiveKeywords: List<String>,
         val negativeKeywords: List<String>,
-        val stressReliefSuggestions: String
+        val stressReliefSuggestions: String,
+        val diaryId: Int
     ) : DiaryRoute
     @Serializable
     data class DiaryAIFeedbackRecord(
         val date: String
     ) : DiaryRoute
     @Serializable
-    data object Chat : DiaryRoute
+    data class Chat(
+        val diaryId: Int,
+        val date: String,
+        val chatMode: ChatModeType
+    ) : DiaryRoute
     @Serializable
-    data object TodayStressScore : DiaryRoute
+    data class TodayStressScore(
+        val date: String
+    ) : DiaryRoute
 }
 
 sealed interface SelfDiagnosisRoute : Route {

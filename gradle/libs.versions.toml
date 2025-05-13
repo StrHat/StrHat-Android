@@ -24,6 +24,7 @@ ksp = "2.0.0-1.0.21"
 androidxComposeNavigation = "2.8.2"
 composeDateTimePicker = "0.0.3"
 kotlinxDatetime = "0.4.0"
+kakao = "2.21.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,7 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 hilt-manager = {group = "androidx.hilt" , name = "hilt-compiler", version.ref = "hiltManager"}
 compose-date-time-picker = { group = "io.github.kez-lab", name = "compose-date-time-picker", version.ref = "composeDateTimePicker" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kakao-user = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
