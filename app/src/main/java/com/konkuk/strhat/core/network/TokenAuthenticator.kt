@@ -12,10 +12,8 @@ import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
     private val tokenManager: TokenManager,
-    retrofit: Retrofit
+    private val retrofit: dagger.Lazy<Retrofit>
 ) : Authenticator {
-
-    private val authService = retrofit.create(ReIssueService::class.java)
 
     override fun authenticate(route: Route?, response: Response): Request? {
         val refreshToken = tokenManager.getRefreshToken()
@@ -23,6 +21,7 @@ class TokenAuthenticator @Inject constructor(
 
         Timber.tag("TokenAuthenticator").d("401 감지됨. 토큰 재발급 시도")
 
+        val authService = retrofit.get().create(ReIssueService::class.java)
         val refreshTokenDto = RequestReissueTokenDto("Bearer $refreshToken")
 
         val tokenResponse = authService.reissueToken(refreshTokenDto).execute()

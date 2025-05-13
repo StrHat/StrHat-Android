@@ -1,16 +1,24 @@
 package com.konkuk.strhat.feature.mypage
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.konkuk.strhat.core.network.TokenManager
 import com.konkuk.strhat.domain.entity.MyPageModel
+import com.konkuk.strhat.domain.usecase.SignOutUseCase
 import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor() : ViewModel() {
+class MyPageViewModel @Inject constructor(
+    private val signOutUseCase: SignOutUseCase,
+    private val tokenManager: TokenManager
+) : ViewModel() {
     private val _myPageModel = MutableStateFlow(
         MyPageModel(
             nickname = "",
@@ -77,5 +85,19 @@ class MyPageViewModel @Inject constructor() : ViewModel() {
 
     fun updatePersonality(personality: String) {
         _myPageModel.value = _myPageModel.value.copy(personality = personality)
+    }
+
+    fun signOut(){
+        viewModelScope.launch {
+            Timber.d("📡 로그아웃 요청 토큰: ${tokenManager.getToken()}")
+
+            signOutUseCase()
+                .onSuccess {
+                    tokenManager.triggerLogout()
+                }
+                .onFailure {
+                    Timber.e("로그아웃 실패: ${it.message}")
+                }
+        }
     }
 }

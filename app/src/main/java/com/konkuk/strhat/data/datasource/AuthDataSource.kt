@@ -9,4 +9,5 @@ import retrofit2.Response
 interface AuthDataSource{
     suspend fun postKakaoLogin(kakaoAccessToken: RequestKakaoLoginDto): Response<BaseResponse<ResponseKakaoLoginDto>>
     suspend fun postSignUp(signUpRequest: RequestSignUpDto): Response<Unit>
+    suspend fun postSignOut(): Response<Unit>
 }

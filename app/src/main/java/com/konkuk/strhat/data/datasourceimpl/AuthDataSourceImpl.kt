@@ -18,4 +18,7 @@ class AuthDataSourceImpl @Inject constructor(
     override suspend fun postSignUp(signUpRequest: RequestSignUpDto): Response<Unit> =
         authService.signUp(signUpRequest = signUpRequest)
 
+    override suspend fun postSignOut(): Response<Unit> =
+        authService.signOut()
+
 }

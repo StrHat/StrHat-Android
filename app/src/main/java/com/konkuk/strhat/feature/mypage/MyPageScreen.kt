@@ -47,7 +47,6 @@ fun MyPageRoute(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
-    navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
@@ -64,10 +63,10 @@ fun MyPageRoute(
         navigateToHealing = navigateToHealing,
         navigateToStress = navigateToStress,
         navigateToPersonality = navigateToPersonality,
-        navigateToLogin = navigateToLogin,
         navigateToMySelfDiagnosisRecord = navigateToMySelfDiagnosisRecord,
         navigateToTodayStressScore = navigateToTodayStressScore,
         navigateToChangeGraph = navigateToChangeGraph,
+        onSignOutClick = { viewModel.signOut() },
         myPageModel = myPageModel
     )
 }
@@ -79,10 +78,10 @@ private fun MyPageScreen(
     navigateToHealing: () -> Unit,
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
-    navigateToLogin: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToTodayStressScore: () -> Unit,
     navigateToChangeGraph: () -> Unit,
+    onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
 ) {
     var isLogoutDialogVisible by remember { mutableStateOf(false) }
@@ -379,7 +378,7 @@ private fun MyPageScreen(
                 descriptionResId = R.string.dialog_logout_description,
                 onConfirmButtonClick = {
                     isLogoutDialogVisible = false
-                    navigateToLogin()
+                    onSignOutClick()
                 },
                 onDismissButtonClick = { isLogoutDialogVisible = false }
             )
@@ -401,10 +400,10 @@ private fun PreviewMyPageScreen() {
             navigateToHealing = {},
             navigateToStress = {},
             navigateToPersonality = {},
-            navigateToLogin = {},
             navigateToMySelfDiagnosisRecord = {},
             navigateToTodayStressScore = {},
             navigateToChangeGraph = {},
+            onSignOutClick = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",
                 birth = 2001,

@@ -18,4 +18,7 @@ interface AuthService {
     suspend fun signUp(
         @Body signUpRequest: RequestSignUpDto
     ): Response<Unit>
+
+    @POST("/api/v1/users/sign-out")
+    suspend fun signOut(): Response<Unit>
 }

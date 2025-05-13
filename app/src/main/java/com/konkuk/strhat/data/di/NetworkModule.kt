@@ -40,7 +40,7 @@ object NetworkModule {
         val token = tokenManager.getToken()
 
         val newRequest = chain.request().newBuilder()
-            .addHeader("Authorization", "Bearer $token")
+            .addHeader("Authorization", token)
             .build()
         chain.proceed(newRequest)
     }
@@ -49,7 +49,7 @@ object NetworkModule {
     @Singleton
     fun providesTokenAuthenticator(
         tokenManager: TokenManager,
-        retrofit: Retrofit
+        retrofit: dagger.Lazy<Retrofit>
     ): TokenAuthenticator = TokenAuthenticator(tokenManager, retrofit)
 
     private fun shouldAddAuthorization(url: String): Boolean {

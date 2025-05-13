@@ -75,7 +75,6 @@ fun MainNavHost(
             myPageNavGraph(
                 padding = padding,
                 onNavigateToMyPage = navigator::navigateToMyPage,
-                onNavigateToLogin = navigator::navigateToLogin,
                 onNavigateToMySelfDiagnosisRecord = navigator::navigateToMySelfDiagnosisRecord,
                 onNavigateToMySelfDiagnosisRecordResult = navigator::navigateToMySelfDiagnosisRecordResult,
                 onNavigateToTodayStressScore = navigator::navigateToTodayStressScore,
