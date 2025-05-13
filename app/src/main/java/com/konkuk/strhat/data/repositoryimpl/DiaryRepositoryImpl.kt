@@ -1,10 +1,11 @@
 package com.konkuk.strhat.data.repositoryimpl
 
 import com.konkuk.strhat.data.datasource.DiaryDataSource
-import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.data.mapper.toAddDiaryDto
 import com.konkuk.strhat.data.mapper.toDiaryExistenceModel
 import com.konkuk.strhat.data.mapper.toDiaryFeedbackModel
 import com.konkuk.strhat.data.mapper.toTotalDiaryModel
+import com.konkuk.strhat.domain.entity.AddDiaryModel
 import com.konkuk.strhat.domain.entity.DiaryExistenceModel
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
@@ -14,9 +15,9 @@ import javax.inject.Inject
 class DiaryRepositoryImpl @Inject constructor(
     private val diaryDataSource: DiaryDataSource
 ) : DiaryRepository {
-    override suspend fun postDiary(request: RequestAddDiaryDto): Result<DiaryFeedbackModel> =
+    override suspend fun postDiary(request: AddDiaryModel): Result<DiaryFeedbackModel> =
         runCatching {
-            val response = diaryDataSource.postDiary(request).response
+            val response = diaryDataSource.postDiary(request.toAddDiaryDto()).response
             response.toDiaryFeedbackModel()
         }
 

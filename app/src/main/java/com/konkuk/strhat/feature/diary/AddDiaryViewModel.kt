@@ -3,7 +3,7 @@ package com.konkuk.strhat.feature.diary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.konkuk.strhat.R
-import com.konkuk.strhat.data.dto.request.RequestAddDiaryDto
+import com.konkuk.strhat.domain.entity.AddDiaryModel
 import com.konkuk.strhat.domain.entity.DiaryFeedbackModel
 import com.konkuk.strhat.domain.entity.EmotionType
 import com.konkuk.strhat.domain.entity.TotalDiaryModel
@@ -40,7 +40,7 @@ class AddDiaryViewModel @Inject constructor(
     val selectedEmotionIndexState = MutableStateFlow(-1)
 
     fun postDiary(
-        request: RequestAddDiaryDto
+        request: AddDiaryModel
     ) {
         viewModelScope.launch {
             try {
