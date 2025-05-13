@@ -41,7 +41,11 @@ fun MyStressRoute(
         padding = padding,
         stress = myPageModel.stressReliefStyle,
         onStressChange = viewModel::updateStress,
-        navigateToMyPage = navigateToMyPage
+        navigateToMyPage = {
+            viewModel.patchStressInfo {
+                navigateToMyPage()
+            }
+        }
     )
 }
 

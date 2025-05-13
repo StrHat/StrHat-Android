@@ -19,4 +19,10 @@ class UserRepositoryImpl @Inject constructor(
         runCatching {
             userDataSource.patchHobbyHealingInfo(hobbyHealingStyle)
         }
+
+    override suspend fun patchStressReliefInfo(stressReliefStyle: String): Result<Unit> =
+        runCatching {
+            userDataSource.patchStressReliefInfo(stressReliefStyle)
+        }
+
 }

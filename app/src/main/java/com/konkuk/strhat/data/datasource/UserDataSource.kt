@@ -7,5 +7,5 @@ import retrofit2.Response
 interface UserDataSource {
     suspend fun getUserInfo(): BaseResponse<ResponseUserInfoDto>
     suspend fun patchHobbyHealingInfo(hobbyHealingStyle: String): Response<Unit>
-
+    suspend fun patchStressReliefInfo(stressReliefStyle: String): Response<Unit>
 }
