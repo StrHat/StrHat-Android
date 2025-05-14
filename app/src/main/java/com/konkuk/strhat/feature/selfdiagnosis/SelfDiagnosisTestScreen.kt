@@ -71,7 +71,7 @@ fun SelfDiagnosisTestScreen(
     val selfDiagnosisTestScreenTitle = when (type) {
         "pss" -> "스틀햇과 함께 하는 PSS 검사"
         "sri" -> "스틀햇과 함께 하는 SRI 검사"
-        "phq-9" -> "스틀햇과 함께 하는 PHQ-9 검사"
+        "phq9" -> "스틀햇과 함께 하는 PHQ-9 검사"
         else -> "스틀햇과 함께 하는 자가진단 검사"
     }
 
@@ -86,8 +86,9 @@ fun SelfDiagnosisTestScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "1 : 전혀 그렇지 않다, 2 : 그렇지 않다, 3 : 보통이다,\n\n4 : 그렇다, 5 : 매우 그렇다",
-            style = typography.body3_m_14
+            text = "1 : 전혀 그렇지 않다, 2 : 그렇지 않다,\n\n3 : 보통이다, 4 : 그렇다, 5 : 매우 그렇다",
+            style = typography.body3_m_14,
+            color = colors.Gray400
         )
         Spacer(modifier = Modifier.height(16.dp))
 

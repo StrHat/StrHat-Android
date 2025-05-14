@@ -3,10 +3,12 @@ package com.konkuk.strhat.feature.selfdiagnosis
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
+import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
 import com.konkuk.strhat.domain.repository.SelfDiagnosisRepository
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,6 +43,9 @@ class SelfDiagnosisViewModel @Inject constructor(
     private val _selfDiagnosisListModel = MutableStateFlow<List<SelfDiagnosisItem>>(emptyList())
     val selfDiagnosisModel = _selfDiagnosisListModel.asStateFlow()
 
+    private val _selfDiagnosisResultModel = MutableStateFlow(SelfDiagnosisResultModel("", 1, "", ""))
+    val selfDiagnosisResultModel: StateFlow<SelfDiagnosisResultModel> = _selfDiagnosisResultModel
+
     fun getSelfDiagnosisQuestionList(
         type: String
     ) {
@@ -62,6 +67,37 @@ class SelfDiagnosisViewModel @Inject constructor(
                     }
             } catch (e: Exception) {
                 Timber.tag("get self diagnosis question list").e("자가진단 문제 데이터 조회 서버 통신 오류")
+            }
+        }
+    }
+
+    fun getSelfDiagnosisResult(
+        date: String,
+        type: String
+    ) {
+        viewModelScope.launch {
+            try {
+                selfDiagnosisRepository.getSelfDiagnosisResult(date, type)
+                    .onSuccess { data ->
+                        _selfDiagnosisResultModel.update {
+                            SelfDiagnosisResultModel(
+                                nickname = data.nickname,
+                                score = data.score,
+                                type = data.type,
+                                selfDiagnosisLevel = data.selfDiagnosisLevel
+                            )
+                        }
+                    }
+                    .onFailure {
+                        if (it is HttpException) {
+                            val errorBody = it.response()?.errorBody()?.string()
+                            Timber.tag("get self diagnosis result").e("$errorBody")
+                        } else {
+                            Timber.tag("get self diagnosis result").e(it, "자가진단 결과 조회 실패")
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.tag("get self diagnosis result").e("자가진단 문제 데이터 조회 서버 통신 오류")
             }
         }
     }

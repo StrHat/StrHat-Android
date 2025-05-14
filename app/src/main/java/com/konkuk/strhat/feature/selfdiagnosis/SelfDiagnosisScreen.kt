@@ -100,7 +100,7 @@ private fun SelfDiagnosisScreen(
 
         StrHatButton(
             text = stringResource(R.string.self_diagnosis_PHQ_9_button),
-            onClick = { onTestBtnClick("phq-9") }
+            onClick = { onTestBtnClick("phq9") }
         )
     }
 }
