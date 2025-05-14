@@ -78,119 +78,167 @@ private fun HomeScreen(
         )
 
         if (homeModel.hasDiary) {
-            Text(
-                text = buildAnnotatedString {
-                    append(
-                        stringResource(
-                            R.string.home_keyword,
-                            homeModel.positiveEmotions[0],
-                            homeModel.positiveEmotions[1],
-                            homeModel.positiveEmotions[2]
+            if (homeModel.positiveEmotions.any { it.isNotBlank() }) {
+                Text(
+                    text = buildAnnotatedString {
+                        append(
+                            stringResource(
+                                R.string.home_keyword,
+                                homeModel.positiveEmotions[0],
+                                homeModel.positiveEmotions[1],
+                                homeModel.positiveEmotions[2]
+                            )
                         )
-                    )
 
-                    addStyle(
-                        style = SpanStyle(
-                            color = colors.MainBlue,
-                            fontSize = textStyle.fontSize,
-                            fontWeight = textStyle.fontWeight,
-                            fontFamily = textStyle.fontFamily,
-                            letterSpacing = textStyle.letterSpacing
-                        ),
-                        start = 9,
-                        end = 13 + homeModel.positiveEmotions[0].length + homeModel.positiveEmotions[1].length + homeModel.positiveEmotions[2].length
-                    )
-                },
-                style = typography.head2_r_20,
-                modifier = Modifier.padding(bottom = 20.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 50.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(
-                        when (homeModel.emotion) {
-                            1 -> R.drawable.ic_strhat_blue_shadow
-                            2 -> R.drawable.ic_strhat_red_shadow
-                            3 -> R.drawable.ic_strhat_gray_shadow
-                            4 -> R.drawable.ic_strhat_yellow_shadow
-                            5 -> R.drawable.ic_strhat_green_shadow
-                            else -> R.drawable.ic_strhat_blue_shadow
-                        }
-                    ),
-                    contentDescription = stringResource(R.string.home_image_description),
-                    modifier = Modifier.size(
-                        width = LocalConfiguration.current.screenWidthDp.dp * 0.36f,
-                        height = LocalConfiguration.current.screenHeightDp.dp * 0.14f
-                    )
+                        addStyle(
+                            style = SpanStyle(
+                                color = colors.MainBlue,
+                                fontSize = textStyle.fontSize,
+                                fontWeight = textStyle.fontWeight,
+                                fontFamily = textStyle.fontFamily,
+                                letterSpacing = textStyle.letterSpacing
+                            ),
+                            start = 9,
+                            end = 13 + homeModel.positiveEmotions[0].length + homeModel.positiveEmotions[1].length + homeModel.positiveEmotions[2].length
+                        )
+                    },
+                    style = typography.head2_r_20,
+                    modifier = Modifier.padding(bottom = 20.dp)
                 )
 
-                Box(
+                Row(
                     modifier = Modifier
-                        .padding(start = 25.dp)
-                        .size(
-                            width = LocalConfiguration.current.screenWidthDp.dp * 0.4f,
-                            height = LocalConfiguration.current.screenHeightDp.dp * 0.31f
-                        )
-                        .background(color = colors.Gray100, shape = RoundedCornerShape(12.dp))
-                        .padding(20.dp)
-                        .verticalScroll(rememberScrollState())
+                        .fillMaxWidth()
+                        .padding(bottom = 50.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
+                    Image(
+                        painter = painterResource(
+                            when (homeModel.emotion) {
+                                1 -> R.drawable.ic_strhat_blue_shadow
+                                2 -> R.drawable.ic_strhat_red_shadow
+                                3 -> R.drawable.ic_strhat_gray_shadow
+                                4 -> R.drawable.ic_strhat_yellow_shadow
+                                5 -> R.drawable.ic_strhat_green_shadow
+                                else -> R.drawable.ic_strhat_blue_shadow
+                            }
+                        ),
+                        contentDescription = stringResource(R.string.home_image_description),
+                        modifier = Modifier.size(
+                            width = LocalConfiguration.current.screenWidthDp.dp * 0.36f,
+                            height = LocalConfiguration.current.screenHeightDp.dp * 0.14f
+                        )
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 25.dp)
+                            .size(
+                                width = LocalConfiguration.current.screenWidthDp.dp * 0.4f,
+                                height = LocalConfiguration.current.screenHeightDp.dp * 0.31f
+                            )
+                            .background(color = colors.Gray100, shape = RoundedCornerShape(12.dp))
+                            .padding(20.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Text(
+                            text = homeModel.stressReliefSuggestion,
+                            color = colors.Gray600,
+                            style = typography.body3_b_14
+                        )
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 50.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_strhat_gray),
+                        contentDescription = stringResource(R.string.home_empty_feedback_image_description),
+                        modifier = Modifier.size(
+                            width = LocalConfiguration.current.screenWidthDp.dp * 0.36f,
+                            height = LocalConfiguration.current.screenHeightDp.dp * 0.14f
+                        )
+                    )
+
                     Text(
-                        text = homeModel.stressReliefSuggestion,
-                        color = colors.Gray600,
-                        style = typography.body3_b_14
+                        text = stringResource(R.string.home_empty_feedback),
+                        style = typography.body3_b_14,
+                        modifier = Modifier
+                            .padding(top = 20.dp),
+                        textAlign = TextAlign.Center
                     )
                 }
             }
 
-            Text(
-                text = buildAnnotatedString {
-                    append(stringResource(R.string.home_stress_title, homeModel.stressScore))
 
-                    addStyle(
-                        style = SpanStyle(color = colors.MainBlue),
-                        start = 13,
-                        end = 13 + homeModel.stressScore.toString().length
+            if (homeModel.stressScore > 0) {
+                Text(
+                    text = buildAnnotatedString {
+                        append(stringResource(R.string.home_stress_title, homeModel.stressScore))
+
+                        addStyle(
+                            style = SpanStyle(color = colors.MainBlue),
+                            start = 13,
+                            end = 13 + homeModel.stressScore.toString().length
+                        )
+                    },
+                    style = typography.head1_b_24,
+                    modifier = Modifier.padding(bottom = 15.dp)
+                )
+
+                Text(
+                    text = buildAnnotatedString {
+                        append(
+                            stringResource(
+                                R.string.home_stress_sub_title,
+                                homeModel.stressLevel
+                            )
+                        )
+
+                        addStyle(
+                            style = SpanStyle(
+                                color =
+                                    if (homeModel.stressScore < 6) colors.MainBlue
+                                    else if (homeModel.stressScore < 9) colors.MainRed
+                                    else colors.SubRed,
+                                fontSize = textStyle.fontSize,
+                                fontWeight = textStyle.fontWeight,
+                                fontFamily = textStyle.fontFamily,
+                                letterSpacing = textStyle.letterSpacing
+                            ),
+                            start = 0,
+                            end = 10
+                        )
+                    },
+                    style = typography.head2_r_20,
+                    modifier = Modifier.padding(bottom = 5.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.home_stress_description),
+                    color = colors.MainBlack,
+                    style = typography.body2_r_15
+                )
+            } else {
+                Column {
+                    Text(
+                        text = stringResource(R.string.home_empty_stressScore_title),
+                        style = typography.head2_b_20,
+                        color = colors.MainBlack,
+                        modifier = Modifier.padding(bottom = 10.dp)
                     )
-                },
-                style = typography.head1_b_24,
-                modifier = Modifier.padding(bottom = 15.dp)
-            )
-
-            Text(
-                text = buildAnnotatedString {
-                    append(stringResource(R.string.home_stress_sub_title, homeModel.stressLevel))
-
-                    addStyle(
-                        style = SpanStyle(
-                            color =
-                            if (homeModel.stressScore < 6) colors.MainBlue
-                            else if (homeModel.stressScore < 9) colors.MainRed
-                            else colors.SubRed,
-                            fontSize = textStyle.fontSize,
-                            fontWeight = textStyle.fontWeight,
-                            fontFamily = textStyle.fontFamily,
-                            letterSpacing = textStyle.letterSpacing
-                        ),
-                        start = 0,
-                        end = 10
+                    Text(
+                        text = stringResource(R.string.home_empty_stressScore_description),
+                        style = typography.body2_r_15,
+                        color = colors.MainBlack
                     )
-                },
-                style = typography.head2_r_20,
-                modifier = Modifier.padding(bottom = 5.dp)
-            )
-
-            Text(
-                text = stringResource(R.string.home_stress_description),
-                color = colors.MainBlack,
-                style = typography.body2_r_15
-            )
+                }
+            }
         } else {
             Text(
                 text = stringResource(R.string.home_empty_sub_title),
@@ -242,10 +290,10 @@ private fun PreviewHomeScreen() {
             homeModel = HomeModel(
                 hasDiary = true,
                 nickname = "송밍서",
-                positiveEmotions = listOf("밍서", "융서", "밍서"),
+                positiveEmotions = listOf("", "", ""),
                 emotion = 4,
                 stressReliefSuggestion = "시험 스트레스를 조금이나마 덜어줄 수 있는 방법으로, 독서와 음악을 조합해보는 건 어떨까요? 좋아하는 음악을 들으며 독서를 즐기면서 마음을 편하게 해보세요.",
-                stressScore = 10,
+                stressScore = 0,
                 stressLevel = "높은 스트레스 수준"
             )
         )
