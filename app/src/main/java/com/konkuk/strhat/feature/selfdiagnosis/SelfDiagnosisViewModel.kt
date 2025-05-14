@@ -1,15 +1,23 @@
 package com.konkuk.strhat.feature.selfdiagnosis
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
+import com.konkuk.strhat.domain.repository.SelfDiagnosisRepository
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class SelfDiagnosisViewModel @Inject constructor() : ViewModel() {
+class SelfDiagnosisViewModel @Inject constructor(
+    private val selfDiagnosisRepository: SelfDiagnosisRepository
+) : ViewModel() {
     private val _selfDiagnosisResultState = MutableStateFlow(SelfDiagnosisResultState())
     val selfDiagnosisResultState = _selfDiagnosisResultState.asStateFlow()
 
@@ -27,6 +35,34 @@ class SelfDiagnosisViewModel @Inject constructor() : ViewModel() {
                         "19점: 높은 스트레스 수준\n\n" + "이 척도는 Cohen, Kamarck과 Mermelstein (1983)의 지각된 스트레스 척도를 한국 실정에 맞게 번안하여 한국 대학생을 대상으로 타당화한 것입니다.\n" +
                         "한국심리학회 홈페이지 또는 KSI한국학술정보 홈페이지에서 원문을 보실 수 있습니다."
             )
+        }
+    }
+
+    private val _selfDiagnosisListModel = MutableStateFlow<List<SelfDiagnosisItem>>(emptyList())
+    val selfDiagnosisModel = _selfDiagnosisListModel.asStateFlow()
+
+    fun getSelfDiagnosisQuestionList(
+        type: String
+    ) {
+        viewModelScope.launch {
+            try {
+                selfDiagnosisRepository.getSelfDiagnosisQuestionList(type)
+                    .onSuccess { data ->
+                        _selfDiagnosisListModel.update {
+                            data
+                        }
+                    }
+                    .onFailure {
+                        if (it is HttpException) {
+                            val errorBody = it.response()?.errorBody()?.string()
+                            Timber.tag("get self diagnosis question list").e("$errorBody")
+                        } else {
+                            Timber.tag("get self diagnosis question list").e(it, "자가진단 문제 데이터 조회 실패")
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.tag("get self diagnosis question list").e("자가진단 문제 데이터 조회 서버 통신 오류")
+            }
         }
     }
 }
