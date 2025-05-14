@@ -170,8 +170,8 @@ class MainNavigator(
         navController.navigateToChangeGraph()
     }
 
-    fun navigateToSelfDiagnosisTest() {
-        navController.navigateToSelfDiagnosisTest()
+    fun navigateToSelfDiagnosisTest(type: String) {
+        navController.navigateToSelfDiagnosisTest(type)
     }
 
     fun navigateToSelfDiagnosisResult() {
