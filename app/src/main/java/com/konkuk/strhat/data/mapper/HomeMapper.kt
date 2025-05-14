@@ -6,9 +6,9 @@ import com.konkuk.strhat.domain.entity.HomeModel
 fun ResponseHomeDto.toHomeModel() = HomeModel(
     hasDiary = hasDiary,
     nickname = nickname,
-    emotion = emotion,
-    positiveEmotions = positiveEmotions,
-    stressReliefSuggestion = stressReliefSuggestion,
-    stressScore = stressScore,
-    stressLevel = stressLevel
+    emotion = emotion ?: 1,
+    positiveEmotions = positiveEmotions ?: listOf("", "", ""),
+    stressReliefSuggestion = stressReliefSuggestion ?: "",
+    stressScore = stressScore ?: 0,
+    stressLevel = stressLevel ?: ""
 )
