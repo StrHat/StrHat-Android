@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
+import com.konkuk.strhat.domain.entity.SelfDiagnosisModel
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -37,7 +38,7 @@ fun SelfDiagnosisTestRoute(
     navigateToSelfDiagnosisResult: () -> Unit,
     viewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
-    val questions by viewModel.selfDiagnosisModel.collectAsState()
+    val questions by viewModel.selfDiagnosisListModel.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getSelfDiagnosisQuestionList(type)
@@ -48,7 +49,16 @@ fun SelfDiagnosisTestRoute(
     SelfDiagnosisTestScreen(
         padding = padding,
         type = type,
-        navigateToSelfDiagnosisResult = navigateToSelfDiagnosisResult,
+        navigateToSelfDiagnosisResult = {
+            val totalScore = selectedScores.values.sum()
+            val selfDiagnosis = SelfDiagnosisModel(
+                type = type,
+                selfDiagnosisScore = totalScore
+            )
+            viewModel.postSelfDiagnosis(selfDiagnosis)
+
+            navigateToSelfDiagnosisResult()
+        },
         questions = questions,
         onSelectionChanged = { index, score ->
             selectedScores[index] = score

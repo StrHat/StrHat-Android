@@ -3,6 +3,7 @@ package com.konkuk.strhat.feature.selfdiagnosis
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
+import com.konkuk.strhat.domain.entity.SelfDiagnosisModel
 import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
 import com.konkuk.strhat.domain.repository.SelfDiagnosisRepository
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
@@ -41,10 +42,13 @@ class SelfDiagnosisViewModel @Inject constructor(
     }
 
     private val _selfDiagnosisListModel = MutableStateFlow<List<SelfDiagnosisItem>>(emptyList())
-    val selfDiagnosisModel = _selfDiagnosisListModel.asStateFlow()
+    val selfDiagnosisListModel = _selfDiagnosisListModel.asStateFlow()
 
     private val _selfDiagnosisResultModel = MutableStateFlow(SelfDiagnosisResultModel("", 1, "", ""))
     val selfDiagnosisResultModel: StateFlow<SelfDiagnosisResultModel> = _selfDiagnosisResultModel
+
+    private val _selfDiagnosisModel = MutableStateFlow(SelfDiagnosisModel("", 1))
+    val selfDiagnosisModel: StateFlow<SelfDiagnosisModel> = _selfDiagnosisModel
 
     fun getSelfDiagnosisQuestionList(
         type: String
@@ -98,6 +102,29 @@ class SelfDiagnosisViewModel @Inject constructor(
                     }
             } catch (e: Exception) {
                 Timber.tag("get self diagnosis result").e("자가진단 문제 데이터 조회 서버 통신 오류")
+            }
+        }
+    }
+
+    fun postSelfDiagnosis(
+        request: SelfDiagnosisModel
+    ) {
+        viewModelScope.launch {
+            try {
+                selfDiagnosisRepository.postSelfDiagnosis(request)
+                    .onSuccess {
+
+                    }
+                    .onFailure {
+                        if (it is HttpException) {
+                            val errorBody = it.response()?.errorBody()?.string()
+                            Timber.tag("post self diagnosis").e("$errorBody")
+                        } else {
+                            Timber.tag("post self diagnosis").e(it, "자가진단 결과 저장 실패")
+                        }
+                    }
+            } catch (e: Exception) {
+                Timber.tag("post self diagnosis").e("자가진단 결과 저장 서버 통신 오류")
             }
         }
     }

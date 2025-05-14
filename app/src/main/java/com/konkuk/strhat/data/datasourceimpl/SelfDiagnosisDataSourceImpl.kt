@@ -2,6 +2,7 @@ package com.konkuk.strhat.data.datasourceimpl
 
 import com.konkuk.strhat.data.datasource.SelfDiagnosisDataSource
 import com.konkuk.strhat.data.dto.base.BaseResponse
+import com.konkuk.strhat.data.dto.request.RequestSelfDiagnosisDto
 import com.konkuk.strhat.data.dto.response.ResponseSelfDiagnosisQuestionDto
 import com.konkuk.strhat.data.dto.response.ResponseSelfDiagnosisResultDto
 import com.konkuk.strhat.data.service.SelfDiagnosisService
@@ -15,4 +16,7 @@ class SelfDiagnosisDataSourceImpl @Inject constructor(
 
     override suspend fun getSelfDiagnosisResult(date: String, type: String): BaseResponse<ResponseSelfDiagnosisResultDto> =
         selfDiagnosisService.getSelfDiagnosisResult(date, type)
+
+    override suspend fun postSelfDiagnosis(request: RequestSelfDiagnosisDto): BaseResponse<Unit> =
+        selfDiagnosisService.postSelfDiagnosis(request)
 }
