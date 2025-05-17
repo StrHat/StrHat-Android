@@ -67,7 +67,7 @@ val defaultStrHatTypography = StrHatTypography(
     body1_m_16 = TextStyle(
         fontFamily = strHatFontMedium,
         fontSize = 16.sp,
-        lineHeight = 18.sp
+        lineHeight = 22.sp
     ),
     body1_r_16 = TextStyle(
         fontFamily = strHatFontRegular,
