@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +51,7 @@ fun MyStressEmotionChangeGraphRoute(
     navigateToMyPageAIFeedback: (String) -> Unit,
     viewModel: MyStressGraphViewModel = hiltViewModel()
 ) {
-    var weekOffset by remember { mutableIntStateOf(0) }
+    var weekOffset by rememberSaveable { mutableIntStateOf(0) }
     val initialDate = remember(date) { LocalDate.parse(date) }
 
     LaunchedEffect(weekOffset) {
