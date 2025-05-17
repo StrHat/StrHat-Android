@@ -1,5 +1,6 @@
 package com.konkuk.strhat.feature.mypage
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
@@ -40,6 +42,8 @@ import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 @Composable
@@ -51,7 +55,7 @@ fun MyPageRoute(
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: () -> Unit,
-    navigateToChangeGraph: () -> Unit,
+    navigateToChangeGraph: (String) -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -82,7 +86,7 @@ private fun MyPageScreen(
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: () -> Unit,
-    navigateToChangeGraph: () -> Unit,
+    navigateToChangeGraph: (String) -> Unit,
     onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
 ) {
@@ -192,6 +196,14 @@ private fun MyPageScreen(
                 painter = painterResource(R.drawable.ic_strhat_yellow_shadow),
                 contentDescription = stringResource(R.string.my_image_description),
                 modifier = Modifier.size(140.dp)
+            )
+            AsyncImage(
+                model = "https://github.com/user-attachments/assets/e227846b-cb86-4f9d-8f0f-0c3a52ca4659",
+                contentDescription = null,
+                modifier = Modifier.size(140.dp),
+                onError = {
+                    Log.e("AsyncImage", "load failed", it.result.throwable)
+                }
             )
         }
 
@@ -326,7 +338,8 @@ private fun MyPageScreen(
             modifier = Modifier
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToChangeGraph()
+                    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+                    navigateToChangeGraph(date)
                 }
         )
         HorizontalDivider(

@@ -52,7 +52,9 @@ sealed interface MyPageRoute: Route{
     @Serializable
     data object MySelfDiagnosisRecordResult: MyPageRoute
     @Serializable
-    data object MyStressEmotionChangeGraph: MyPageRoute
+    data class MyStressEmotionChangeGraph(
+        val date: String
+    ): MyPageRoute
     @Serializable
     data object MyPageStressScore: MyPageRoute
     @Serializable

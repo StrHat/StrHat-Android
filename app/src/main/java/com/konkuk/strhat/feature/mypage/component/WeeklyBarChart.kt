@@ -30,11 +30,11 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 
 @Composable
 fun WeeklyBarChart(
-    values: List<Int>,
+    values: List<Int?>,
     maxBarHeight: Int = 200,
     modifier: Modifier = Modifier
 ) {
-    val maxValue = values.maxOrNull()?.toFloat() ?: 0f
+    val maxValue = values.filterNotNull().maxOrNull()?.toFloat() ?: 0f
 
     Column(
         modifier = modifier
@@ -51,7 +51,7 @@ fun WeeklyBarChart(
             verticalAlignment = Alignment.Bottom
         ) {
             values.forEachIndexed { index, value ->
-                val ratio = if (maxValue > 0) value / maxValue else 0f
+                val ratio = if (maxValue > 0) (value?.toFloat() ?: 0f) / maxValue else 0f
 
                 Column(
                     modifier = Modifier,
