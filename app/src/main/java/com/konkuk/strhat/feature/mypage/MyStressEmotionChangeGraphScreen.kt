@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,24 +34,40 @@ import com.konkuk.strhat.core.component.SummaryBox
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.core.util.time.getWeekStateFromOffset
+import com.konkuk.strhat.domain.entity.WeeklyStressScoreModel
 import com.konkuk.strhat.feature.mypage.component.WeeklyBarChart
-import com.konkuk.strhat.feature.mypage.state.MyWeeklyStressState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MyStressEmotionChangeGraphRoute(
     padding: PaddingValues,
+    date: String,
     navigateToMyPageStressScore: () -> Unit,
     navigateToMyPageAIFeedback: () -> Unit,
-    viewModel: MyPageViewModel = hiltViewModel()
+    viewModel: MyStressGraphViewModel = hiltViewModel()
 ) {
-    val myWeeklyStressState by viewModel.myWeeklyStressState.collectAsState()
+    var weekOffset by remember { mutableIntStateOf(0) }
+    val initialDate = remember(date) { LocalDate.parse(date) }
+
+    LaunchedEffect(weekOffset) {
+        val targetDate = initialDate
+            .minusWeeks(weekOffset.toLong())
+            .format(DateTimeFormatter.ISO_LOCAL_DATE)
+        viewModel.getWeeklyStressScore(targetDate)
+    }
+
+    val weeklyStressScoreModel by viewModel.weeklyStressScoreModel.collectAsState()
 
     MyStressEmotionChangeGraphScreen(
         padding = padding,
-        myWeeklyStressState = myWeeklyStressState,
+        weeklyStressScoreModel = weeklyStressScoreModel,
+        weekOffset = weekOffset,
+        onPrevWeek = { weekOffset += 1 },
+        onNextWeek = { if (weekOffset > 0) weekOffset -= 1 },
         navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToMyPageAIFeedback = navigateToMyPageAIFeedback
     )
@@ -59,12 +76,14 @@ fun MyStressEmotionChangeGraphRoute(
 @Composable
 private fun MyStressEmotionChangeGraphScreen(
     padding: PaddingValues,
-    myWeeklyStressState: MyWeeklyStressState,
+    weeklyStressScoreModel: WeeklyStressScoreModel,
+    weekOffset: Int,
+    onPrevWeek: () -> Unit,
+    onNextWeek: () -> Unit,
     navigateToMyPageStressScore: () -> Unit,
     navigateToMyPageAIFeedback: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var weekOffset by remember { mutableIntStateOf(0) }
     val weekState = getWeekStateFromOffset(weekOffset)
 
     Column(
@@ -81,7 +100,7 @@ private fun MyStressEmotionChangeGraphScreen(
         ) {
             Row {
                 Text(
-                    text = myWeeklyStressState.nickname,
+                    text = weeklyStressScoreModel.nickname,
                     style = typography.head1_b_24,
                     color = colors.MainBlue
                 )
@@ -99,9 +118,7 @@ private fun MyStressEmotionChangeGraphScreen(
                     painter = painterResource(R.drawable.ic_arrow_left),
                     contentDescription = stringResource(R.string.diary_calendar_month_left_arrow_description),
                     tint = colors.Gray300,
-                    modifier = Modifier.noRippleClickable {
-                        weekOffset += 1
-                    }
+                    modifier = Modifier.noRippleClickable { onPrevWeek() }
                 )
                 Text(
                     text = "${weekState.month}",
@@ -130,9 +147,7 @@ private fun MyStressEmotionChangeGraphScreen(
                     painter = painterResource(R.drawable.ic_arrow_right),
                     contentDescription = stringResource(R.string.diary_calendar_month_right_arrow_description),
                     tint = colors.Gray300,
-                    modifier = Modifier.noRippleClickable {
-                        if (weekOffset > 0) weekOffset -= 1
-                    }
+                    modifier = Modifier.noRippleClickable { onNextWeek() }
                 )
             }
         }
@@ -148,7 +163,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
         
         SummaryBox(
-            summary = myWeeklyStressState.weeklySummary,
+            summary = weeklyStressScoreModel.weeklySummary,
             backgroundColor = colors.SubBlue
         )
 
@@ -162,7 +177,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = myWeeklyStressState.weeklyStressScores,
+            values = weeklyStressScoreModel.stressLevels,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageStressScore()
             }
@@ -178,7 +193,7 @@ private fun MyStressEmotionChangeGraphScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         WeeklyBarChart(
-            values = myWeeklyStressState.weeklyEmotionScores,
+            values = weeklyStressScoreModel.emotionLevels,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageAIFeedback()
             }
@@ -190,13 +205,19 @@ private fun MyStressEmotionChangeGraphScreen(
 @Composable
 private fun MyStressEmotionChangeGraphScreenPreview() {
     StrHatTheme {
-        val myWeeklyStressExampleState = MyWeeklyStressState(
-            nickname = "송민서",
-            weeklySummary = "사용자는 완벽주의적이고 내성적인 성향을 가지고 있어서 발표나 의견 충돌, 야근, 인적 손실, 신체적 피로, 그리고 가족 관련 걱정 등 다양한 요인들이 스트레스를 유발했을 것으로 판단됩니다. 이러한 스트레스 요인들이 하나씩 쌓이며 사용자의 마음과 몸에 부담을 주었을 것입니다. 스트레스 관리를 위해 업무에서 완벽을 추구하는 것보다 실수를 수용하고 동료와 의견을 잘 조율하며, 일과 휴식을 균형 있게 유지하는 것이 중요해 보입니다."
-        )
         MyStressEmotionChangeGraphScreen(
             padding = PaddingValues(0.dp),
-            myWeeklyStressState = myWeeklyStressExampleState,
+            weeklyStressScoreModel = WeeklyStressScoreModel(
+                "",
+                "",
+                emptyList(),
+                emptyList(),
+                "",
+                ""
+            ),
+            weekOffset = 1,
+            onPrevWeek = {},
+            onNextWeek = {},
             navigateToMyPageStressScore = {},
             navigateToMyPageAIFeedback = {}
         )
