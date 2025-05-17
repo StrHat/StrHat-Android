@@ -56,7 +56,9 @@ sealed interface MyPageRoute: Route{
         val date: String
     ): MyPageRoute
     @Serializable
-    data object MyPageStressScore: MyPageRoute
+    data class MyPageStressScore(
+        val date: String
+    ): MyPageRoute
     @Serializable
     data class MyPageChatHistory(
         val diaryId: Int

@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.domain.type.DayOfWeekType
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -32,6 +33,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun WeeklyBarChart(
     values: List<Int?>,
     maxBarHeight: Int = 200,
+    onBarClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val maxValue = values.filterNotNull().maxOrNull()?.toFloat() ?: 0f
@@ -60,7 +62,8 @@ fun WeeklyBarChart(
                     Box(
                         modifier = Modifier
                             .height(maxBarHeight.dp)
-                            .width(24.dp),
+                            .width(24.dp)
+                            .noRippleClickable { onBarClick(index) },
                         contentAlignment = Alignment.BottomCenter
                     ) {
                         Box(
@@ -119,5 +122,8 @@ fun WeeklyBarChart(
 @Composable
 fun WeeklyBarChartPreview() {
     val testValues = listOf(10, 2, 3, 4, 6, 7, 9)
-    WeeklyBarChart(values = testValues)
+    WeeklyBarChart(
+        values = testValues,
+        onBarClick = {}
+    )
 }

@@ -46,7 +46,7 @@ import java.time.format.DateTimeFormatter
 fun MyStressEmotionChangeGraphRoute(
     padding: PaddingValues,
     date: String,
-    navigateToMyPageStressScore: () -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
     navigateToMyPageAIFeedback: () -> Unit,
     viewModel: MyStressGraphViewModel = hiltViewModel()
 ) {
@@ -64,10 +64,19 @@ fun MyStressEmotionChangeGraphRoute(
 
     MyStressEmotionChangeGraphScreen(
         padding = padding,
+        date = date,
         weeklyStressScoreModel = weeklyStressScoreModel,
         weekOffset = weekOffset,
-        onPrevWeek = { weekOffset += 1 },
-        onNextWeek = { if (weekOffset > 0) weekOffset -= 1 },
+        onPrevWeekClick = { weekOffset += 1 },
+        onNextWeekClick = { if (weekOffset > 0) weekOffset -= 1 },
+        onBarClick = { index ->
+            val weekStart = LocalDate
+                .parse(weeklyStressScoreModel.startDate, DateTimeFormatter.ISO_LOCAL_DATE)
+            val barDate = weekStart
+                .plusDays(index.toLong())
+                .format(DateTimeFormatter.ISO_LOCAL_DATE)
+            navigateToMyPageStressScore(barDate)
+        },
         navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToMyPageAIFeedback = navigateToMyPageAIFeedback
     )
@@ -76,11 +85,13 @@ fun MyStressEmotionChangeGraphRoute(
 @Composable
 private fun MyStressEmotionChangeGraphScreen(
     padding: PaddingValues,
+    date: String,
     weeklyStressScoreModel: WeeklyStressScoreModel,
     weekOffset: Int,
-    onPrevWeek: () -> Unit,
-    onNextWeek: () -> Unit,
-    navigateToMyPageStressScore: () -> Unit,
+    onPrevWeekClick: () -> Unit,
+    onNextWeekClick: () -> Unit,
+    onBarClick: (Int) -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
     navigateToMyPageAIFeedback: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -118,7 +129,7 @@ private fun MyStressEmotionChangeGraphScreen(
                     painter = painterResource(R.drawable.ic_arrow_left),
                     contentDescription = stringResource(R.string.diary_calendar_month_left_arrow_description),
                     tint = colors.Gray300,
-                    modifier = Modifier.noRippleClickable { onPrevWeek() }
+                    modifier = Modifier.noRippleClickable { onPrevWeekClick() }
                 )
                 Text(
                     text = "${weekState.month}",
@@ -147,7 +158,7 @@ private fun MyStressEmotionChangeGraphScreen(
                     painter = painterResource(R.drawable.ic_arrow_right),
                     contentDescription = stringResource(R.string.diary_calendar_month_right_arrow_description),
                     tint = colors.Gray300,
-                    modifier = Modifier.noRippleClickable { onNextWeek() }
+                    modifier = Modifier.noRippleClickable { onNextWeekClick() }
                 )
             }
         }
@@ -178,8 +189,9 @@ private fun MyStressEmotionChangeGraphScreen(
 
         WeeklyBarChart(
             values = weeklyStressScoreModel.stressLevels,
+            onBarClick = onBarClick,
             modifier = Modifier.noRippleClickable {
-                navigateToMyPageStressScore()
+                navigateToMyPageStressScore(date)
             }
         )
 
@@ -194,6 +206,7 @@ private fun MyStressEmotionChangeGraphScreen(
 
         WeeklyBarChart(
             values = weeklyStressScoreModel.emotionLevels,
+            onBarClick = onBarClick,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageAIFeedback()
             }
@@ -207,6 +220,7 @@ private fun MyStressEmotionChangeGraphScreenPreview() {
     StrHatTheme {
         MyStressEmotionChangeGraphScreen(
             padding = PaddingValues(0.dp),
+            date = "2025-05-01",
             weeklyStressScoreModel = WeeklyStressScoreModel(
                 "",
                 "",
@@ -216,8 +230,9 @@ private fun MyStressEmotionChangeGraphScreenPreview() {
                 ""
             ),
             weekOffset = 1,
-            onPrevWeek = {},
-            onNextWeek = {},
+            onPrevWeekClick = {},
+            onNextWeekClick = {},
+            onBarClick = {},
             navigateToMyPageStressScore = {},
             navigateToMyPageAIFeedback = {}
         )

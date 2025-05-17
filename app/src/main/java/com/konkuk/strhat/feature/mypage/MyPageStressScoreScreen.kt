@@ -29,21 +29,18 @@ import com.konkuk.strhat.feature.diary.StressScoreViewModel
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun MyPageStressScoreRoute(
     padding: PaddingValues,
+    date: String,
     popBackStack: () -> Unit,
     viewModel: StressScoreViewModel = hiltViewModel()
 ) {
     val stressScoreState by viewModel.stressScoreState.collectAsState()
 
-    val today = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-
     LaunchedEffect(Unit) {
-        viewModel.getStressScore(today)
+        viewModel.getStressScore(date)
     }
 
     MyPageStressScoreScreen(

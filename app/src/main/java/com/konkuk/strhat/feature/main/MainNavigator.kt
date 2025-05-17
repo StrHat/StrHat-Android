@@ -186,8 +186,8 @@ class MainNavigator(
         navController.navigateToMySelfDiagnosisRecordResult()
     }
 
-    fun navigateToMyPageStressScore() {
-        navController.navigateToMyPageStressScore()
+    fun navigateToMyPageStressScore(date: String) {
+        navController.navigateToMyPageStressScore(date)
     }
 
     fun navigateToMyPageChatHistory(diaryId: Int) {
