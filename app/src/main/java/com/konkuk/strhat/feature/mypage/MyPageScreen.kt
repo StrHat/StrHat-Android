@@ -1,6 +1,5 @@
 package com.konkuk.strhat.feature.mypage
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,10 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -34,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
@@ -54,7 +54,7 @@ fun MyPageRoute(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToMyPageStressScore: () -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
     navigateToChangeGraph: (String) -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
@@ -85,7 +85,7 @@ private fun MyPageScreen(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToMyPageStressScore: () -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
     navigateToChangeGraph: (String) -> Unit,
     onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
@@ -105,8 +105,7 @@ private fun MyPageScreen(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
@@ -192,18 +191,16 @@ private fun MyPageScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.width(20.dp))
+
             Image(
                 painter = painterResource(R.drawable.ic_strhat_yellow_shadow),
                 contentDescription = stringResource(R.string.my_image_description),
-                modifier = Modifier.size(140.dp)
-            )
-            AsyncImage(
-                model = "https://github.com/user-attachments/assets/e227846b-cb86-4f9d-8f0f-0c3a52ca4659",
-                contentDescription = null,
-                modifier = Modifier.size(140.dp),
-                onError = {
-                    Log.e("AsyncImage", "load failed", it.result.throwable)
-                }
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(20.dp)
             )
         }
 
@@ -355,7 +352,8 @@ private fun MyPageScreen(
             modifier = Modifier
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToMyPageStressScore()
+                    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+                    navigateToMyPageStressScore(date)
                 }
         )
         HorizontalDivider(
