@@ -174,8 +174,8 @@ class MainNavigator(
         navController.navigateToSelfDiagnosisTest(type)
     }
 
-    fun navigateToSelfDiagnosisResult() {
-        navController.navigateToSelfDiagnosisResult()
+    fun navigateToSelfDiagnosisResult(type: String) {
+        navController.navigateToSelfDiagnosisResult(type)
     }
 
     fun navigateToMySelfDiagnosisRecord() {

@@ -20,14 +20,14 @@ fun NavController.navigateToSelfDiagnosisTest(type: String) {
     navigate(SelfDiagnosisRoute.SelfDiagnosisTest(type))
 }
 
-fun NavController.navigateToSelfDiagnosisResult() {
-    navigate(SelfDiagnosisRoute.SelfDiagnosisResult)
+fun NavController.navigateToSelfDiagnosisResult(type: String) {
+    navigate(SelfDiagnosisRoute.SelfDiagnosisResult(type))
 }
 
 fun NavGraphBuilder.selfDiagnosisNavGraph(
     padding: PaddingValues,
     onNavigateToSelfDiagnosisTest: (String) -> Unit,
-    onNavigateToSelfDiagnosisResult: () -> Unit,
+    onNavigateToSelfDiagnosisResult: (String) -> Unit,
     onNavigateToSelfDiagnosis: () -> Unit
 ) {
     composable<MainTabRoute.SelfDiagnosis> {
@@ -47,9 +47,12 @@ fun NavGraphBuilder.selfDiagnosisNavGraph(
         )
     }
 
-    composable<SelfDiagnosisRoute.SelfDiagnosisResult> {
+    composable<SelfDiagnosisRoute.SelfDiagnosisResult> { navBackStackEntry ->
+        val type = navBackStackEntry.toRoute<SelfDiagnosisRoute.SelfDiagnosisResult>().type
+
         SelfDiagnosisResultRoute(
             padding = padding,
+            type = type,
             navigateToSelfDiagnosis = onNavigateToSelfDiagnosis
         )
     }

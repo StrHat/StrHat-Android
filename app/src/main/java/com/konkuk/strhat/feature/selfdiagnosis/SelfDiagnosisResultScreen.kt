@@ -27,18 +27,23 @@ import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun SelfDiagnosisResultRoute(
     padding: PaddingValues,
+    type: String,
     navigateToSelfDiagnosis: () -> Unit,
     viewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
     val selfDiagnosisResultState by viewModel.selfDiagnosisResultState.collectAsState()
     val selfDiagnosisRecordResultModel by viewModel.selfDiagnosisResultModel.collectAsState()
 
+    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+
     LaunchedEffect(Unit) {
-        viewModel.getSelfDiagnosisResult("2025-05-14", "phq9")  // type도 넘겨받은 걸로 해야 함
+        viewModel.getSelfDiagnosisResult(date, type)
     }
 
     SelfDiagnosisResultScreen(

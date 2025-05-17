@@ -99,5 +99,7 @@ sealed interface SelfDiagnosisRoute : Route {
         val type: String
     ) : Route
     @Serializable
-    data object SelfDiagnosisResult : Route
+    data class SelfDiagnosisResult(
+        val type: String
+    ) : Route
 }

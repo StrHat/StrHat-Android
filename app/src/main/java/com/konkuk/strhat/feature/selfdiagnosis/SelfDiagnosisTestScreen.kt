@@ -35,7 +35,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun SelfDiagnosisTestRoute(
     padding: PaddingValues,
     type: String,
-    navigateToSelfDiagnosisResult: () -> Unit,
+    navigateToSelfDiagnosisResult: (String) -> Unit,
     viewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
     val questions by viewModel.selfDiagnosisListModel.collectAsState()
@@ -57,7 +57,7 @@ fun SelfDiagnosisTestRoute(
             )
             viewModel.postSelfDiagnosis(selfDiagnosis)
 
-            navigateToSelfDiagnosisResult()
+            navigateToSelfDiagnosisResult(type)
         },
         questions = questions,
         onSelectionChanged = { index, score ->
