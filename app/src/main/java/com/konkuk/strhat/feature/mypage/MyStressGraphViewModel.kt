@@ -38,12 +38,24 @@ class MyStressGraphViewModel @Inject constructor(
                             )
                         }
                     }
-                    .onFailure {
-                        if (it is HttpException) {
-                            val errorBody = it.response()?.errorBody()?.string()
-                            Timber.tag("get weekly stress score").e("$errorBody")
-                        } else {
-                            Timber.tag("get weekly stress score").e(it, "주간 스트레스 변화 시각화 조회 실패")
+                    .onFailure { throwable ->
+                        when {
+                            throwable is HttpException && throwable.code() == 404 -> {
+                                _weeklyStressScoreModel.update {
+                                    it.copy(
+                                        weeklySummary = "해당 기간에는 일기를 작성하지 않았습니다.",
+                                        stressLevels = emptyList(),
+                                        emotionLevels = emptyList()
+                                    )
+                                }
+                            }
+                            throwable is HttpException -> {
+                                val errorBody = throwable.response()?.errorBody()?.string()
+                                Timber.tag("get weekly stress score").e("$errorBody")
+                            }
+                            else -> {
+                                Timber.tag("get weekly stress score").e(throwable, "주간 스트레스 변화 시각화 조회 실패")
+                            }
                         }
                     }
             } catch (e: Exception) {
