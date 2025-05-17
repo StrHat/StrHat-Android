@@ -58,6 +58,13 @@ fun MyPageStressScoreScreen(
     popBackStack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val stressScoreColor =
+        when (stressScoreState.stressScore) {
+            in 1 .. 5 -> colors.MainBlue
+            in 9 .. 10 -> colors.MainRed
+            else -> colors.Gray400
+        }
+
     if (stressScoreState.analysis == "") {
         TodayStressScoreEmptyView(
             popBackStack = popBackStack
@@ -100,8 +107,10 @@ fun MyPageStressScoreScreen(
                     Text(
                         text = stressScoreState.stressScore.toString(),
                         style = typography.head0_b_26,
-                        color = colors.Gray400,
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                        color = stressScoreColor,
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .align(Alignment.CenterVertically)
                     )
 
                     Spacer(modifier = Modifier.width(4.dp))
@@ -119,7 +128,7 @@ fun MyPageStressScoreScreen(
                     Text(
                         text = stressScoreState.level,
                         style = typography.head2_b_20,
-                        color = colors.Gray400,
+                        color = stressScoreColor,
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
                     Text(
@@ -168,7 +177,7 @@ fun MyPageStressScoreScreenPreview() {
     StrHatTheme {
         MyPageStressScoreScreen(
             padding = PaddingValues(),
-            stressScoreState = StressScoreModel("", 1, "", "", ""),
+            stressScoreState = StressScoreModel("", 1, "", "aa", ""),
             popBackStack = {}
         )
     }

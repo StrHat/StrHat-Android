@@ -123,7 +123,7 @@
     <string name="home_title">안녕하세요, %s님</string>
     <string name="home_keyword">오늘의 키워드는\n%s, %s, %s이었네요</string>
     <string name="home_image_description">오늘의 감정 이미지</string>
-    <string name="home_stress_title">오늘의 스트레스 점수는\n%d이에요</string>
+    <string name="home_stress_title">오늘의 스트레스 점수는\n%d 이에요</string>
     <string name="home_stress_sub_title">%s에 해당되네요</string>
     <string name="home_stress_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
 

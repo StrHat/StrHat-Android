@@ -83,6 +83,13 @@ fun TodayStressScoreScreen(
         navController.previousBackStackEntry?.destination?.route
     }
 
+    val stressScoreColor =
+        when (stressScoreState.stressScore) {
+            in 1 .. 5 -> colors.MainBlue
+            in 9 .. 10 -> colors.MainRed
+            else -> colors.Gray400
+        }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -118,7 +125,7 @@ fun TodayStressScoreScreen(
                 Text(
                     text = stressScoreState.stressScore.toString(),
                     style = typography.head0_b_26,
-                    color = colors.Gray400,
+                    color = stressScoreColor,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
 
@@ -137,7 +144,7 @@ fun TodayStressScoreScreen(
                 Text(
                     text = stressScoreState.level,
                     style = typography.head2_b_20,
-                    color = colors.Gray400,
+                    color = stressScoreColor,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
                 Text(
