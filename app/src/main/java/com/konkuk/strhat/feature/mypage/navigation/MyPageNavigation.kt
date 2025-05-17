@@ -67,7 +67,7 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToChangeGraph: (String) -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: (String) -> Unit,
-    onNavigateToMyPageAIFeedback: () -> Unit,
+    onNavigateToMyPageAIFeedback: (String) -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {

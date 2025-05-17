@@ -47,7 +47,7 @@ fun MyStressEmotionChangeGraphRoute(
     padding: PaddingValues,
     date: String,
     navigateToMyPageStressScore: (String) -> Unit,
-    navigateToMyPageAIFeedback: () -> Unit,
+    navigateToMyPageAIFeedback: (String) -> Unit,
     viewModel: MyStressGraphViewModel = hiltViewModel()
 ) {
     var weekOffset by remember { mutableIntStateOf(0) }
@@ -62,6 +62,20 @@ fun MyStressEmotionChangeGraphRoute(
 
     val weeklyStressScoreModel by viewModel.weeklyStressScoreModel.collectAsState()
 
+    val calculateBarDate: (Int) -> String = { index ->
+        LocalDate
+            .parse(weeklyStressScoreModel.startDate, DateTimeFormatter.ISO_LOCAL_DATE)
+            .plusDays(index.toLong())
+            .format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
+
+    val onStressBarClick = { index: Int ->
+        navigateToMyPageStressScore(calculateBarDate(index))
+    }
+    val onEmotionBarClick = { index: Int ->
+        navigateToMyPageAIFeedback(calculateBarDate(index))
+    }
+
     MyStressEmotionChangeGraphScreen(
         padding = padding,
         date = date,
@@ -69,14 +83,8 @@ fun MyStressEmotionChangeGraphRoute(
         weekOffset = weekOffset,
         onPrevWeekClick = { weekOffset += 1 },
         onNextWeekClick = { if (weekOffset > 0) weekOffset -= 1 },
-        onBarClick = { index ->
-            val weekStart = LocalDate
-                .parse(weeklyStressScoreModel.startDate, DateTimeFormatter.ISO_LOCAL_DATE)
-            val barDate = weekStart
-                .plusDays(index.toLong())
-                .format(DateTimeFormatter.ISO_LOCAL_DATE)
-            navigateToMyPageStressScore(barDate)
-        },
+        onStressBarClick = onStressBarClick,
+        onEmotionBarClick = onEmotionBarClick,
         navigateToMyPageStressScore = navigateToMyPageStressScore,
         navigateToMyPageAIFeedback = navigateToMyPageAIFeedback
     )
@@ -90,9 +98,10 @@ private fun MyStressEmotionChangeGraphScreen(
     weekOffset: Int,
     onPrevWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
-    onBarClick: (Int) -> Unit,
+    onStressBarClick: (Int) -> Unit,
+    onEmotionBarClick: (Int) -> Unit,
     navigateToMyPageStressScore: (String) -> Unit,
-    navigateToMyPageAIFeedback: () -> Unit,
+    navigateToMyPageAIFeedback: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val weekState = getWeekStateFromOffset(weekOffset)
@@ -189,7 +198,7 @@ private fun MyStressEmotionChangeGraphScreen(
 
         WeeklyBarChart(
             values = weeklyStressScoreModel.stressLevels,
-            onBarClick = onBarClick,
+            onBarClick = onStressBarClick,
             modifier = Modifier.noRippleClickable {
                 navigateToMyPageStressScore(date)
             }
@@ -206,9 +215,9 @@ private fun MyStressEmotionChangeGraphScreen(
 
         WeeklyBarChart(
             values = weeklyStressScoreModel.emotionLevels,
-            onBarClick = onBarClick,
+            onBarClick = onEmotionBarClick,
             modifier = Modifier.noRippleClickable {
-                navigateToMyPageAIFeedback()
+                navigateToMyPageAIFeedback(date)
             }
         )
     }
@@ -232,7 +241,8 @@ private fun MyStressEmotionChangeGraphScreenPreview() {
             weekOffset = 1,
             onPrevWeekClick = {},
             onNextWeekClick = {},
-            onBarClick = {},
+            onStressBarClick = {},
+            onEmotionBarClick = {},
             navigateToMyPageStressScore = {},
             navigateToMyPageAIFeedback = {}
         )

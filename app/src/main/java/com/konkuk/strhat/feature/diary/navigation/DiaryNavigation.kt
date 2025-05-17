@@ -25,8 +25,8 @@ fun NavController.navigateToAddDiary() {
     navigate(DiaryRoute.AddDiary)
 }
 
-fun NavController.navigateToMyPageDiaryAIFeedback() {
-    navigate(DiaryRoute.DiaryAIFeedback)
+fun NavController.navigateToMyPageDiaryAIFeedback(date: String) {
+    navigate(DiaryRoute.DiaryAIFeedbackRecord(date))
 }
 
 fun NavController.navigateToDiaryAIFeedback(date: String, summary: String, positiveKeywords: List<String>, negativeKeywords: List<String>, stressReliefSuggestions: String, diaryId: Int) {

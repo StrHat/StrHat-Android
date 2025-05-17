@@ -128,8 +128,8 @@ class MainNavigator(
         navController.navigateToAddDiary()
     }
 
-    fun navigateToMyPageDiaryAIFeedback() {
-        navController.navigateToMyPageDiaryAIFeedback()
+    fun navigateToMyPageDiaryAIFeedback(date: String) {
+        navController.navigateToMyPageDiaryAIFeedback(date)
     }
 
     fun navigateToDiaryAIFeedback(

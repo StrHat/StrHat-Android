@@ -224,15 +224,9 @@ fun DiaryAIFeedbackRecordScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(40.dp)
         ) {
-            val isDiaryRoute = previousRoute?.contains("Diary") == true
-
             StrHatButton(
                 isDisabled = false,
-                text =
-                if (isDiaryRoute)
-                    stringResource(R.string.confirm)
-                else
-                    stringResource(R.string.diary_ai_feedback_quit_button),
+                text = stringResource(R.string.confirm),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
@@ -240,19 +234,12 @@ fun DiaryAIFeedbackRecordScreen(
             )
             StrHatButton(
                 isDisabled = false,
-                text =
-                if (previousRoute?.contains("Diary") == true)
-                    stringResource(R.string.my_page_ai_feedback_chat_history_button)
-                else
-                    stringResource(R.string.diary_ai_feedback_chat_button),
+                text = stringResource(R.string.my_page_ai_feedback_chat_history_button),
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .weight(1f),
                 onClick = {
-                    if (previousRoute?.contains("Diary") == true)
-                        navigateToMyPageChatHistory(diaryFeedbackModel.diaryId)
-                    else
-                        isChatModeBottomSheetVisible = true
+                    navigateToMyPageChatHistory(diaryFeedbackModel.diaryId)
                 }
             )
         }
