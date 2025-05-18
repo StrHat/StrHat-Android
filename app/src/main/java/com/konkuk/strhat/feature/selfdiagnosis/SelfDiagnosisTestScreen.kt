@@ -21,12 +21,15 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
 import com.konkuk.strhat.domain.entity.SelfDiagnosisModel
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -79,10 +82,10 @@ fun SelfDiagnosisTestScreen(
     val selections = remember { mutableStateMapOf<Int, Int>() }
 
     val selfDiagnosisTestScreenTitle = when (type) {
-        "pss" -> "스틀햇과 함께 하는 PSS 검사"
-        "sri" -> "스틀햇과 함께 하는 SRI 검사"
-        "phq9" -> "스틀햇과 함께 하는 PHQ-9 검사"
-        else -> "스틀햇과 함께 하는 자가진단 검사"
+        SelfDiagnosisTestType.PSS.testType -> stringResource(R.string.self_diagnosis_test_PSS_title)
+        SelfDiagnosisTestType.SRI.testType -> stringResource(R.string.self_diagnosis_test_SRI_title)
+        SelfDiagnosisTestType.PHQ9.testType -> stringResource(R.string.self_diagnosis_test_PHQ_9_title)
+        else -> stringResource(R.string.self_diagnosis_test_default_title)
     }
 
     Column(
@@ -96,7 +99,7 @@ fun SelfDiagnosisTestScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "1 : 전혀 그렇지 않다, 2 : 그렇지 않다,\n\n3 : 보통이다, 4 : 그렇다, 5 : 매우 그렇다",
+            text = stringResource(R.string.self_diagnosis_test_selection_description),
             style = typography.body3_m_14,
             color = colors.Gray400
         )
@@ -146,7 +149,7 @@ fun SelfDiagnosisTestScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         StrHatButton(
-            text = "검사 종료하기",
+            text = stringResource(R.string.self_diagnosis_test_exit_button),
             onClick = {
                 navigateToSelfDiagnosisResult()
             }

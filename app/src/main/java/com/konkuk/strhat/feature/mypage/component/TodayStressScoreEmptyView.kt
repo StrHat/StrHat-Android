@@ -50,7 +50,7 @@ fun TodayStressScoreEmptyView(
             )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
-                text = "해당 날짜에는\n스트레스 점수가 존재하지 않습니다.\n\n오늘의 일기를 작성하고 확인하러 와주세요!",
+                text = stringResource(R.string.stress_score_empty_view_description),
                 style = typography.body1_m_16,
                 color = colors.Gray500,
                 textAlign = TextAlign.Center

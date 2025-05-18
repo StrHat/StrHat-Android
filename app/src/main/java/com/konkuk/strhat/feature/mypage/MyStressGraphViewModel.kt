@@ -2,6 +2,7 @@ package com.konkuk.strhat.feature.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.konkuk.strhat.core.util.KeyStorage.WEEKLY_DIARY_NOT_FOUND
 import com.konkuk.strhat.domain.entity.WeeklyStressScoreModel
 import com.konkuk.strhat.domain.repository.StressScoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +41,7 @@ class MyStressGraphViewModel @Inject constructor(
                     }
                     .onFailure { throwable ->
                         when {
-                            throwable is HttpException && throwable.code() == 404 -> {
+                            throwable is HttpException && throwable.code() == WEEKLY_DIARY_NOT_FOUND -> {
                                 _weeklyStressScoreModel.update {
                                     it.copy(
                                         weeklySummary = "해당 기간에는 일기를 작성하지 않았습니다.",

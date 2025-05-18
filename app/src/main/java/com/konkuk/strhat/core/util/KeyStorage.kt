@@ -10,4 +10,7 @@ object KeyStorage {
 
     // year picker
     const val MIN_YEAR = 2000
+
+    // 서버 통신
+    const val WEEKLY_DIARY_NOT_FOUND = 404
 }
