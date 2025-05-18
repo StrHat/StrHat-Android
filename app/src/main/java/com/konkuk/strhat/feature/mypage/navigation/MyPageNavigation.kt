@@ -43,8 +43,8 @@ fun NavController.navigateToMySelfDiagnosisRecord() {
     navigate(MyPageRoute.MySelfDiagnosisRecord)
 }
 
-fun NavController.navigateToMySelfDiagnosisRecordResult() {
-    navigate(MyPageRoute.MySelfDiagnosisRecordResult)
+fun NavController.navigateToMySelfDiagnosisRecordResult(type: String) {
+    navigate(MyPageRoute.MySelfDiagnosisRecordResult(type))
 }
 
 fun NavController.navigateToChangeGraph(date: String) {
@@ -63,7 +63,7 @@ fun NavGraphBuilder.myPageNavGraph(
     padding: PaddingValues,
     onNavigateToMyPage: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
-    onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
+    onNavigateToMySelfDiagnosisRecordResult: (String) -> Unit,
     onNavigateToChangeGraph: (String) -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: (String) -> Unit,

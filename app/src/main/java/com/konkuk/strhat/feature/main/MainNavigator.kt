@@ -182,8 +182,8 @@ class MainNavigator(
         navController.navigateToMySelfDiagnosisRecord()
     }
 
-    fun navigateToMySelfDiagnosisRecordResult() {
-        navController.navigateToMySelfDiagnosisRecordResult()
+    fun navigateToMySelfDiagnosisRecordResult(type: String) {
+        navController.navigateToMySelfDiagnosisRecordResult(type)
     }
 
     fun navigateToMyPageStressScore(date: String) {
