@@ -20,6 +20,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,17 +33,20 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.bottomsheet.DatePickerBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
-import com.konkuk.strhat.core.util.time.currentDate
 import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
 import com.konkuk.strhat.feature.mypage.state.MySelfDiagnosisRecordResultState
 import com.konkuk.strhat.feature.selfdiagnosis.SelfDiagnosisViewModel
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import kotlinx.datetime.LocalDateTime
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MySelfDiagnosisRecordResultRoute(
     padding: PaddingValues,
+    type: String,
     navigateToMyPage: () -> Unit,
     viewModel: MySelfDiagnosisRecordViewModel = hiltViewModel(),
     selfDiagnosisViewModel: SelfDiagnosisViewModel = hiltViewModel()
@@ -50,12 +54,15 @@ fun MySelfDiagnosisRecordResultRoute(
     val mySelfDiagnosisRecordResultState by viewModel.mySelfDiagnosisRecordResultState.collectAsState()
     val selfDiagnosisRecordResultModel by selfDiagnosisViewModel.selfDiagnosisResultModel.collectAsState()
 
+    val today = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+
     LaunchedEffect(Unit) {
-        selfDiagnosisViewModel.getSelfDiagnosisResult("2025-05-14", "pss")
+        selfDiagnosisViewModel.getSelfDiagnosisResult(today, type)
     }
 
     MySelfDiagnosisRecordResultScreen(
         padding = padding,
+        type = type,
         selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
         mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultState,
         navigateToMyPage = navigateToMyPage
@@ -65,15 +72,16 @@ fun MySelfDiagnosisRecordResultRoute(
 @Composable
 fun MySelfDiagnosisRecordResultScreen(
     padding: PaddingValues,
+    type: String,
     selfDiagnosisRecordResultModel: SelfDiagnosisResultModel,
     mySelfDiagnosisRecordResultState: MySelfDiagnosisRecordResultState,
     navigateToMyPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isDatePickerBottomSheetVisible by remember { mutableStateOf(false) }
+    val initialDate = mySelfDiagnosisRecordResultState.selectedDate ?: LocalDate.now()
+    var selectedLocalDate by rememberSaveable { mutableStateOf(initialDate) }
 
-    val initialDate = mySelfDiagnosisRecordResultState.selectedDate ?: currentDate
-    var selectedLocalDate by remember { mutableStateOf(initialDate) }
+    var isDatePickerBottomSheetVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -119,7 +127,7 @@ fun MySelfDiagnosisRecordResultScreen(
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Text(
-                        text = selectedLocalDate.toString().substring(5, 7),
+                        text = "%02d".format(selectedLocalDate.monthValue),
                         style = typography.head0_b_26,
                         color = colors.MainBlue,
                         modifier = Modifier.align(Alignment.CenterVertically)
@@ -134,7 +142,7 @@ fun MySelfDiagnosisRecordResultScreen(
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Text(
-                        text = selectedLocalDate.toString().substring(8, 10),
+                        text = "%02d".format(selectedLocalDate.dayOfMonth),
                         style = typography.head0_b_26,
                         color = colors.MainBlue,
                         modifier = Modifier.align(Alignment.CenterVertically)
@@ -234,12 +242,25 @@ fun MySelfDiagnosisRecordResultScreen(
     }
 
     if (isDatePickerBottomSheetVisible) {
+        val initialKx = LocalDateTime(
+            year        = selectedLocalDate.year,
+            monthNumber = selectedLocalDate.monthValue,
+            dayOfMonth  = selectedLocalDate.dayOfMonth,
+            hour        = 0,
+            minute      = 0,
+            second      = 0,
+            nanosecond  = 0
+        )
+
         DatePickerBottomSheet(
             isVisible = isDatePickerBottomSheetVisible,
-            selectedDateString = mySelfDiagnosisRecordResultState.selectedDateString,
-            selectedDate = mySelfDiagnosisRecordResultState.selectedDate,
+            selectedDateString = selectedLocalDate.format(DateTimeFormatter.ISO_DATE),
+            selectedDate = initialKx,
             onDismiss = { isDatePickerBottomSheetVisible = false },
             onDateSelected = { selectedDate ->
+                selectedDate?.let {
+                    selectedLocalDate = LocalDate.of(it.year, it.monthNumber, it.dayOfMonth)
+                }
                 isDatePickerBottomSheetVisible = false
             }
         )
@@ -265,6 +286,7 @@ fun MySelfDiagnosisResultScreenPreview() {
 
         MySelfDiagnosisRecordResultScreen(
             padding = PaddingValues(),
+            type = "",
             selfDiagnosisRecordResultModel = SelfDiagnosisResultModel("", 1, "", ""),
             mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultExampleState,
             navigateToMyPage = {}

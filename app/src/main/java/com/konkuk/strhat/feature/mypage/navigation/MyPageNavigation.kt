@@ -47,8 +47,8 @@ fun NavController.navigateToMySelfDiagnosisRecordResult(type: String) {
     navigate(MyPageRoute.MySelfDiagnosisRecordResult(type))
 }
 
-fun NavController.navigateToChangeGraph(date: String) {
-    navigate(MyPageRoute.MyStressEmotionChangeGraph(date))
+fun NavController.navigateToChangeGraph(date: String, nickname: String) {
+    navigate(MyPageRoute.MyStressEmotionChangeGraph(date, nickname))
 }
 
 fun NavController.navigateToMyPageStressScore(date: String) {
@@ -64,7 +64,7 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToMyPage: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: (String) -> Unit,
-    onNavigateToChangeGraph: (String) -> Unit,
+    onNavigateToChangeGraph: (String, String) -> Unit,
     onPopBackStack: () -> Unit,
     onNavigateToMyPageStressScore: (String) -> Unit,
     onNavigateToMyPageAIFeedback: (String) -> Unit,
@@ -118,19 +118,24 @@ fun NavGraphBuilder.myPageNavGraph(
         )
     }
 
-    composable<MyPageRoute.MySelfDiagnosisRecordResult> {
+    composable<MyPageRoute.MySelfDiagnosisRecordResult> { navBackStackEntry ->
+        val type = navBackStackEntry.toRoute<MyPageRoute.MySelfDiagnosisRecordResult>().type
+
         MySelfDiagnosisRecordResultRoute(
             padding = padding,
+            type = type,
             navigateToMyPage = onNavigateToMyPage
         )
     }
 
     composable<MyPageRoute.MyStressEmotionChangeGraph> { navBackStackEntry ->
         val date = navBackStackEntry.toRoute<MyPageRoute.MyStressEmotionChangeGraph>().date
+        val nickname = navBackStackEntry.toRoute<MyPageRoute.MyStressEmotionChangeGraph>().nickname
 
         MyStressEmotionChangeGraphRoute(
             padding = padding,
             date = date,
+            nickname = nickname,
             navigateToMyPageStressScore = onNavigateToMyPageStressScore,
             navigateToMyPageAIFeedback = onNavigateToMyPageAIFeedback
         )

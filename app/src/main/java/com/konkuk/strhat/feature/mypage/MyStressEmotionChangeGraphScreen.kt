@@ -47,6 +47,7 @@ import java.time.format.DateTimeFormatter
 fun MyStressEmotionChangeGraphRoute(
     padding: PaddingValues,
     date: String,
+    nickname: String,
     navigateToMyPageStressScore: (String) -> Unit,
     navigateToMyPageAIFeedback: (String) -> Unit,
     viewModel: MyStressGraphViewModel = hiltViewModel()
@@ -80,6 +81,7 @@ fun MyStressEmotionChangeGraphRoute(
     MyStressEmotionChangeGraphScreen(
         padding = padding,
         date = date,
+        nickname = nickname,
         weeklyStressScoreModel = weeklyStressScoreModel,
         weekOffset = weekOffset,
         onPrevWeekClick = { weekOffset += 1 },
@@ -95,6 +97,7 @@ fun MyStressEmotionChangeGraphRoute(
 private fun MyStressEmotionChangeGraphScreen(
     padding: PaddingValues,
     date: String,
+    nickname: String,
     weeklyStressScoreModel: WeeklyStressScoreModel,
     weekOffset: Int,
     onPrevWeekClick: () -> Unit,
@@ -121,7 +124,7 @@ private fun MyStressEmotionChangeGraphScreen(
         ) {
             Row {
                 Text(
-                    text = weeklyStressScoreModel.nickname,
+                    text = nickname,
                     style = typography.head1_b_24,
                     color = colors.MainBlue
                 )
@@ -231,6 +234,7 @@ private fun MyStressEmotionChangeGraphScreenPreview() {
         MyStressEmotionChangeGraphScreen(
             padding = PaddingValues(0.dp),
             date = "2025-05-01",
+            nickname = "",
             weeklyStressScoreModel = WeeklyStressScoreModel(
                 "",
                 "",

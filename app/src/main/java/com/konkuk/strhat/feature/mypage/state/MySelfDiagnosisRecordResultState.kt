@@ -1,6 +1,6 @@
 package com.konkuk.strhat.feature.mypage.state
 
-import kotlinx.datetime.LocalDateTime
+import java.time.LocalDate
 
 data class MySelfDiagnosisRecordResultState(
     val nickname: String = "",
@@ -10,5 +10,5 @@ data class MySelfDiagnosisRecordResultState(
     val stressLevelDescription: String = "",
     val testTypeDescription: String = "",
     val selectedDateString: String = "",
-    val selectedDate: LocalDateTime? = null
+    val selectedDate: LocalDate? = null
 )

@@ -55,7 +55,7 @@ fun MyPageRoute(
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: (String) -> Unit,
-    navigateToChangeGraph: (String) -> Unit,
+    navigateToChangeGraph: (String, String) -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -86,7 +86,7 @@ private fun MyPageScreen(
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
     navigateToMyPageStressScore: (String) -> Unit,
-    navigateToChangeGraph: (String) -> Unit,
+    navigateToChangeGraph: (String, String) -> Unit,
     onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
 ) {
@@ -336,7 +336,7 @@ private fun MyPageScreen(
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
                     val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-                    navigateToChangeGraph(date)
+                    navigateToChangeGraph(date, myPageModel.nickname)
                 }
         )
         HorizontalDivider(
@@ -426,7 +426,7 @@ private fun PreviewMyPageScreen() {
             navigateToPersonality = {},
             navigateToMySelfDiagnosisRecord = {},
             navigateToMyPageStressScore = {},
-            navigateToChangeGraph = {},
+            navigateToChangeGraph = { _, _ -> },
             onSignOutClick = {},
             myPageModel = MyPageModel(
                 nickname = "송밍서",

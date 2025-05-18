@@ -55,7 +55,8 @@ sealed interface MyPageRoute: Route{
     ): MyPageRoute
     @Serializable
     data class MyStressEmotionChangeGraph(
-        val date: String
+        val date: String,
+        val nickname: String
     ): MyPageRoute
     @Serializable
     data class MyPageStressScore(
