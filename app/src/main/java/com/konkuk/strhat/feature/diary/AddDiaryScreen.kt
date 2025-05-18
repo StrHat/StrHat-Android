@@ -60,6 +60,7 @@ fun AddDiaryRoute(
     } else {
         AddDiaryScreen(
             padding = padding,
+            isLoading = isLoading,
             onGetFeedbackBtnClick = { date ->
                 val diaryContent = viewModel.diaryContentState.value
                 val selectedEmotionIndex = viewModel.selectedEmotionIndexState.value
@@ -93,6 +94,7 @@ fun AddDiaryRoute(
 @Composable
 fun AddDiaryScreen(
     padding: PaddingValues,
+    isLoading: Boolean,
     onGetFeedbackBtnClick: (String) -> Unit,
     viewModel: AddDiaryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
@@ -181,7 +183,7 @@ fun AddDiaryScreen(
         }
 
         StrHatButton(
-            isDisabled = diaryContent.length < 20 || selectedEmotionIndex == -1,
+            isDisabled = diaryContent.length < 20 || selectedEmotionIndex == -1 || isLoading,
             text = stringResource(R.string.get_feedback_button),
             modifier = Modifier.padding(20.dp),
             onClick = {
@@ -200,6 +202,7 @@ fun AddDiaryScreenPreview(
     StrHatTheme {
         AddDiaryScreen(
             padding = PaddingValues(),
+            isLoading = true,
             modifier = Modifier.background(colors.MainWhite),
             onGetFeedbackBtnClick = {}
         )
