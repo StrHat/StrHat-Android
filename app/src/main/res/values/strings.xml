@@ -97,6 +97,7 @@
 
     <!-- my -->
     <string name="my_title">계정 정보</string>
+    <string name="my_open_web_view">스틀햇 피드백 웹뷰 연결</string>
     <string name="my_image_description">마이페이지 감정 이미지</string>
     <string name="my_nickname">닉네임:</string>
     <string name="my_age">나이:</string>
