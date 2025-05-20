@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -37,6 +40,7 @@ import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.dialog.StrHatDialog
 import com.konkuk.strhat.core.component.section.PageDescriptionSection
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
+import com.konkuk.strhat.core.util.openWebView
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -89,6 +93,7 @@ private fun MyPageScreen(
     var isLogoutDialogVisible by remember { mutableStateOf(false) }
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
     val age = currentYear - myPageModel.birth + 1
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -97,7 +102,26 @@ private fun MyPageScreen(
             .fillMaxSize()
             .padding(padding)
     ) {
-        PageDescriptionSection(titleResId = R.string.my_title)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource( R.string.my_title),
+                color = colors.MainBlack,
+                style = typography.head1_b_24
+            )
+            Spacer(modifier = Modifier.weight(1f))
+
+            Icon(
+                painter = painterResource(R.drawable.ic_report_48),
+                contentDescription = stringResource(R.string.my_open_web_view),
+                tint = colors.Gray400,
+                modifier = Modifier.noRippleClickable{
+                    openWebView(context, "https://forms.gle/xVdviTAHppGJsP9a8")
+                }
+            )
+        }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
