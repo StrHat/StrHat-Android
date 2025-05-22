@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
-import com.konkuk.strhat.domain.type.SelfDiagnosisTestType
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType.PHQ9
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -111,7 +111,7 @@ fun SelfDiagnosisResultScreen(
 
             Text(
                 text =
-                    if (type == SelfDiagnosisTestType.PHQ9.testType)
+                    if (type == PHQ9.testType)
                         stringResource(R.string.self_diagnosis_result_depression_description)
                     else
                         stringResource(R.string.self_diagnosis_result_stress_score_description),

@@ -54,15 +54,24 @@ fun MySelfDiagnosisRecordResultRoute(
     val mySelfDiagnosisRecordResultState by viewModel.mySelfDiagnosisRecordResultState.collectAsState()
     val selfDiagnosisRecordResultModel by selfDiagnosisViewModel.selfDiagnosisResultModel.collectAsState()
 
-    val today = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+    var selectedLocalDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
 
     LaunchedEffect(Unit) {
-        selfDiagnosisViewModel.getSelfDiagnosisResult(today, type)
+        selfDiagnosisViewModel.getSelfDiagnosisResult(
+            selectedLocalDate.format(DateTimeFormatter.ISO_DATE), type
+        )
     }
 
     MySelfDiagnosisRecordResultScreen(
         padding = padding,
-        type = type,
+        selectedLocalDate = selectedLocalDate,
+        onDateSelected = {
+            selectedLocalDate = it
+            selfDiagnosisViewModel.getSelfDiagnosisResult(
+                it.format(DateTimeFormatter.ISO_DATE),
+                type
+            )
+        },
         selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
         mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultState,
         navigateToMyPage = navigateToMyPage
@@ -72,15 +81,13 @@ fun MySelfDiagnosisRecordResultRoute(
 @Composable
 fun MySelfDiagnosisRecordResultScreen(
     padding: PaddingValues,
-    type: String,
+    selectedLocalDate: LocalDate,
+    onDateSelected: (LocalDate) -> Unit,
     selfDiagnosisRecordResultModel: SelfDiagnosisResultModel,
     mySelfDiagnosisRecordResultState: MySelfDiagnosisRecordResultState,
     navigateToMyPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val initialDate = mySelfDiagnosisRecordResultState.selectedDate ?: LocalDate.now()
-    var selectedLocalDate by rememberSaveable { mutableStateOf(initialDate) }
-
     var isDatePickerBottomSheetVisible by remember { mutableStateOf(false) }
 
     Column(
@@ -242,24 +249,17 @@ fun MySelfDiagnosisRecordResultScreen(
     }
 
     if (isDatePickerBottomSheetVisible) {
-        val initialKx = LocalDateTime(
-            year        = selectedLocalDate.year,
-            monthNumber = selectedLocalDate.monthValue,
-            dayOfMonth  = selectedLocalDate.dayOfMonth,
-            hour        = 0,
-            minute      = 0,
-            second      = 0,
-            nanosecond  = 0
-        )
+        val initialLocalDateTime = LocalDateTime(year = selectedLocalDate.year, monthNumber = selectedLocalDate.monthValue, dayOfMonth = selectedLocalDate.dayOfMonth, hour = 0, minute = 0)
 
         DatePickerBottomSheet(
-            isVisible = isDatePickerBottomSheetVisible,
+            isVisible = true,
             selectedDateString = selectedLocalDate.format(DateTimeFormatter.ISO_DATE),
-            selectedDate = initialKx,
+            selectedDate = initialLocalDateTime,
             onDismiss = { isDatePickerBottomSheetVisible = false },
-            onDateSelected = { selectedDate ->
-                selectedDate?.let {
-                    selectedLocalDate = LocalDate.of(it.year, it.monthNumber, it.dayOfMonth)
+            onDateSelected = {
+                it?.let {
+                    val selectedDate = LocalDate.of(it.year, it.monthNumber, it.dayOfMonth)
+                    onDateSelected(selectedDate)
                 }
                 isDatePickerBottomSheetVisible = false
             }
@@ -286,7 +286,8 @@ fun MySelfDiagnosisResultScreenPreview() {
 
         MySelfDiagnosisRecordResultScreen(
             padding = PaddingValues(),
-            type = "",
+            selectedLocalDate = LocalDate.now(),
+            onDateSelected = {},
             selfDiagnosisRecordResultModel = SelfDiagnosisResultModel("", 1, "", ""),
             mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultExampleState,
             navigateToMyPage = {}

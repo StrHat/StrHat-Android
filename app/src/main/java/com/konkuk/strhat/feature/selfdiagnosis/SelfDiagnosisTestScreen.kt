@@ -54,14 +54,20 @@ fun SelfDiagnosisTestRoute(
 
     val selectedScores = remember { mutableStateMapOf<Int, Int>() }
 
+    val testTotalScore = when (type) {
+        PSS.testType -> selectedScores.values.sum() - 10
+        SRI.testType -> selectedScores.values.sum()
+        PHQ9.testType -> selectedScores.values.sum() - 9
+        else -> 0
+    }
+
     SelfDiagnosisTestScreen(
         padding = padding,
         type = type,
         navigateToSelfDiagnosisResult = {
-            val totalScore = selectedScores.values.sum()
             val selfDiagnosis = SelfDiagnosisModel(
                 type = type,
-                selfDiagnosisScore = totalScore
+                selfDiagnosisScore = testTotalScore
             )
             viewModel.postSelfDiagnosis(selfDiagnosis)
 
@@ -172,7 +178,10 @@ fun SelfDiagnosisTestScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val allQuestionsCompleted = questions.all { selections.containsKey(it.selfDiagnosisIndex) }
+
         StrHatButton(
+            isDisabled = !allQuestionsCompleted,
             text = stringResource(R.string.self_diagnosis_test_exit_button),
             onClick = {
                 navigateToSelfDiagnosisResult()
