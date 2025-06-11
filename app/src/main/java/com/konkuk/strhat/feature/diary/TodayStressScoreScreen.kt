@@ -50,7 +50,7 @@ fun TodayStressScoreRoute(
 
     LaunchedEffect(Unit) {
         viewModel.getStressScore(date)
-        delay(5000)
+        delay(8000)
         showContent = true
     }
 

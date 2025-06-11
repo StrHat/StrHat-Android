@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,6 +54,7 @@ fun MySelfDiagnosisRecordResultRoute(
 ) {
     val mySelfDiagnosisRecordResultState by viewModel.mySelfDiagnosisRecordResultState.collectAsState()
     val selfDiagnosisRecordResultModel by selfDiagnosisViewModel.selfDiagnosisResultModel.collectAsState()
+    val isRecordEmpty by selfDiagnosisViewModel.isRecordEmpty.collectAsState()
 
     var selectedLocalDate by rememberSaveable { mutableStateOf(LocalDate.now()) }
 
@@ -62,20 +64,35 @@ fun MySelfDiagnosisRecordResultRoute(
         )
     }
 
-    MySelfDiagnosisRecordResultScreen(
-        padding = padding,
-        selectedLocalDate = selectedLocalDate,
-        onDateSelected = {
-            selectedLocalDate = it
-            selfDiagnosisViewModel.getSelfDiagnosisResult(
-                it.format(DateTimeFormatter.ISO_DATE),
-                type
-            )
-        },
-        selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
-        mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultState,
-        navigateToMyPage = navigateToMyPage
-    )
+    if (isRecordEmpty) {
+        SelfDiagnosisResultEmptyView(
+            padding = padding,
+            selectedDate = selectedLocalDate,
+            onDateSelected = { selectedDate ->
+                selectedLocalDate = selectedDate
+                selfDiagnosisViewModel.getSelfDiagnosisResult(
+                    selectedDate.format(DateTimeFormatter.ISO_DATE),
+                    type
+                )
+            },
+            navigateToMyPage = navigateToMyPage
+        )
+    } else {
+        MySelfDiagnosisRecordResultScreen(
+            padding = padding,
+            selectedLocalDate = selectedLocalDate,
+            onDateSelected = {
+                selectedLocalDate = it
+                selfDiagnosisViewModel.getSelfDiagnosisResult(
+                    it.format(DateTimeFormatter.ISO_DATE),
+                    type
+                )
+            },
+            selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
+            mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultState,
+            navigateToMyPage = navigateToMyPage
+        )
+    }
 }
 
 @Composable
@@ -96,6 +113,42 @@ fun MySelfDiagnosisRecordResultScreen(
             .background(colors.MainWhite)
             .padding(top = 70.dp, start = 20.dp, end = 20.dp)
     ) {
+        if (selfDiagnosisRecordResultModel.score == 0 && selfDiagnosisRecordResultModel.selfDiagnosisLevel.isNullOrBlank()) {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(colors.MainWhite)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_strhat_gray_shadow),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(100.dp)
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+                    Text(
+                        text = "해당 날짜에는 자가진단 기록이 존재하지 않습니다.\n자가진단 검사를 진행한 후 확인하러 와주세요!",
+                        style = typography.body1_m_16,
+                        color = colors.Gray500,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+                StrHatButton(
+                    text = stringResource(R.string.confirm),
+                    onClick = navigateToMyPage,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .weight(1f)

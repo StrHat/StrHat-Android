@@ -24,6 +24,9 @@ class SelfDiagnosisViewModel @Inject constructor(
     private val _selfDiagnosisResultState = MutableStateFlow(SelfDiagnosisResultState())
     val selfDiagnosisResultState = _selfDiagnosisResultState.asStateFlow()
 
+    private val _isRecordEmpty = MutableStateFlow(false)
+    val isRecordEmpty: StateFlow<Boolean> = _isRecordEmpty
+
     init {
         _selfDiagnosisResultState.update {
             it.copy(
@@ -91,16 +94,20 @@ class SelfDiagnosisViewModel @Inject constructor(
                                 selfDiagnosisLevel = data.selfDiagnosisLevel
                             )
                         }
+                        _isRecordEmpty.value = false
                     }
                     .onFailure {
-                        if (it is HttpException) {
+                        if (it is HttpException && it.code() == 404) {
+                            _isRecordEmpty.value = true
                             val errorBody = it.response()?.errorBody()?.string()
                             Timber.tag("get self diagnosis result").e("$errorBody")
                         } else {
+                            _isRecordEmpty.value = true
                             Timber.tag("get self diagnosis result").e(it, "자가진단 결과 조회 실패")
                         }
                     }
             } catch (e: Exception) {
+                _isRecordEmpty.value = true
                 Timber.tag("get self diagnosis result").e("자가진단 문제 데이터 조회 서버 통신 오류")
             }
         }
