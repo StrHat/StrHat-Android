@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,6 +44,8 @@ import com.konkuk.strhat.core.util.openWebView
 import com.konkuk.strhat.domain.entity.MyPageModel
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 @Composable
@@ -53,8 +56,8 @@ fun MyPageRoute(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToMyPageStressScore: () -> Unit,
-    navigateToChangeGraph: () -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
+    navigateToChangeGraph: (String) -> Unit,
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -84,8 +87,8 @@ private fun MyPageScreen(
     navigateToStress: () -> Unit,
     navigateToPersonality: () -> Unit,
     navigateToMySelfDiagnosisRecord: () -> Unit,
-    navigateToMyPageStressScore: () -> Unit,
-    navigateToChangeGraph: () -> Unit,
+    navigateToMyPageStressScore: (String) -> Unit,
+    navigateToChangeGraph: (String) -> Unit,
     onSignOutClick: () -> Unit,
     myPageModel: MyPageModel
 ) {
@@ -124,8 +127,7 @@ private fun MyPageScreen(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier
@@ -211,10 +213,16 @@ private fun MyPageScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.width(20.dp))
+
             Image(
                 painter = painterResource(R.drawable.ic_strhat_yellow_shadow),
                 contentDescription = stringResource(R.string.my_image_description),
-                modifier = Modifier.size(140.dp)
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(20.dp)
             )
         }
 
@@ -349,7 +357,8 @@ private fun MyPageScreen(
             modifier = Modifier
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToChangeGraph()
+                    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+                    navigateToChangeGraph(date)
                 }
         )
         HorizontalDivider(
@@ -365,7 +374,8 @@ private fun MyPageScreen(
             modifier = Modifier
                 .padding(bottom = 15.dp)
                 .noRippleClickable {
-                    navigateToMyPageStressScore()
+                    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+                    navigateToMyPageStressScore(date)
                 }
         )
         HorizontalDivider(

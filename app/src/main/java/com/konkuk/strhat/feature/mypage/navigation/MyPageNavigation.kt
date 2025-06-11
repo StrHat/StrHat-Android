@@ -47,12 +47,12 @@ fun NavController.navigateToMySelfDiagnosisRecordResult() {
     navigate(MyPageRoute.MySelfDiagnosisRecordResult)
 }
 
-fun NavController.navigateToChangeGraph() {
-    navigate(MyPageRoute.MyStressEmotionChangeGraph)
+fun NavController.navigateToChangeGraph(date: String) {
+    navigate(MyPageRoute.MyStressEmotionChangeGraph(date))
 }
 
-fun NavController.navigateToMyPageStressScore() {
-    navigate(MyPageRoute.MyPageStressScore)
+fun NavController.navigateToMyPageStressScore(date: String) {
+    navigate(MyPageRoute.MyPageStressScore(date))
 }
 
 fun NavController.navigateToMyPageChatHistory(diaryId: Int) {
@@ -64,10 +64,10 @@ fun NavGraphBuilder.myPageNavGraph(
     onNavigateToMyPage: () -> Unit,
     onNavigateToMySelfDiagnosisRecord: () -> Unit,
     onNavigateToMySelfDiagnosisRecordResult: () -> Unit,
-    onNavigateToChangeGraph: () -> Unit,
+    onNavigateToChangeGraph: (String) -> Unit,
     onPopBackStack: () -> Unit,
-    onNavigateToMyPageStressScore: () -> Unit,
-    onNavigateToMyPageAIFeedback: () -> Unit,
+    onNavigateToMyPageStressScore: (String) -> Unit,
+    onNavigateToMyPageAIFeedback: (String) -> Unit,
     navController: NavController
 ) {
     composable<MainTabRoute.MyPage> {
@@ -125,17 +125,23 @@ fun NavGraphBuilder.myPageNavGraph(
         )
     }
 
-    composable<MyPageRoute.MyStressEmotionChangeGraph> {
+    composable<MyPageRoute.MyStressEmotionChangeGraph> { navBackStackEntry ->
+        val date = navBackStackEntry.toRoute<MyPageRoute.MyStressEmotionChangeGraph>().date
+
         MyStressEmotionChangeGraphRoute(
             padding = padding,
+            date = date,
             navigateToMyPageStressScore = onNavigateToMyPageStressScore,
             navigateToMyPageAIFeedback = onNavigateToMyPageAIFeedback
         )
     }
 
-    composable<MyPageRoute.MyPageStressScore> {
+    composable<MyPageRoute.MyPageStressScore> { navBackStackEntry ->
+        val date = navBackStackEntry.toRoute<MyPageRoute.MyPageStressScore>().date
+
         MyPageStressScoreRoute(
             padding = padding,
+            date = date,
             popBackStack = onPopBackStack
         )
     }

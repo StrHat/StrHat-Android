@@ -41,6 +41,8 @@ class StressScoreViewModel @Inject constructor(
                         if (it is HttpException) {
                             val errorBody = it.response()?.errorBody()?.string()
                             Timber.tag("get stress score").e("$errorBody")
+                        } else {
+                            Timber.tag("get stress score").e(it, "스트레스 점수 조회 실패")
                         }
                     }
             } catch (e: Exception) {

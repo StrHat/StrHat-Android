@@ -128,8 +128,8 @@ class MainNavigator(
         navController.navigateToAddDiary()
     }
 
-    fun navigateToMyPageDiaryAIFeedback() {
-        navController.navigateToMyPageDiaryAIFeedback()
+    fun navigateToMyPageDiaryAIFeedback(date: String) {
+        navController.navigateToMyPageDiaryAIFeedback(date)
     }
 
     fun navigateToDiaryAIFeedback(
@@ -166,16 +166,16 @@ class MainNavigator(
         navController.navigateToTodayStressScore(date)
     }
 
-    fun navigateToChangeGraph() {
-        navController.navigateToChangeGraph()
+    fun navigateToChangeGraph(date: String) {
+        navController.navigateToChangeGraph(date)
     }
 
-    fun navigateToSelfDiagnosisTest() {
-        navController.navigateToSelfDiagnosisTest()
+    fun navigateToSelfDiagnosisTest(type: String) {
+        navController.navigateToSelfDiagnosisTest(type)
     }
 
-    fun navigateToSelfDiagnosisResult() {
-        navController.navigateToSelfDiagnosisResult()
+    fun navigateToSelfDiagnosisResult(type: String) {
+        navController.navigateToSelfDiagnosisResult(type)
     }
 
     fun navigateToMySelfDiagnosisRecord() {
@@ -186,8 +186,8 @@ class MainNavigator(
         navController.navigateToMySelfDiagnosisRecordResult()
     }
 
-    fun navigateToMyPageStressScore() {
-        navController.navigateToMyPageStressScore()
+    fun navigateToMyPageStressScore(date: String) {
+        navController.navigateToMyPageStressScore(date)
     }
 
     fun navigateToMyPageChatHistory(diaryId: Int) {
