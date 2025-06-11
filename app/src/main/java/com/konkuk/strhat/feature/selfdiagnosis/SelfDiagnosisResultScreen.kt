@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType.PHQ9
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
@@ -40,14 +41,15 @@ fun SelfDiagnosisResultRoute(
     val selfDiagnosisResultState by viewModel.selfDiagnosisResultState.collectAsState()
     val selfDiagnosisRecordResultModel by viewModel.selfDiagnosisResultModel.collectAsState()
 
-    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+    val today = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
 
     LaunchedEffect(Unit) {
-        viewModel.getSelfDiagnosisResult(date, type)
+        viewModel.getSelfDiagnosisResult(today, type)
     }
 
     SelfDiagnosisResultScreen(
         padding = padding,
+        type = type,
         selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
         selfDiagnosisResultState = selfDiagnosisResultState,
         navigateToSelfDiagnosis = navigateToSelfDiagnosis
@@ -57,6 +59,7 @@ fun SelfDiagnosisResultRoute(
 @Composable
 fun SelfDiagnosisResultScreen(
     padding: PaddingValues,
+    type: String,
     selfDiagnosisRecordResultModel: SelfDiagnosisResultModel,
     selfDiagnosisResultState: SelfDiagnosisResultState,
     navigateToSelfDiagnosis: () -> Unit,
@@ -107,7 +110,11 @@ fun SelfDiagnosisResultScreen(
             }
 
             Text(
-                text = stringResource(R.string.self_diagnosis_result_stress_score_description),
+                text =
+                    if (type == PHQ9.testType)
+                        stringResource(R.string.self_diagnosis_result_depression_description)
+                    else
+                        stringResource(R.string.self_diagnosis_result_stress_score_description),
                 style = typography.head1_b_24,
                 color = colors.MainBlack
             )
@@ -190,6 +197,7 @@ fun SelfDiagnosisResultScreenPreview() {
 
         SelfDiagnosisResultScreen(
             padding = PaddingValues(),
+            type = "pss",
             selfDiagnosisRecordResultModel = SelfDiagnosisResultModel("", 1, "", ""),
             selfDiagnosisResultState = selfDiagnosisResultExampleState,
             navigateToSelfDiagnosis = {}

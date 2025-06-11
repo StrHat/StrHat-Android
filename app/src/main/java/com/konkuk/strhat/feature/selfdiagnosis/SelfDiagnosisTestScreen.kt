@@ -27,9 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.core.util.KeyStorage.SELECTION_COUNT_4
+import com.konkuk.strhat.core.util.KeyStorage.SELECTION_COUNT_5
+import com.konkuk.strhat.core.util.KeyStorage.SELECTION_COUNT_NONE
 import com.konkuk.strhat.domain.entity.SelfDiagnosisItem
 import com.konkuk.strhat.domain.entity.SelfDiagnosisModel
-import com.konkuk.strhat.domain.type.SelfDiagnosisTestType
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType.PHQ9
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType.PSS
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType.SRI
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -49,14 +54,20 @@ fun SelfDiagnosisTestRoute(
 
     val selectedScores = remember { mutableStateMapOf<Int, Int>() }
 
+    val testTotalScore = when (type) {
+        PSS.testType -> selectedScores.values.sum() - 10
+        SRI.testType -> selectedScores.values.sum()
+        PHQ9.testType -> selectedScores.values.sum() - 9
+        else -> 0
+    }
+
     SelfDiagnosisTestScreen(
         padding = padding,
         type = type,
         navigateToSelfDiagnosisResult = {
-            val totalScore = selectedScores.values.sum()
             val selfDiagnosis = SelfDiagnosisModel(
                 type = type,
-                selfDiagnosisScore = totalScore
+                selfDiagnosisScore = testTotalScore
             )
             viewModel.postSelfDiagnosis(selfDiagnosis)
 
@@ -82,10 +93,23 @@ fun SelfDiagnosisTestScreen(
     val selections = remember { mutableStateMapOf<Int, Int>() }
 
     val selfDiagnosisTestScreenTitle = when (type) {
-        SelfDiagnosisTestType.PSS.testType -> stringResource(R.string.self_diagnosis_test_PSS_title)
-        SelfDiagnosisTestType.SRI.testType -> stringResource(R.string.self_diagnosis_test_SRI_title)
-        SelfDiagnosisTestType.PHQ9.testType -> stringResource(R.string.self_diagnosis_test_PHQ_9_title)
+        PSS.testType -> stringResource(R.string.self_diagnosis_test_PSS_title)
+        SRI.testType -> stringResource(R.string.self_diagnosis_test_SRI_title)
+        PHQ9.testType -> stringResource(R.string.self_diagnosis_test_PHQ_9_title)
         else -> stringResource(R.string.self_diagnosis_test_default_title)
+    }
+
+    val selfDiagnosisTestScreenDescription = when (type) {
+        PSS.testType -> stringResource(R.string.self_diagnosis_test_PSS_selection_description)
+        SRI.testType -> stringResource(R.string.self_diagnosis_test_SRI_selection_description)
+        PHQ9.testType -> stringResource(R.string.self_diagnosis_test_PHQ_9_selection_description)
+        else -> stringResource(R.string.blank)
+    }
+
+    val selectionCount = when (type) {
+        PSS.testType, SRI.testType -> SELECTION_COUNT_5
+        PHQ9.testType -> SELECTION_COUNT_4
+        else -> SELECTION_COUNT_NONE
     }
 
     Column(
@@ -99,7 +123,7 @@ fun SelfDiagnosisTestScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.self_diagnosis_test_selection_description),
+            text = selfDiagnosisTestScreenDescription,
             style = typography.body3_m_14,
             color = colors.Gray400
         )
@@ -123,7 +147,7 @@ fun SelfDiagnosisTestScreen(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        (1..5).forEach { score ->
+                        (1..selectionCount).forEach { score ->
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -138,7 +162,13 @@ fun SelfDiagnosisTestScreen(
                                         unselectedColor = colors.Gray500
                                     )
                                 )
-                                Text(text = score.toString())
+                                Text(
+                                    text =
+                                        if (type == SRI.testType)
+                                            score.toString()
+                                        else
+                                            (score - 1).toString()
+                                )
                             }
                         }
                     }
@@ -148,7 +178,10 @@ fun SelfDiagnosisTestScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val allQuestionsCompleted = questions.all { selections.containsKey(it.selfDiagnosisIndex) }
+
         StrHatButton(
+            isDisabled = !allQuestionsCompleted,
             text = stringResource(R.string.self_diagnosis_test_exit_button),
             onClick = {
                 navigateToSelfDiagnosisResult()

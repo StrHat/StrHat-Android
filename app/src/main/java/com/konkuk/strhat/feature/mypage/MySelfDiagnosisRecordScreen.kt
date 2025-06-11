@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.domain.type.SelfDiagnosisTestType
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -22,7 +23,7 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 @Composable
 fun MySelfDiagnosisRecordRoute(
     padding: PaddingValues,
-    navigateToMySelfDiagnosisRecordResult: () -> Unit,
+    navigateToMySelfDiagnosisRecordResult: (String) -> Unit,
 ) {
     MySelfDiagnosisRecordScreen(
         padding = padding,
@@ -33,7 +34,7 @@ fun MySelfDiagnosisRecordRoute(
 @Composable
 fun MySelfDiagnosisRecordScreen(
     padding: PaddingValues,
-    onResultRecordBtnClick: () -> Unit,
+    onResultRecordBtnClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -68,7 +69,7 @@ fun MySelfDiagnosisRecordScreen(
 
         StrHatButton(
             text = stringResource(R.string.my_self_diagnosis_record_PSS_button),
-            onClick = { onResultRecordBtnClick() }
+            onClick = { onResultRecordBtnClick(SelfDiagnosisTestType.PSS.testType) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -83,7 +84,7 @@ fun MySelfDiagnosisRecordScreen(
 
         StrHatButton(
             text = stringResource(R.string.my_self_diagnosis_record_SRI_button),
-            onClick = { onResultRecordBtnClick() }
+            onClick = { onResultRecordBtnClick(SelfDiagnosisTestType.SRI.testType) }
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -106,7 +107,7 @@ fun MySelfDiagnosisRecordScreen(
 
         StrHatButton(
             text = stringResource(R.string.my_self_diagnosis_record_PHQ_9_button),
-            onClick = { onResultRecordBtnClick() }
+            onClick = { onResultRecordBtnClick(SelfDiagnosisTestType.PHQ9.testType) }
         )
     }
 }

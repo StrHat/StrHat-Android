@@ -166,8 +166,8 @@ class MainNavigator(
         navController.navigateToTodayStressScore(date)
     }
 
-    fun navigateToChangeGraph(date: String) {
-        navController.navigateToChangeGraph(date)
+    fun navigateToChangeGraph(date: String, nickname: String) {
+        navController.navigateToChangeGraph(date, nickname)
     }
 
     fun navigateToSelfDiagnosisTest(type: String) {
@@ -182,8 +182,8 @@ class MainNavigator(
         navController.navigateToMySelfDiagnosisRecord()
     }
 
-    fun navigateToMySelfDiagnosisRecordResult() {
-        navController.navigateToMySelfDiagnosisRecordResult()
+    fun navigateToMySelfDiagnosisRecordResult(type: String) {
+        navController.navigateToMySelfDiagnosisRecordResult(type)
     }
 
     fun navigateToMyPageStressScore(date: String) {
