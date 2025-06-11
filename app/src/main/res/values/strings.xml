@@ -123,7 +123,7 @@
     <string name="home_title">안녕하세요, %s님</string>
     <string name="home_keyword">오늘의 키워드는\n%s, %s, %s이었네요</string>
     <string name="home_image_description">오늘의 감정 이미지</string>
-    <string name="home_stress_title">오늘의 스트레스 점수는\n%d이에요</string>
+    <string name="home_stress_title">오늘의 스트레스 점수는\n%d 이에요</string>
     <string name="home_stress_sub_title">%s에 해당되네요</string>
     <string name="home_stress_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
 
@@ -171,6 +171,7 @@
     <string name="stress_score_level_description">스틀햇이 일기와 대화를 기반으로\n스트레스 점수를 평가했어요.\n1~5까지는 낮은 스트레스, 6~8까지는 보통 스트레스, 9~10까지는 높은 스트레스에요.</string>
     <string name="stress_score_analysis_title">스트레스 원인 분석</string>
     <string name="stress_score_to_home">홈화면으로 돌아가기</string>
+    <string name="stress_score_empty_view_description">해당 날짜에는\n스트레스 점수가 존재하지 않습니다.\n\n오늘의 일기를 작성하고 확인하러 와주세요!</string>
 
     <!-- self diagnosis -->
     <string name="self_diagnosis_screen_stress_title">스트레스 자가 진단</string>
@@ -182,6 +183,14 @@
     <string name="self_diagnosis_description_PHQ_9">정확한 결과를 제공하기 위해 과학적으로 검증된 도구를 사용합니다.\n\n이 진단은 한국판 우울증 선별도구(Patient Health Questionnaire-9, PHQ-9)를 기반으로 한 전문적인 검사입니다.</string>
     <string name="self_diagnosis_PHQ_9_button">PHQ-9 검사하기</string>
     <string name="self_diagnosis_test_screen_title">자가 진단 문제지 화면</string>
+
+    <!-- self diagnosis test -->
+    <string name="self_diagnosis_test_PSS_title">스틀햇과 함께 하는 PSS 검사</string>
+    <string name="self_diagnosis_test_SRI_title">스틀햇과 함께 하는 SRI 검사</string>
+    <string name="self_diagnosis_test_PHQ_9_title">스틀햇과 함께 하는 PHQ-9 검사</string>
+    <string name="self_diagnosis_test_default_title">스틀햇과 함께 하는 자가진단 검사</string>
+    <string name="self_diagnosis_test_selection_description">1 : 전혀 그렇지 않다, 2 : 그렇지 않다,\n\n3: 보통이다, 4 : 그렇다, 5 : 매우 그렇다</string>
+    <string name="self_diagnosis_test_exit_button">검사 종료하기</string>
 
     <!-- self diagnosis result -->
     <string name="self_diagnosis_result_nickname_description">님의</string>

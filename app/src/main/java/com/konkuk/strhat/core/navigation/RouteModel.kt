@@ -52,9 +52,13 @@ sealed interface MyPageRoute: Route{
     @Serializable
     data object MySelfDiagnosisRecordResult: MyPageRoute
     @Serializable
-    data object MyStressEmotionChangeGraph: MyPageRoute
+    data class MyStressEmotionChangeGraph(
+        val date: String
+    ): MyPageRoute
     @Serializable
-    data object MyPageStressScore: MyPageRoute
+    data class MyPageStressScore(
+        val date: String
+    ): MyPageRoute
     @Serializable
     data class MyPageChatHistory(
         val diaryId: Int
@@ -91,7 +95,11 @@ sealed interface DiaryRoute : Route {
 
 sealed interface SelfDiagnosisRoute : Route {
     @Serializable
-    data object SelfDiagnosisTest : Route
+    data class SelfDiagnosisTest(
+        val type: String
+    ) : Route
     @Serializable
-    data object SelfDiagnosisResult : Route
+    data class SelfDiagnosisResult(
+        val type: String
+    ) : Route
 }

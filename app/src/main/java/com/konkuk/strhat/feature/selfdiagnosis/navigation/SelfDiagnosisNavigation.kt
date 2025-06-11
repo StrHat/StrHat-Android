@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.konkuk.strhat.core.navigation.MainTabRoute
 import com.konkuk.strhat.core.navigation.SelfDiagnosisRoute
 import com.konkuk.strhat.feature.selfdiagnosis.SelfDiagnosisResultRoute
@@ -15,18 +16,18 @@ fun NavController.navigateToSelfDiagnosis(navOptions: NavOptions) {
     navigate(MainTabRoute.SelfDiagnosis, navOptions)
 }
 
-fun NavController.navigateToSelfDiagnosisTest() {
-    navigate(SelfDiagnosisRoute.SelfDiagnosisTest)
+fun NavController.navigateToSelfDiagnosisTest(type: String) {
+    navigate(SelfDiagnosisRoute.SelfDiagnosisTest(type))
 }
 
-fun NavController.navigateToSelfDiagnosisResult() {
-    navigate(SelfDiagnosisRoute.SelfDiagnosisResult)
+fun NavController.navigateToSelfDiagnosisResult(type: String) {
+    navigate(SelfDiagnosisRoute.SelfDiagnosisResult(type))
 }
 
 fun NavGraphBuilder.selfDiagnosisNavGraph(
     padding: PaddingValues,
-    onNavigateToSelfDiagnosisTest: () -> Unit,
-    onNavigateToSelfDiagnosisResult: () -> Unit,
+    onNavigateToSelfDiagnosisTest: (String) -> Unit,
+    onNavigateToSelfDiagnosisResult: (String) -> Unit,
     onNavigateToSelfDiagnosis: () -> Unit
 ) {
     composable<MainTabRoute.SelfDiagnosis> {
@@ -36,16 +37,22 @@ fun NavGraphBuilder.selfDiagnosisNavGraph(
         )
     }
 
-    composable<SelfDiagnosisRoute.SelfDiagnosisTest> {
+    composable<SelfDiagnosisRoute.SelfDiagnosisTest> { navBackStackEntry ->
+        val type = navBackStackEntry.toRoute<SelfDiagnosisRoute.SelfDiagnosisTest>().type
+
         SelfDiagnosisTestRoute(
             padding = padding,
+            type = type,
             navigateToSelfDiagnosisResult = onNavigateToSelfDiagnosisResult
         )
     }
 
-    composable<SelfDiagnosisRoute.SelfDiagnosisResult> {
+    composable<SelfDiagnosisRoute.SelfDiagnosisResult> { navBackStackEntry ->
+        val type = navBackStackEntry.toRoute<SelfDiagnosisRoute.SelfDiagnosisResult>().type
+
         SelfDiagnosisResultRoute(
             padding = padding,
+            type = type,
             navigateToSelfDiagnosis = onNavigateToSelfDiagnosis
         )
     }

@@ -5,6 +5,7 @@ import com.konkuk.strhat.data.service.ChatService
 import com.konkuk.strhat.data.service.DiaryService
 import com.konkuk.strhat.data.service.HomeService
 import com.konkuk.strhat.data.service.ReIssueService
+import com.konkuk.strhat.data.service.SelfDiagnosisService
 import com.konkuk.strhat.data.service.UserService
 import com.konkuk.strhat.data.service.StressScoreService
 import dagger.Module
@@ -51,4 +52,9 @@ object ApiModule {
     @Singleton
     fun providesChatService(retrofit: Retrofit): ChatService =
         retrofit.create(ChatService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesSelfDiagnosisService(retrofit: Retrofit): SelfDiagnosisService =
+        retrofit.create(SelfDiagnosisService::class.java)
 }

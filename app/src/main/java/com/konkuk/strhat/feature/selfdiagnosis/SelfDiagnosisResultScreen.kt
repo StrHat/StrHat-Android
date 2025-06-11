@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,21 +22,33 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.konkuk.strhat.R
 import com.konkuk.strhat.core.component.button.StrHatButton
+import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
 import com.konkuk.strhat.feature.selfdiagnosis.state.SelfDiagnosisResultState
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun SelfDiagnosisResultRoute(
     padding: PaddingValues,
+    type: String,
     navigateToSelfDiagnosis: () -> Unit,
     viewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
     val selfDiagnosisResultState by viewModel.selfDiagnosisResultState.collectAsState()
+    val selfDiagnosisRecordResultModel by viewModel.selfDiagnosisResultModel.collectAsState()
+
+    val date = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+
+    LaunchedEffect(Unit) {
+        viewModel.getSelfDiagnosisResult(date, type)
+    }
 
     SelfDiagnosisResultScreen(
         padding = padding,
+        selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
         selfDiagnosisResultState = selfDiagnosisResultState,
         navigateToSelfDiagnosis = navigateToSelfDiagnosis
     )
@@ -44,6 +57,7 @@ fun SelfDiagnosisResultRoute(
 @Composable
 fun SelfDiagnosisResultScreen(
     padding: PaddingValues,
+    selfDiagnosisRecordResultModel: SelfDiagnosisResultModel,
     selfDiagnosisResultState: SelfDiagnosisResultState,
     navigateToSelfDiagnosis: () -> Unit,
     modifier: Modifier = Modifier
@@ -60,7 +74,7 @@ fun SelfDiagnosisResultScreen(
         ) {
             Row {
                 Text(
-                    text = selfDiagnosisResultState.nickname,
+                    text = selfDiagnosisRecordResultModel.nickname,
                     style = typography.head1_b_24,
                     color = colors.MainBlue
                 )
@@ -74,12 +88,14 @@ fun SelfDiagnosisResultScreen(
             Spacer(modifier = Modifier.height(8.dp))
             
             Row {
-                Text(
-                    text = selfDiagnosisResultState.testType,
-                    style = typography.head0_b_26,
-                    color = colors.MainBlack,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+                selfDiagnosisRecordResultModel.type?.let {
+                    Text(
+                        text = it,
+                        style = typography.head0_b_26,
+                        color = colors.MainBlack,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(4.dp))
 
@@ -98,7 +114,7 @@ fun SelfDiagnosisResultScreen(
 
             Row {
                 Text(
-                    text = selfDiagnosisResultState.stressScore.toString(),
+                    text = selfDiagnosisRecordResultModel.score.toString(),
                     style = typography.head0_b_26,
                     color = colors.MainBlue,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -116,11 +132,13 @@ fun SelfDiagnosisResultScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             Row {
-                Text(
-                    text = selfDiagnosisResultState.stressLevel,
-                    style = typography.head2_b_20,
-                    color = colors.MainBlue
-                )
+                selfDiagnosisRecordResultModel.selfDiagnosisLevel?.let {
+                    Text(
+                        text = it,
+                        style = typography.head2_b_20,
+                        color = colors.MainBlue
+                    )
+                }
                 Text(
                     text = stringResource(R.string.self_diagnosis_result_stress_level_end),
                     style = typography.head2_r_20,
@@ -172,6 +190,7 @@ fun SelfDiagnosisResultScreenPreview() {
 
         SelfDiagnosisResultScreen(
             padding = PaddingValues(),
+            selfDiagnosisRecordResultModel = SelfDiagnosisResultModel("", 1, "", ""),
             selfDiagnosisResultState = selfDiagnosisResultExampleState,
             navigateToSelfDiagnosis = {}
         )

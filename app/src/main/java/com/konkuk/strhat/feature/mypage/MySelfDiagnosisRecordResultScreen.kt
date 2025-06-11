@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +33,9 @@ import com.konkuk.strhat.core.component.bottomsheet.DatePickerBottomSheet
 import com.konkuk.strhat.core.component.button.StrHatButton
 import com.konkuk.strhat.core.util.modifier.noRippleClickable
 import com.konkuk.strhat.core.util.time.currentDate
+import com.konkuk.strhat.domain.entity.SelfDiagnosisResultModel
 import com.konkuk.strhat.feature.mypage.state.MySelfDiagnosisRecordResultState
+import com.konkuk.strhat.feature.selfdiagnosis.SelfDiagnosisViewModel
 import com.konkuk.strhat.ui.theme.StrHatTheme
 import com.konkuk.strhat.ui.theme.StrHatTheme.colors
 import com.konkuk.strhat.ui.theme.StrHatTheme.typography
@@ -41,12 +44,19 @@ import com.konkuk.strhat.ui.theme.StrHatTheme.typography
 fun MySelfDiagnosisRecordResultRoute(
     padding: PaddingValues,
     navigateToMyPage: () -> Unit,
-    viewModel: MySelfDiagnosisRecordViewModel = hiltViewModel()
+    viewModel: MySelfDiagnosisRecordViewModel = hiltViewModel(),
+    selfDiagnosisViewModel: SelfDiagnosisViewModel = hiltViewModel()
 ) {
     val mySelfDiagnosisRecordResultState by viewModel.mySelfDiagnosisRecordResultState.collectAsState()
+    val selfDiagnosisRecordResultModel by selfDiagnosisViewModel.selfDiagnosisResultModel.collectAsState()
+
+    LaunchedEffect(Unit) {
+        selfDiagnosisViewModel.getSelfDiagnosisResult("2025-05-14", "pss")
+    }
 
     MySelfDiagnosisRecordResultScreen(
         padding = padding,
+        selfDiagnosisRecordResultModel = selfDiagnosisRecordResultModel,
         mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultState,
         navigateToMyPage = navigateToMyPage
     )
@@ -55,6 +65,7 @@ fun MySelfDiagnosisRecordResultRoute(
 @Composable
 fun MySelfDiagnosisRecordResultScreen(
     padding: PaddingValues,
+    selfDiagnosisRecordResultModel: SelfDiagnosisResultModel,
     mySelfDiagnosisRecordResultState: MySelfDiagnosisRecordResultState,
     navigateToMyPage: () -> Unit,
     modifier: Modifier = Modifier
@@ -80,7 +91,7 @@ fun MySelfDiagnosisRecordResultScreen(
             ) {
                 Row {
                     Text(
-                        text = mySelfDiagnosisRecordResultState.nickname,
+                        text = selfDiagnosisRecordResultModel.nickname,
                         style = typography.head1_b_24,
                         color = colors.MainBlue
                     )
@@ -140,12 +151,14 @@ fun MySelfDiagnosisRecordResultScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                Text(
-                    text = mySelfDiagnosisRecordResultState.testType,
-                    style = typography.head0_b_26,
-                    color = colors.MainBlack,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+                selfDiagnosisRecordResultModel.type?.let {
+                    Text(
+                        text = it,
+                        style = typography.head0_b_26,
+                        color = colors.MainBlack,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(4.dp))
 
@@ -164,7 +177,7 @@ fun MySelfDiagnosisRecordResultScreen(
 
             Row {
                 Text(
-                    text = mySelfDiagnosisRecordResultState.stressScore.toString(),
+                    text = selfDiagnosisRecordResultModel.score.toString(),
                     style = typography.head0_b_26,
                     color = colors.MainBlue,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -182,11 +195,13 @@ fun MySelfDiagnosisRecordResultScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             Row {
-                Text(
-                    text = mySelfDiagnosisRecordResultState.stressLevel,
-                    style = typography.head2_b_20,
-                    color = colors.MainBlue
-                )
+                selfDiagnosisRecordResultModel.selfDiagnosisLevel?.let {
+                    Text(
+                        text = it,
+                        style = typography.head2_b_20,
+                        color = colors.MainBlue
+                    )
+                }
                 Text(
                     text = stringResource(R.string.self_diagnosis_result_stress_level_end),
                     style = typography.head2_r_20,
@@ -250,6 +265,7 @@ fun MySelfDiagnosisResultScreenPreview() {
 
         MySelfDiagnosisRecordResultScreen(
             padding = PaddingValues(),
+            selfDiagnosisRecordResultModel = SelfDiagnosisResultModel("", 1, "", ""),
             mySelfDiagnosisRecordResultState = mySelfDiagnosisRecordResultExampleState,
             navigateToMyPage = {}
         )

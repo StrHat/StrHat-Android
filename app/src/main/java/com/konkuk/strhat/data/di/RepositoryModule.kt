@@ -4,12 +4,14 @@ import com.konkuk.strhat.data.repositoryimpl.AuthRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.ChatRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.DiaryRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.HomeRepositoryImpl
+import com.konkuk.strhat.data.repositoryimpl.SelfDiagnosisRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.UserRepositoryImpl
 import com.konkuk.strhat.data.repositoryimpl.StressScoreRepositoryImpl
 import com.konkuk.strhat.domain.repository.AuthRepository
 import com.konkuk.strhat.domain.repository.ChatRepository
 import com.konkuk.strhat.domain.repository.DiaryRepository
 import com.konkuk.strhat.domain.repository.HomeRepository
+import com.konkuk.strhat.domain.repository.SelfDiagnosisRepository
 import com.konkuk.strhat.domain.repository.UserRepository
 import com.konkuk.strhat.domain.repository.StressScoreRepository
 import dagger.Binds
@@ -44,4 +46,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsChatRepository(chatRepositoryImpl: ChatRepositoryImpl): ChatRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsSelfDiagnosisRepository(selfDiagnosisRepositoryImpl: SelfDiagnosisRepositoryImpl): SelfDiagnosisRepository
 }
